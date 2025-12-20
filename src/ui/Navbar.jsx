@@ -33,7 +33,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2 text-xl md:text-2xl font-bold"
+          className="flex items-center gap-2 text-xl md:text-3xl font-bold"
         >
           <Droplet />
           RedUnity

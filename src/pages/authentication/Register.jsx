@@ -152,6 +152,7 @@ const Register = () => {
                 <input
                   type="text"
                   name="name"
+                  placeholder="Your Full Name"
                   required
                   className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 />
@@ -163,6 +164,7 @@ const Register = () => {
                 <input
                   type="email"
                   name="email"
+                  placeholder="Your Email Address"
                   required
                   className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 />
@@ -255,7 +257,7 @@ const Register = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2"
+                  className="absolute right-4 top-8 -translate-y-1/2"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -273,7 +275,7 @@ const Register = () => {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2"
+                  className="absolute right-4 top-8 -translate-y-1/2"
                 >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>

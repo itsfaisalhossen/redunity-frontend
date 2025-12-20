@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaEye, FaEyeSlash, FaEdit, FaSave } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
-import BtnPrimary from "../../../ui/BtnPrimary";
+import SectionTitle from "../../../ui/SectionTitle ";
 
 const ProfilePage = () => {
   const [isEditable, setIsEditable] = useState(false);
@@ -14,8 +14,11 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-2xl my-10">
+    <div className="max-w-5xl mx-auto my-12 md:my-22 p-8 md:p-8 bg-white shadow-md rounded-2xl ">
       {/* Header with Edit Toggle */}
+      <div>
+        <SectionTitle subTitle={""} title={"Profile Management"} />
+      </div>
       <div className="flex justify-between items-center border-b pb-4 mb-6">
         <h2 className="text-2xl font-bold text-gray-800">My Profile</h2>
         {!isEditable ? (

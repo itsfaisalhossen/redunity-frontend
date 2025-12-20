@@ -11,6 +11,9 @@ import BloodDonationReq from "../pages/bloodDonationReq/bloodDonationReq";
 import Loading from "../ui/Loading";
 import ProfilePage from "../pages/dashboard/AllUserProfile/ProfilePage";
 import Funding from "../pages/funding/Funding";
+import DashboardHome from "../pages/dashboard/dashboardHome/DashboardHome";
+import MyDonationRequests from "../pages/dashboard/donor/MyDonationRequests";
+import CreateDonationRequest from "../pages/dashboard/donor/CreateDonationRequest";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +42,12 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    children: [{ index: true, element: <ProfilePage /> }],
+    children: [
+      { index: true, element: <DashboardHome /> },
+      { path: "my-profile", element: <ProfilePage /> },
+      { path: "create-donation-request", element: <CreateDonationRequest /> },
+      { path: "my-donation-requests", element: <MyDonationRequests /> },
+    ],
   },
   { path: "/*", element: <Error /> },
 ]);

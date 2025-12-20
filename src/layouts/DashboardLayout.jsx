@@ -2,24 +2,28 @@ import { useState } from "react";
 import { Link, Outlet } from "react-router";
 import Container from "../ui/Container";
 import { Droplet } from "lucide-react";
-import { FaHome, FaRegUser } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-
+import { FiHome } from "react-icons/fi";
+import { MdBloodtype } from "react-icons/md";
+import { BiDonateBlood } from "react-icons/bi";
 import useAuth from "../hooks/useAuth";
+import { MdOutlineBloodtype } from "react-icons/md";
+import { FiUserCheck } from "react-icons/fi";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="max-w-400 mx-auto flex flex-col min-h-screen">
       {/* 1. Navbar stays on top */}
 
       <div className="flex flex-1">
         {/* 2. Responsive Sidebar */}
         <aside
           className={`
-            fixed inset-y-0 left-0 z-40 w-64 transform bg-white border-r transition-transform duration-300 ease-in-out dark:bg-gray-900 dark:border-gray-700
+            fixed inset-y-0 left-0 z-40 md:w-82 transform bg-white border-red-400 border-r transition-transform duration-300 ease-in-out
             lg:translate-x-0 lg:static lg:inset-0 
             ${isOpen ? "translate-x-0" : "-translate-x-full"}
           `}
@@ -29,31 +33,63 @@ const DashboardLayout = () => {
             <div>
               <Link
                 to="/"
-                className="flex justify-center items-center gap-2 text-xl md:text-3xl font-extrabold"
+                className="flex justify-center items-center gap-2 text-xl md:text-4xl font-extrabold"
               >
-                <Droplet color="red" />
+                <Droplet size={30} color="red" />
                 RedUnity
               </Link>
+              <hr className="mt-8 border-red-600" />
               {/* Nav Links */}
-              <nav className="mt-6 space-y-3">
-                <a
-                  className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-gray-200"
-                  href="#"
-                >
-                  <DashboardIcon />
-                  <span className="mx-4 font-medium">My Profile</span>
-                </a>
-                <a
-                  className="flex items-center px-4 py-2 text-gray-600 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  href="#"
-                >
-                  <AccountIcon />
-                  <span className="mx-4 font-medium">Accounts</span>
-                </a>
+              <nav className="mt-6">
+                <li>
+                  <Link
+                    to={"/dashboard"}
+                    className="flex hover:text-red-500 duration-300 items-center px-2 py-3 text-black rounded-lg"
+                  >
+                    <FiHome size={18} />
+                    <span className="mx-3 uppercase text-[15px] font-semibold">
+                      Home
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/dashboard/my-profile"}
+                    className="flex hover:text-red-500 duration-300 items-center px-2 py-3 text-black rounded-lg"
+                  >
+                    <FiUserCheck size={20} />
+                    <span className="mx-3 uppercase text-[15px] font-semibold">
+                      My Profile
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/dashboard/my-donation-requests"}
+                    className="flex hover:text-red-500 duration-300 items-center px-2 py-3 text-black rounded-lg"
+                  >
+                    <BiDonateBlood size={20} />
+                    <span className="mx-3 uppercase text-[15px] font-semibold">
+                      My Donation Requests
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/dashboard/create-donation-request"}
+                    className="flex hover:text-red-500 duration-300 items-center px-2 py-3 text-black rounded-lg"
+                  >
+                    <MdOutlineBloodtype size={22} />
+                    <span className="mx-3 uppercase text-[15px] font-semibold">
+                      Create Donation Request
+                    </span>
+                  </Link>
+                </li>
               </nav>
             </div>
+
             {/* Profile */}
-            <div className="flex flex-col items-center mt-6">
+            <div className="hidden max-sm:flex flex-col items-center mt-6">
               <img
                 className="object-cover w-24 h-24 rounded-full"
                 src={user?.photoURL}
@@ -70,7 +106,7 @@ const DashboardLayout = () => {
         </aside>
 
         {/* 3. Main Content Area */}
-        <main className="flex-1 min-w-0 bg-gray-50 dark:bg-gray-950">
+        <main className="flex-1 min-w-0">
           {/* Mobile Toggle Button (Visible only on mobile) */}
           <button
             onClick={() => setIsOpen(!isOpen)}

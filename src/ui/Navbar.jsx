@@ -31,6 +31,7 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "Donation Requests", path: "/donation-requests" },
     { name: "Search Donation", path: "/search-donation" },
+    { name: "Funding", path: "/Funding" },
   ];
 
   return (
@@ -61,14 +62,6 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          {user && (
-            <NavLink
-              to="/funding"
-              className="text-gray-300 hover:text-white transition"
-            >
-              Funding
-            </NavLink>
-          )}
         </div>
         {/* Action Buttons & User Profile */}
         <div className="flex items-center gap-4">
@@ -137,15 +130,6 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          {user && (
-            <NavLink
-              to="/funding"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-lg font-medium hover:text-red-500 transition"
-            >
-              Funding
-            </NavLink>
-          )}
           {!user && (
             <div onClick={() => setIsMobileMenuOpen(false)}>
               <BtnPrimary text={"Login"} link={"/auth/login"} />

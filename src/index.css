@@ -10,13 +10,16 @@
 
 * {
   font-family: "DM Sans", sans-serif;
-  font-weight: 400;
   font-style: normal;
 }
 
 .ranga-font {
   font-family: "Ranga", cursive;
   font-style: normal;
+}
+
+li {
+  list-style: none;
 }
 
 /* li,

@@ -51,16 +51,18 @@ const Login = () => {
 
           <form onSubmit={handleSignin}>
             {/* Email */}
+            <label className="block font-medium text-gray-800">Email</label>
             <input
               required
               type="email"
               name="email"
               placeholder="Email address"
-              className="w-full px-4 py-3 mb-4 border rounded-xl focus:outline-none focus:ring focus:ring-red-300"
+              className="w-full px-4 py-3 mb-4 mt-2 border rounded-xl focus:outline-none focus:ring focus:ring-red-300"
             />
 
             {/* Password */}
-            <div className="relative mb-4">
+            <label className="block font-medium text-gray-800">Password</label>
+            <div className="relative mb-4 mt-2">
               <input
                 required
                 type={showPassword ? "text" : "password"}
@@ -81,7 +83,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-2 md:py-3 rounded-xl font-medium md:text-lg transition flex items-center justify-center gap-2
+              className={`w-full py-2 md:py-3 mt-6 md:mt-10 rounded-xl font-medium md:text-lg transition flex items-center justify-center gap-2
       ${
         loading
           ? "bg-red-400 cursor-not-allowed"

@@ -9,6 +9,8 @@ import Error from "../pages/error/Error";
 import SearchDonation from "../pages/SearchDonation/SearchDonation";
 import BloodDonationReq from "../pages/bloodDonationReq/bloodDonationReq";
 import Loading from "../ui/Loading";
+import ProfilePage from "../pages/dashboard/AllUserProfile/ProfilePage";
+import Funding from "../pages/funding/Funding";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +21,7 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "search-donation", element: <SearchDonation /> },
       { path: "donation-requests", element: <BloodDonationReq /> },
+      { path: "funding", element: <Funding /> },
     ],
   },
   {
@@ -26,13 +29,17 @@ export const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
+      {
+        path: "register",
+        element: <Register />,
+        loader: () => fetch("/dristict.json").then((res) => res.json()),
+      },
     ],
   },
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    children: [],
+    children: [{ index: true, element: <ProfilePage /> }],
   },
   { path: "/*", element: <Error /> },
 ]);

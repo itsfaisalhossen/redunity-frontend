@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router";
 import Container from "../../ui/Container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -9,30 +9,62 @@ import toast from "react-hot-toast";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [districtData, setDistrictData] = useState([]);
+  const [upazilaData, setUpazilaData] = useState([]);
+  const [district, setDistrict] = useState("");
+  const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+
   const {
-    user,
     setUser,
     loading,
     setLoading,
     updateProfileFunc,
     createUserWithEmailAndPasswordFunc,
   } = useAuth();
-  console.log(user);
 
+  useEffect(() => {
+    fetch("/dristict.json")
+      .then((res) => res.json())
+      .then((data) => setDistrictData(data));
+  }, []);
+
+  useEffect(() => {
+    fetch("/upazilas.json")
+      .then((res) => res.json())
+      .then((data) => setUpazilaData(data));
+  }, []);
+
+  /* ============ FILTER UPAZILA BY DISTRICT ID ============ */
+  useEffect(() => {
+    if (district) {
+      const result = upazilaData.filter((u) => u.district_id === district);
+      setFilteredUpazilas(result);
+    } else {
+      setFilteredUpazilas([]);
+    }
+  }, [district, upazilaData]);
+
+  /* ================= REGISTER ================= */
   const handleRegister = (e) => {
     e.preventDefault();
     setLoading(true);
+
     const form = e.target;
     const displayName = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
     const bloodGroup = form.bloodGroup.value;
-    const district = form.district.value;
-    const upazila = form.upazila.value;
+    const upazilaName = form.upazila.value;
     const avatarFile = form.avatar.files[0];
+
+    //  find district name from id
+    const selectedDistrict = districtData.find((d) => d.id === district);
+    const districtName = selectedDistrict ? selectedDistrict.name : "";
 
     if (password !== confirmPassword) {
       toast.error("Password does not match");
@@ -40,20 +72,10 @@ const Register = () => {
       return;
     }
 
-    const regEx =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?!.*\s).{8,}$/;
-
-    if (!regEx.test(password)) {
-      toast.error(
-        "Password must be at least 8 characters and include uppercase, lowercase, number & special character"
-      );
-      setLoading(false);
-      return;
-    }
-
     createUserWithEmailAndPasswordFunc(email, password)
       .then((res) => {
         const user = res.user;
+
         const formData = new FormData();
         formData.append("image", avatarFile);
 
@@ -76,13 +98,14 @@ const Register = () => {
                 photoURL,
               });
 
+              // ✅ FINAL USER OBJECT (NAME + DISTRICT NAME + UPAZILA NAME)
               const newUser = {
                 name: displayName,
                 email,
                 image: photoURL,
                 bloodGroup,
-                district,
-                upazila,
+                district: districtName,
+                upazila: upazilaName,
                 status: "active",
               };
 
@@ -100,7 +123,6 @@ const Register = () => {
           });
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.message);
         setLoading(false);
       });
@@ -131,8 +153,7 @@ const Register = () => {
                   type="text"
                   name="name"
                   required
-                  placeholder="Your name"
-                  className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-xl focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 />
               </div>
 
@@ -143,24 +164,24 @@ const Register = () => {
                   type="email"
                   name="email"
                   required
-                  placeholder="Email address"
-                  className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-xl focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 />
               </div>
 
               {/* Avatar */}
               <div>
                 <label className="block font-medium text-gray-800">
-                  Avatar (ImageBB)
+                  Avatar
                 </label>
                 <input
                   type="file"
                   name="avatar"
-                  className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 bg-white border rounded-xl"
+                  required
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 />
               </div>
 
-              {/* Blood Group */}
+              {/* Blood */}
               <div>
                 <label className="block font-medium text-gray-800">
                   Blood Group
@@ -168,9 +189,9 @@ const Register = () => {
                 <select
                   name="bloodGroup"
                   required
-                  className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 bg-white border rounded-xl focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 >
-                  <option value="">Select blood group</option>
+                  <option value="">Select</option>
                   <option>A+</option>
                   <option>A-</option>
                   <option>B+</option>
@@ -188,16 +209,17 @@ const Register = () => {
                   District
                 </label>
                 <select
-                  name="district"
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
                   required
-                  className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 bg-white border rounded-xl"
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 >
                   <option value="">Select district</option>
-                  <option>Dhaka</option>
-                  <option>Chattogram</option>
-                  <option>Rajshahi</option>
-                  <option>Khulna</option>
-                  <option>Sylhet</option>
+                  {districtData.map((d) => (
+                    <option key={d.id} value={d.id}>
+                      {d.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -209,98 +231,71 @@ const Register = () => {
                 <select
                   name="upazila"
                   required
-                  className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 bg-white border rounded-xl"
+                  disabled={!district}
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
                 >
                   <option value="">Select upazila</option>
-                  <option>Savar</option>
-                  <option>Mirpur</option>
-                  <option>Dhanmondi</option>
-                  <option>Uttara</option>
+                  {filteredUpazilas.map((u) => (
+                    <option key={u.id} value={u.name}>
+                      {u.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               {/* Password */}
-              <div className="md:col-span-1">
-                <label className="block font-medium text-gray-800">
-                  Password
-                </label>
-
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                    name="password"
-                    required
-                    className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-xl focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600"
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
-                </div>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  required
+                  placeholder="Password"
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
 
-              {/* Confirm Password */}
-              <div className="md:col-span-1">
-                <label className="block font-medium text-gray-800">
-                  Confirm Password
-                </label>
-
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm password"
-                    name="confirmPassword"
-                    required
-                    className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-xl"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600"
-                  >
-                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
-                </div>
+              {/* Confirm */}
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  required
+                  placeholder="Confirm Password"
+                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2"
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
             </div>
 
-            {/* Register Button with Spinner */}
-            <div className="mt-6 md:mt-10 flex items-center justify-center">
+            <div className="mt-10 flex justify-center">
               <button
-                type="submit"
                 disabled={loading}
-                className="px-4 w-[50%] md:px-8 py-2 md:py-3 rounded-xl bg-red-500 text-white font-medium md:text-lg hover:bg-red-600 transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-1/2 py-3 bg-red-500 text-white rounded-xl"
               >
-                {loading ? (
-                  <>
-                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                    Registering...
-                  </>
-                ) : (
-                  "Register"
-                )}
+                {loading ? "Registering..." : "Register"}
               </button>
             </div>
           </form>
 
-          <div className="flex w-full items-center bg-red300 justify-center mx-auto mt-4 md:mt-8">
-            <p className="max-sm:text-sm font-normal text-center text-gray-700">
-              Already have an account?{" "}
-              <Link
-                state={location?.state}
-                to="/auth/login"
-                className="ftext-sm text-center text-red-700 dark:text-gray-400 hover:underline"
-              >
-                Sign In
-              </Link>
-            </p>
-          </div>
+          <p className="text-center mt-6">
+            Already have an account?{" "}
+            <Link to="/auth/login" className="text-red-600 underline">
+              Sign In
+            </Link>
+          </p>
         </div>
       </Container>
     </div>

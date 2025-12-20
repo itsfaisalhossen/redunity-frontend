@@ -5,11 +5,11 @@ import Container from "./Container";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <div className="bg-white">
+    <div className="bg-black">
       <Container>
         <footer className="relative ">
           {/* Main Footer Content */}
-          <div className="py-16 lg:py-20">
+          <div className="py-16 lg:py-20 text-white">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
               {/* Brand Section */}
               <div className="lg:col-span-4">
@@ -29,32 +29,32 @@ const Footer = () => {
                     className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-foreground/10 transition-colors hover:bg-accent hover:text-accent-foreground"
                     aria-label="Facebook"
                   >
-                    <div className="bg-red-50 hover:bg-red-300 duration-300 rounded p-3">
-                      <Facebook className="h-5 w-5" />
+                    <div className="bg-red-50 hover:bg-red1300 duration-300 rounded p-3">
+                      <Facebook className="h-5 w-5 text-black" />
                     </div>
                   </Link>
                   <Link
                     className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-foreground/10 transition-colors hover:bg-accent hover:text-accent-foreground"
                     aria-label="Instagram"
                   >
-                    <div className="bg-red-50 hover:bg-red-300 duration-300 rounded p-3">
-                      <Instagram className="h-5 w-5" />
+                    <div className="bg-red-50 hover:bg-red-100 duration-300 rounded p-3">
+                      <Instagram className="h-5 w-5 text-black" />
                     </div>
                   </Link>
                   <Link
                     className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-foreground/10 transition-colors hover:bg-accent hover:text-accent-foreground"
                     aria-label="Phone"
                   >
-                    <div className="bg-red-50 hover:bg-red-300 duration-300 rounded p-3">
-                      <Phone className="h-5 w-5" />
+                    <div className="bg-red-50 hover:bg-1ed-300 duration-300 rounded p-3">
+                      <Phone className="h-5 w-5 text-black" />
                     </div>
                   </Link>
                   <Link
                     className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-foreground/10 transition-colors hover:bg-accent hover:text-accent-foreground"
                     aria-label="Email"
                   >
-                    <div className="bg-red-50 hover:bg-red-300 duration-300 rounded p-3">
-                      <MailCheck className="h-5 w-5" />
+                    <div className="bg-red-50 hover:bg-red-100 duration-300 rounded p-3">
+                      <MailCheck className="h-5 w-5 text-black" />
                     </div>
                   </Link>
                 </div>
@@ -76,10 +76,7 @@ const Footer = () => {
                       "Donation Process",
                     ].map((item) => (
                       <li key={item}>
-                        <Link
-                          href="#"
-                          className="text-sm hover:text-red-500 text-black transition-colors  "
-                        >
+                        <Link className="text-sm hover:text-red-500 text-white transition-colors  ">
                           {item}
                         </Link>
                       </li>
@@ -101,10 +98,7 @@ const Footer = () => {
                       "Blog",
                     ].map((item) => (
                       <li key={item}>
-                        <Link
-                          href="#"
-                          className="text-sm hover:text-red-500 text-black transition-colors  "
-                        >
+                        <Link className="text-sm hover:text-red-500 text-white transition-colors  ">
                           {item}
                         </Link>
                       </li>
@@ -126,10 +120,7 @@ const Footer = () => {
                       "Volunteer",
                     ].map((item) => (
                       <li key={item}>
-                        <Link
-                          href="#"
-                          className="text-sm hover:text-red-500 text-black transition-colors "
-                        >
+                        <Link className="text-sm hover:text-red-500 text-white transition-colors ">
                           {item}
                         </Link>
                       </li>
@@ -146,22 +137,13 @@ const Footer = () => {
                   © {currentYear} RedUnity Blood Donation. All rights reserved.
                 </p>
                 <div className="flex flex-wrap items-center gap-6 text-sm">
-                  <Link
-                    href="#"
-                    className="text-primary-foreground/60 transition-colors hover:text-accent"
-                  >
+                  <Link className="text-primary-foreground/60 transition-colors hover:text-accent">
                     Privacy Policy
                   </Link>
-                  <Link
-                    href="#"
-                    className="text-primary-foreground/60 transition-colors hover:text-accent"
-                  >
+                  <Link className="text-primary-foreground/60 transition-colors hover:text-accent">
                     Terms of Service
                   </Link>
-                  <Link
-                    href="#"
-                    className="text-primary-foreground/60 transition-colors hover:text-accent"
-                  >
+                  <Link className="text-primary-foreground/60 transition-colors hover:text-accent">
                     Cookie Policy
                   </Link>
                 </div>

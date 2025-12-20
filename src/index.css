@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Ranga:wght@400;700&display=swap");
+
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #ffedfa4b;
+  --color-primary-dark: #0e010f;
+}
+
+* {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ranga-font {
+  font-family: "Ranga", cursive;
+  font-style: normal;
+}
+
+li,
+.active {
+  @apply border-b border-white/80 text-white duration-400 py-1 px-3.5;
+}

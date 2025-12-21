@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { data, Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Container from "../../ui/Container";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -105,11 +105,16 @@ const Register = () => {
             };
             console.log("New User:", newUser);
 
-            axiosSecure.post("/users", newUser).then((res) => {
-              if (res.data.insertedId) {
-                console.log("User created in the database");
-              }
-            });
+            axiosSecure
+              .post("/users", newUser)
+              .then((res) => {
+                if (res.data.insertedId) {
+                  console.log("User created in the database");
+                }
+              })
+              .catch((err) => {
+                console.error(err);
+              });
 
             // update user profile to firebase
             updateProfileFunc(displayName, photoURL).then(() => {
@@ -152,7 +157,6 @@ const Register = () => {
               Create Your Account
             </h3>
           </div>
-
           <form onSubmit={handleRegister}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {/* Name */}
@@ -297,7 +301,7 @@ const Register = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-2 md:py-3 mt-6 md:mt-10 rounded-xl font-medium md:text-lg transition flex items-center justify-center gap-2
+                className={`w-full py-2 md:py-3 mt-6 md:mt-10 rounded-xl font-medium md:text-lg transition cursor-pointer flex items-center justify-center gap-2
       ${
         loading
           ? "bg-red-400 cursor-not-allowed"
@@ -315,7 +319,6 @@ const Register = () => {
               </button>
             </div>
           </form>
-
           <p className="text-center mt-6">
             Already have an account?{" "}
             <Link to="/auth/login" className="text-red-600 underline">

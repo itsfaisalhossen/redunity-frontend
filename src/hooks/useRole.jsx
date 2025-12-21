@@ -10,9 +10,6 @@ const useRole = () => {
     queryKey: ["user-role", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      // const res = await axiosSecure.get(`/users/${user?.email}/role`);
-      // return res?.data?.role || "Donor";
-      // এখানে অবশ্যই ব্যাকটিক (`) ব্যবহার করবেন
       const res = await axiosSecure.get(`/users/${user?.email}/role`);
       return res?.data?.role || "Donor";
     },

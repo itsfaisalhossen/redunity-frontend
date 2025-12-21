@@ -95,14 +95,6 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      // {
-      //   path: "all-blood-donation-request",
-      //   element: (
-      //     <AdminRoute>
-      //       <AllBloodDonationRequest />
-      //     </AdminRoute>
-      //   ),
-      // },
       {
         path: "all-blood-donation-request",
         element: (

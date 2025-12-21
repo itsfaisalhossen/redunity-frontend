@@ -13,7 +13,7 @@ const RoleRoute = ({ allowedRoles, children }) => {
   }
 
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/auth/login" />;
   }
 
   if (!allowedRoles.includes(role)) {

@@ -14,8 +14,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { user, setUser, signInWithEmailAndPasswordFunc } = useAuth();
-  console.log(user);
+  const { setUser, signInWithEmailAndPasswordFunc } = useAuth();
 
   const handleSignin = async (e) => {
     e.preventDefault();

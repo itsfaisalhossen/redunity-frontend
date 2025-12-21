@@ -1,4 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "./useAuth";
+import useAxiosSecure from "./useAxiosSecure";
+
 const useRole = () => {
-  return <div>useRole</div>;
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const { isLoading: roleLoading, data: role = "Donor" } = useQuery({
+    queryKey: ["user-role", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      // const res = await axiosSecure.get(`/users/${user?.email}/role`);
+      // return res?.data?.role || "Donor";
+      // এখানে অবশ্যই ব্যাকটিক (`) ব্যবহার করবেন
+      const res = await axiosSecure.get(`/users/${user?.email}/role`);
+      return res?.data?.role || "Donor";
+    },
+  });
+
+  return { role, roleLoading };
 };
+
 export default useRole;

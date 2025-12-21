@@ -1,10 +1,11 @@
 import { Helmet } from "react-helmet";
-import { Link, useLocation, useNavigate } from "react-router";
+import { data, Link, useLocation, useNavigate } from "react-router";
 import Container from "../../ui/Container";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,6 +18,7 @@ const Register = () => {
   const [upazilaData, setUpazilaData] = useState([]);
   const [district, setDistrict] = useState("");
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   const {
     setUser,
@@ -91,6 +93,25 @@ const Register = () => {
           .then((imgData) => {
             const photoURL = imgData?.data?.display_url || "";
 
+            // ✅ FINAL USER OBJECT (NAME + DISTRICT NAME + UPAZILA NAME)
+            const newUser = {
+              name: displayName,
+              email,
+              image: photoURL,
+              bloodGroup,
+              district: districtName,
+              upazila: upazilaName,
+              status: "Active",
+            };
+            console.log("New User:", newUser);
+
+            axiosSecure.post("/users", newUser).then((res) => {
+              if (res.data.insertedId) {
+                console.log("User created in the database");
+              }
+            });
+
+            // update user profile to firebase
             updateProfileFunc(displayName, photoURL).then(() => {
               setUser({
                 ...user,
@@ -98,32 +119,22 @@ const Register = () => {
                 photoURL,
               });
 
-              // ✅ FINAL USER OBJECT (NAME + DISTRICT NAME + UPAZILA NAME)
-              const newUser = {
-                name: displayName,
-                email,
-                image: photoURL,
-                bloodGroup,
-                district: districtName,
-                upazila: upazilaName,
-                status: "active",
-              };
-
-              console.log("New User:", newUser);
-
               toast.success("Account created successfully 🎉");
               navigate(location.state ? location.state : "/");
               form.reset();
               setLoading(false);
             });
           })
-          .catch(() => {
+          .catch((err) => {
             toast.error("Image upload failed");
+            console.log(err);
+
             setLoading(false);
           });
       })
       .catch((err) => {
         toast.error(err.message);
+        console.log(err);
         setLoading(false);
       });
   };
@@ -284,10 +295,23 @@ const Register = () => {
 
             <div className="mt-10 flex justify-center">
               <button
+                type="submit"
                 disabled={loading}
-                className="w-1/2 py-3 bg-red-500 text-white rounded-xl"
+                className={`w-full py-2 md:py-3 mt-6 md:mt-10 rounded-xl font-medium md:text-lg transition flex items-center justify-center gap-2
+      ${
+        loading
+          ? "bg-red-400 cursor-not-allowed"
+          : "bg-red-500 hover:bg-red-600 text-white"
+      }`}
               >
-                {loading ? "Registering..." : "Register"}
+                {loading ? (
+                  <>
+                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    Registering...
+                  </>
+                ) : (
+                  "Register"
+                )}
               </button>
             </div>
           </form>

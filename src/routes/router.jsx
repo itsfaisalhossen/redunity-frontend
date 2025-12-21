@@ -14,6 +14,13 @@ import Funding from "../pages/funding/Funding";
 import DashboardHome from "../pages/dashboard/dashboardHome/DashboardHome";
 import MyDonationRequests from "../pages/dashboard/donor/MyDonationRequests";
 import CreateDonationRequest from "../pages/dashboard/donor/CreateDonationRequest";
+import BloodRequestDetails from "../pages/bloodRequestDetails/BloodRequestDetails";
+import PrivateRoute from "./PrivateRoute ";
+import AllUsers from "../pages/dashboard/admin/AllUsers";
+import AllBloodDonationRequest from "../pages/dashboard/admin/AllBloodDonationRequest";
+import AdminRoute from "./AdminRoute";
+import DonorRoute from "./DonorRoute";
+import RoleRoute from "./RoleRoute ";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +31,22 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "search-donation", element: <SearchDonation /> },
       { path: "donation-requests", element: <BloodDonationReq /> },
-      { path: "funding", element: <Funding /> },
+      {
+        path: "blood-equest-details",
+        element: (
+          <PrivateRoute>
+            <BloodRequestDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "funding",
+        element: (
+          <PrivateRoute>
+            <Funding />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
@@ -41,12 +63,54 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       { index: true, element: <DashboardHome /> },
       { path: "my-profile", element: <ProfilePage /> },
-      { path: "create-donation-request", element: <CreateDonationRequest /> },
-      { path: "my-donation-requests", element: <MyDonationRequests /> },
+      {
+        path: "create-donation-request",
+        element: (
+          <DonorRoute>
+            <CreateDonationRequest />
+          </DonorRoute>
+        ),
+      },
+      {
+        path: "my-donation-requests",
+        element: (
+          <DonorRoute>
+            <MyDonationRequests />
+          </DonorRoute>
+        ),
+      },
+      {
+        path: "all-users",
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
+      },
+      // {
+      //   path: "all-blood-donation-request",
+      //   element: (
+      //     <AdminRoute>
+      //       <AllBloodDonationRequest />
+      //     </AdminRoute>
+      //   ),
+      // },
+      {
+        path: "all-blood-donation-request",
+        element: (
+          <RoleRoute allowedRoles={["Admin", "Volunteer"]}>
+            <AllBloodDonationRequest />
+          </RoleRoute>
+        ),
+      },
     ],
   },
   { path: "/*", element: <Error /> },

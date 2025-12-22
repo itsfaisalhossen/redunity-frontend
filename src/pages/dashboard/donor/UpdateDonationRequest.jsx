@@ -3,15 +3,17 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet";
 import SectionTitle from "../../../ui/SectionTitle ";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { ChevronLeft } from "lucide-react";
 
 const UpdateDonationRequest = () => {
   const { user } = useAuth();
   const location = useLocation();
   const id = location.state?.requestId;
+  const Navigate = useNavigate();
 
   const axiosSecure = useAxiosSecure();
   const { data: blood = [] } = useQuery({
@@ -103,10 +105,13 @@ const UpdateDonationRequest = () => {
       </Helmet>
       <div className="max-w-5xl mx-auto my-12 md:my-22 p-8 md:p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
         <SectionTitle title={"Update Donation Request"} />
-        <div className="my-8 md:my-16 flex items-center gap-1 justify-end font-semibold hover:text-red-400">
-          <MdOutlineArrowBack size={20} />
-          <Link to={"/dashboard"}>Back to Recent Donation</Link>
-        </div>
+        <button
+          onClick={() => Navigate("/dashboard/my-donation-requests")}
+          className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"
+        >
+          <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+          <span className="font-semibold">Back to List</span>
+        </button>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Read-Only Section */}

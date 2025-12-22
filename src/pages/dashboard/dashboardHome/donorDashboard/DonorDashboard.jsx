@@ -1,21 +1,29 @@
 import { Helmet } from "react-helmet";
-import SectionTitle from "../../../../ui/SectionTitle ";
-import { Edit, Trash2, Eye, ExternalLink } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router";
-import useAuth from "../../../../hooks/useAuth";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-import { useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import {
+  Eye,
+  Edit,
+  Trash2,
+  ExternalLink,
+  MapPin,
+  Calendar,
+  Clock,
+  User,
+} from "lucide-react";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAuth from "../../../../hooks/useAuth";
+import SectionTitle from "../../../../ui/SectionTitle ";
 
 const DonorDashboard = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const { data: lastRequest = [] } = useQuery({
+  // eslint-disable-next-line no-unused-vars
+  const { data: lastRequest = [], isLoading } = useQuery({
     queryKey: ["last-requests", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -32,239 +40,205 @@ const DonorDashboard = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#e11d48", // rose-600 color
+      cancelButtonColor: "#64748b", // slate-500 color
       confirmButtonText: "Yes, delete it!",
+      background: "#fff",
+      customClass: {
+        popup: "rounded-[2rem]",
+        confirmButton: "rounded-xl px-6 py-3 font-bold",
+        cancelButton: "rounded-xl px-6 py-3 font-bold",
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axiosSecure.delete(
-          `/lastRequest-bloods/${id}?email=${user.email}`
-        );
-        queryClient.invalidateQueries(["last-requests", user.email]);
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your request has been deleted.",
-          icon: "success",
-        });
+        try {
+          await axiosSecure.delete(
+            `/lastRequest-bloods/${id}?email=${user.email}`
+          );
+          queryClient.invalidateQueries(["last-requests", user.email]);
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your request has been deleted.",
+            icon: "success",
+            confirmButtonColor: "#e11d48",
+            customClass: { popup: "rounded-[2rem]" },
+          });
+        } catch (error) {
+          console.error(error);
+          Swal.fire("Error!", "Failed to delete the request.", "error");
+        }
       }
     });
   };
 
   return (
-    <div className="my-14 md:my-24 bg-gray50 min-h-screen font-sans">
+    <div className="my-10 md:my-16 min-h-screen font-sans">
       <Helmet>
         <title>RedUnity | Donor Dashboard</title>
       </Helmet>
-      {/* Welcome Section */}
-      <header className="mb-8">
-        <SectionTitle
-          title={` Welcome back, ${user?.displayName}!`}
-          subTitle={" Here is a summary of your recent activity."}
-        />
-      </header>
 
-      {/* Recent Donation Requests Table */}
-      {lastRequest.length > 0 && (
-        <section className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="p-5 border-b border-gray-100 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-700">
-              Recent Donation Requests
-            </h2>
-          </div>
+      <div className="container mx-auto px-4">
+        {/* Welcome Section */}
+        <header className="mb-12">
+          <SectionTitle
+            title={`Welcome back, ${user?.displayName}!`}
+            subTitle={"Here is a summary of your recent activity."}
+          />
+        </header>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead className="bg-gray-50 text-gray-500 uppercase text-xs font-medium">
-                <tr>
-                  <th className="px-6 py-4">Recipient</th>
-                  <th className="px-6 py-4">Location</th>
-                  <th className="px-6 py-4">Date/Time</th>
-                  <th className="px-6 py-4">Blood Group</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4">Donor Info</th>
-                  <th className="px-6 py-4 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 text-sm">
-                {lastRequest.map((request) => (
-                  <tr
-                    key={request._id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-6 py-4 font-medium text-gray-900">
-                      {request.name}
-                    </td>
-                    <td className="px-6 py-4 text-gray-600">
-                      {request.upazilaName}, {request.districtName}
-                    </td>
-                    <td className="px-6 py-4 text-gray-600">
-                      {request.date} <br />{" "}
-                      <span className="text-xs text-gray-400">
-                        {request.time}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full font-bold">
-                        {request.bloodGroup}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`capitalize px-2 py-1 rounded text-xs font-semibold
-                        ${
-                          request.status === "inprogress"
-                            ? "bg-blue-100 text-blue-700"
-                            : request.status === "done"
-                            ? "bg-green-100 text-green-700"
-                            : request.status === "canceled"
-                            ? "bg-gray-100 text-gray-700"
-                            : "bg-yellow-100 text-yellow-700"
-                        }`}
-                      >
-                        {request.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      {request.status === "inprogress" ? (
-                        <div className="text-xs">
-                          <p className="font-semibold">{request.name}</p>
-                          <p className="text-gray-400">{request.email}</p>
-                        </div>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex justify-center gap-3">
-                        {request.status === "inprogress" && (
-                          <>
-                            <button className="text-green-600 hover:underline font-medium">
-                              Done
-                            </button>
-                            <button className="text-red-600 hover:underline font-medium">
-                              Cancel
-                            </button>
-                          </>
-                        )}
-                        <button
-                          title="View"
-                          // onClick={() => handleView(request._id)}
-                          className="text-gray-400 hover:text-blue-600"
-                        >
-                          <Eye size={18} />
-                        </button>
-                        <Link
-                          to={`/dashboard/update-donation-request`}
-                          state={{ requestId: request._id }}
-                          title="Edit"
-                          className="text-gray-400 hover:text-yellow-600"
-                        >
-                          <Edit size={18} />
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(request._id)}
-                          title="Delete"
-                          className="text-gray-400 hover:text-red-600"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </td>
+        {/* Recent Donation Requests Section */}
+        {lastRequest.length > 0 ? (
+          <section className="bg-white rounded-[2.5rem] shadow-2xl shadow-rose-100/40 border border-rose-50 overflow-hidden mb-10 transition-all duration-500">
+            {/* Table Header */}
+            <div className="px-8 py-7 border-b border-rose-50 flex justify-between items-center bg-linear-to-r from-white to-rose-50/20">
+              <h2 className="text-xl font-black text-slate-800 flex items-center gap-3">
+                <span className="w-2.5 h-8 bg-rose-600 rounded-full inline-block animate-pulse"></span>
+                Recent Donation Requests
+              </h2>
+              <Link
+                to={"/dashboard/my-donation-requests"}
+                className="hidden md:flex items-center gap-2 text-rose-600 hover:text-rose-700 font-bold text-sm transition-all bg-rose-50 px-5 py-2 rounded-xl"
+              >
+                View All Requests <ExternalLink size={16} />
+              </Link>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-rose-50/30 text-rose-600 uppercase text-[11px] font-black tracking-[2px]">
+                    <th className="px-8 py-5">Recipient</th>
+                    <th className="px-8 py-5">Location</th>
+                    <th className="px-8 py-5">Status</th>
+                    <th className="px-8 py-5">Donor Info</th>
+                    <th className="px-8 py-5 text-center">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-rose-50/60">
+                  {lastRequest.map((request) => (
+                    <tr
+                      key={request._id}
+                      className="hover:bg-rose-50/20 transition-all duration-300"
+                    >
+                      <td className="px-8 py-6 font-bold text-slate-800 text-base italic">
+                        {request.recipientName || request.name}
+                      </td>
+                      <td className="px-8 py-6">
+                        <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
+                          <MapPin size={14} className="text-rose-400" />
+                          {request.upazilaName}, {request.districtName}
+                        </div>
+                      </td>
 
-          <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
+                      <td className="px-8 py-6">
+                        <span
+                          className={`capitalize px-3 py-1.5 rounded-full text-[10px] font-black tracking-wider border-2 shadow-sm
+                          ${
+                            request.status === "inprogress"
+                              ? "bg-blue-50 text-blue-600 border-blue-100"
+                              : request.status === "done"
+                              ? "bg-emerald-50 text-emerald-600 border-emerald-100"
+                              : request.status === "canceled"
+                              ? "bg-slate-50 text-slate-500 border-slate-100"
+                              : "bg-amber-50 text-amber-600 border-amber-100"
+                          }`}
+                        >
+                          {request.status}
+                        </span>
+                      </td>
+                      <td className="px-8 py-6">
+                        {request.status === "inprogress" ? (
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 border border-rose-200">
+                              <User size={16} />
+                            </div>
+                            <div>
+                              <p className="text-xs font-bold text-slate-800 leading-none">
+                                {request.donorName || "Assigned"}
+                              </p>
+                              <p className="text-[10px] text-slate-400 font-medium mt-1 uppercase">
+                                {request.donorEmail}
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <span className="text-slate-200 font-black tracking-widest text-xs">
+                            ————
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-8 py-6">
+                        <div className="flex justify-center items-center gap-3">
+                          {request.status === "inprogress" && (
+                            <div className="flex gap-2 mr-3 pr-3 border-r border-rose-100">
+                              <button className="px-3 py-1.5 bg-emerald-500 text-white text-[10px] font-black rounded-lg hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100">
+                                DONE
+                              </button>
+                              <button className="px-3 py-1.5 bg-rose-500 text-white text-[10px] font-black rounded-lg hover:bg-rose-600 transition-all shadow-lg shadow-rose-100">
+                                CANCEL
+                              </button>
+                            </div>
+                          )}
+                          <Link
+                            to={`/dashboard/view-details-donation`}
+                            state={{ requestId: request._id }}
+                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
+                            title="View"
+                          >
+                            <Eye size={18} />
+                          </Link>
+                          <Link
+                            to={`/dashboard/update-donation-request`}
+                            state={{ requestId: request._id }}
+                            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
+                            title="Edit"
+                          >
+                            <Edit size={18} />
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(request._id)}
+                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                            title="Delete"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bottom Footer for Table */}
+            <div className="p-6 bg-slate-50/50 border-t border-rose-50 text-center md:hidden">
+              <Link
+                to={"/dashboard/my-donation-requests"}
+                className="text-rose-600 font-bold text-sm flex items-center justify-center gap-2"
+              >
+                See All Requests <ExternalLink size={16} />
+              </Link>
+            </div>
+          </section>
+        ) : (
+          <div className="py-24 bg-white rounded-[3rem] border-2 border-dashed border-rose-100 text-center">
+            <div className="bg-rose-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-rose-300 italic font-black text-2xl">
+              !
+            </div>
+            <p className="text-slate-400 font-bold italic">
+              No recent donation requests found.
+            </p>
             <Link
-              to={"/dashboard/my-donation-requests"}
-              className="text-blue-600 hover:text-blue-800 font-semibold text-sm flex items-center justify-center mx-auto gap-2"
+              to="/dashboard/create-donation-request"
+              className="mt-4 inline-block text-rose-600 font-bold hover:underline"
             >
-              View My All Requests <ExternalLink size={14} />
+              Create a new request?
             </Link>
           </div>
-        </section>
-      )}
-
-      {/* --- Animated & Blurry Modal --- */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300">
-          {/* Backdrop with Blur */}
-          <div
-            className="absolute inset-0 bg-white/40 backdrop-blur-md"
-            onClick={() => setIsOpen(false)}
-          ></div>
-
-          {/* Modal Content */}
-          <div className="relative bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl border border-gray-100 transform transition-all scale-100 animate-in fade-in zoom-in duration-200">
-            <div className="mb-6">
-              <h3 className="text-xl font-bold text-gray-900">
-                Edit Donation Request
-              </h3>
-              <p className="text-sm text-gray-500">
-                Update recipient details below
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  Recipient Name
-                </label>
-                <input
-                  type="text"
-                  // value={formData.recipientName || ""}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, recipientName: e.target.value })
-                  // }
-                  className="w-full mt-1 px-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                  placeholder="Enter name"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                    District
-                  </label>
-                  <input
-                    type="text"
-                    // value={formData.districtName || ""}
-                    // onChange={(e) =>
-                    //   setFormData({ ...formData, districtName: e.target.value })
-                    // }
-                    className="w-full mt-1 px-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                    Upazila
-                  </label>
-                  <input
-                    type="text"
-                    // value={formData.upazilaName || ""}
-                    // onChange={(e) =>
-                    //   setFormData({ ...formData, upazilaName: e.target.value })
-                    // }
-                    className="w-full mt-1 px-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 flex gap-3">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="flex-1 px-6 py-3 text-sm font-bold text-gray-500 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all"
-              >
-                close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
+
 export default DonorDashboard;

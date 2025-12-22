@@ -4,6 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import SectionTitle from "../../../ui/SectionTitle ";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const ProfilePage = () => {
   const [isEditable, setIsEditable] = useState(false);
@@ -17,7 +18,7 @@ const ProfilePage = () => {
     loading,
     setLoading,
     updateProfileFunc,
-    createUserWithEmailAndPasswordFunc,
+    // createUserWithEmailAndPasswordFunc,
   } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -60,7 +61,7 @@ const ProfilePage = () => {
       bloodGroup,
       district: districtName,
       upazila: upazilaName,
-      status: "Active",
+      status: "active",
     };
 
     try {
@@ -88,6 +89,9 @@ const ProfilePage = () => {
   };
   return (
     <div className="max-w-5xl mx-auto my-12 md:my-22 p-8 md:p-8 bg-white shadow-md rounded-2xl">
+      <Helmet>
+        <title>RedUnity | My Profile</title>
+      </Helmet>
       <div>
         <SectionTitle subTitle={""} title={"Profile Management"} />
       </div>

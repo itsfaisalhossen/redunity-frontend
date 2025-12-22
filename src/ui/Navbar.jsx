@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { LogOut, LayoutDashboard, Droplet, Menu, X } from "lucide-react";
 import toast from "react-hot-toast";
 import BtnPrimary from "./BtnPrimary";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, signOutUserFunc } = useAuth();
@@ -11,10 +12,37 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const handleLogout = () => {
-    signOutUserFunc().then(() => {
-      toast.success("Logged out successfully");
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out from your account",
+      width: "320px", // 🔹 smaller width
+      padding: "1.25rem",
+      showCancelButton: true,
+      confirmButtonText: "Logout",
+      confirmButtonColor: "#2563eb", // Tailwind blue-600
+      cancelButtonColor: "#dc2626", // Tailwind red-600
+      customClass: {
+        title: "text-base",
+        popup: "rounded-xl",
+        confirmButton: "px-4 py-1.5 text-sm",
+        cancelButton: "px-4 py-1.5 text-sm",
+      },
     });
+
+    if (result.isConfirmed) {
+      try {
+        await signOutUserFunc();
+        Swal.fire({
+          title: "Logged Out!",
+          text: "You have been logged out successfully.",
+          icon: "success",
+        });
+      } catch (error) {
+        toast.error("Failed to logout");
+        console.error(error);
+      }
+    }
   };
 
   useEffect(() => {

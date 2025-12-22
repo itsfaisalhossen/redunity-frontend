@@ -22,6 +22,8 @@ import AdminRoute from "./AdminRoute";
 import DonorRoute from "./DonorRoute";
 import RoleRoute from "./RoleRoute ";
 import UpdateDonationRequest from "../pages/dashboard/donor/UpdateDonationRequest";
+import ViewDetails from "../pages/dashboard/donor/ViewDetails";
+import BloodDetails from "../pages/bloodDetails/BloodDetails";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <BloodRequestDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "blood-details",
+        element: (
+          <PrivateRoute>
+            <BloodDetails />
           </PrivateRoute>
         ),
       },
@@ -77,6 +87,14 @@ export const router = createBrowserRouter([
         element: (
           <DonorRoute>
             <CreateDonationRequest />
+          </DonorRoute>
+        ),
+      },
+      {
+        path: "view-details-donation",
+        element: (
+          <DonorRoute>
+            <ViewDetails />
           </DonorRoute>
         ),
       },

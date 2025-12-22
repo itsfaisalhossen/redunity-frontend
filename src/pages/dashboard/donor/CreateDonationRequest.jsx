@@ -87,7 +87,7 @@ const CreateDonationRequest = () => {
   return (
     <div className="my-14 md:my-24">
       <Helmet>
-        <title>RedUnity | Donation Request</title>
+        <title>RedUnity | Create Donation</title>
       </Helmet>
       <div className="max-w-5xl mx-auto my-12 md:my-22 p-8 md:p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
         <SectionTitle title={"Create Blood Request"} />

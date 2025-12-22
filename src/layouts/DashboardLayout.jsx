@@ -149,7 +149,7 @@ const DashboardLayout = () => {
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 min-w-0 bg-gray-50">
+        <main className="flex-1 min-w-0 bg-gray50">
           {/* Mobile Toggle Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}

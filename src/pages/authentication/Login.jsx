@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import useAuth from "../../hooks/useAuth";
 import Container from "../../ui/Container";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const location = useLocation();
@@ -26,7 +27,13 @@ const Login = () => {
     try {
       const result = await signInWithEmailAndPasswordFunc(email, password);
       setUser(result.user);
-      toast.success("Login Successful");
+      Swal.fire({
+        title: "Login Successful!",
+        icon: "success",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       navigate(from);
     } catch (error) {
       toast.error("Email or Password is wrong");

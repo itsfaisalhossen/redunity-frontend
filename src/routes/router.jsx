@@ -13,7 +13,6 @@ import Funding from "../pages/funding/Funding";
 import DashboardHome from "../pages/dashboard/dashboardHome/DashboardHome";
 import MyDonationRequests from "../pages/dashboard/donor/MyDonationRequests";
 import CreateDonationRequest from "../pages/dashboard/donor/CreateDonationRequest";
-// import BloodRequestDetails from "../pages/bloodRequestDetails/BloodRequestDetails";
 import PrivateRoute from "./PrivateRoute ";
 import AllUsers from "../pages/dashboard/admin/AllUsers";
 import AllBloodDonationRequest from "../pages/dashboard/admin/AllBloodDonationRequest";
@@ -34,14 +33,6 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "search-donation", element: <SearchDonation /> },
       { path: "donation-requests", element: <BloodDonationReq /> },
-      // {
-      //   path: "blood-equest-details",
-      //   element: (
-      //     <PrivateRoute>
-      //       <BloodRequestDetails />
-      //     </PrivateRoute>
-      //   ),
-      // },
       {
         path: "donation-details",
         element: (

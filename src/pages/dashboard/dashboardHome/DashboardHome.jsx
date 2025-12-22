@@ -12,7 +12,7 @@ const DashboardHome = () => {
 
   if (role === "Admin") {
     return <AdminDashboard />;
-  } else if (role === "Volunteer ") {
+  } else if (role === "Volunteer") {
     return <VolunteerDashboard />;
   } else {
     return <DonorDashboard />;

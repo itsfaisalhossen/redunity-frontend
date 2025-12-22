@@ -68,7 +68,6 @@ const ProfilePage = () => {
       if (res.data.success) {
         console.log("Profile data saved to database successfully");
         setIsEditable(false);
-        toast.success("Profile updated successfully! 🎉");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -83,7 +82,7 @@ const ProfilePage = () => {
         photoURL: avatar,
       });
 
-      toast.success("User Update successfully 🎉");
+      toast.success("Profile Updated Successfully! 🎉");
       setLoading(false);
     });
   };

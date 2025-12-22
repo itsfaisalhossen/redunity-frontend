@@ -21,6 +21,7 @@ import AllBloodDonationRequest from "../pages/dashboard/admin/AllBloodDonationRe
 import AdminRoute from "./AdminRoute";
 import DonorRoute from "./DonorRoute";
 import RoleRoute from "./RoleRoute ";
+import UpdateDonationRequest from "../pages/dashboard/donor/UpdateDonationRequest";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,14 @@ export const router = createBrowserRouter([
         element: (
           <DonorRoute>
             <CreateDonationRequest />
+          </DonorRoute>
+        ),
+      },
+      {
+        path: "update-donation-request",
+        element: (
+          <DonorRoute>
+            <UpdateDonationRequest />
           </DonorRoute>
         ),
       },

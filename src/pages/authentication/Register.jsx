@@ -77,10 +77,8 @@ const Register = () => {
     createUserWithEmailAndPasswordFunc(email, password)
       .then((res) => {
         const user = res.user;
-
         const formData = new FormData();
         formData.append("image", avatarFile);
-
         const image_API_URL = `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_image_host_key
         }`;
@@ -104,7 +102,6 @@ const Register = () => {
               status: "Active",
             };
             console.log("New User:", newUser);
-
             axiosSecure
               .post("/users", newUser)
               .then((res) => {

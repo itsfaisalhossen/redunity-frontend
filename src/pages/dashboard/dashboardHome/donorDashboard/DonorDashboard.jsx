@@ -1,36 +1,55 @@
 import { Helmet } from "react-helmet";
 import SectionTitle from "../../../../ui/SectionTitle ";
-import React, { useState } from "react";
 import { Edit, Trash2, Eye, ExternalLink } from "lucide-react";
 import { Link } from "react-router";
+import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import { useState } from "react";
 
 const DonorDashboard = () => {
-  // Sample data based on your provided JSON
-  const [requests, setRequests] = useState([
-    {
-      _id: "694828fab52cb803208ed17c",
-      recipientName: "Sarah Peters",
-      districtName: "Chattogram",
-      upazilaName: "Banshkhali",
-      date: "1971-11-01",
-      time: "15:41",
-      bloodGroup: "O-",
-      status: "inprogress", // options: pending, inprogress, done, canceled
-      donorName: "MR. f",
-      donorEmail: "faisalhossen396@gmail.com",
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { data: lastRequest = [] } = useQuery({
+    queryKey: ["last-requests", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/lastRequest-bloods?email=${user.email}`
+      );
+      return res.data;
     },
-  ]);
+  });
 
-  const userName = "MR. f"; // This would come from your Auth context
-
-  // Function to handle status updates
-  const updateStatus = (id, newStatus) => {
-    setRequests(
-      requests.map((req) =>
-        req._id === id ? { ...req, status: newStatus } : req
-      )
-    );
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axiosSecure.delete(
+          `/lastRequest-bloods/${id}?email=${user.email}`
+        );
+        queryClient.invalidateQueries(["last-requests", user.email]);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your request has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
+
   return (
     <div className="my-14 md:my-24 bg-gray-50 min-h-screen font-sans">
       <Helmet>
@@ -38,20 +57,14 @@ const DonorDashboard = () => {
       </Helmet>
       {/* Welcome Section */}
       <header className="mb-8">
-        {/* <h1 className="text-3xl font-bold text-gray-800">
-          Welcome back, {userName}!
-        </h1>
-        <p className="text-gray-600">
-          Here is a summary of your recent activity.
-        </p> */}
         <SectionTitle
-          title={` Welcome back, ${userName}!`}
+          title={` Welcome back, ${user?.displayName}!`}
           subTitle={" Here is a summary of your recent activity."}
         />
       </header>
 
       {/* Recent Donation Requests Table */}
-      {requests.length > 0 && (
+      {lastRequest.length > 0 && (
         <section className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="p-5 border-b border-gray-100 flex justify-between items-center">
             <h2 className="text-xl font-semibold text-gray-700">
@@ -73,13 +86,13 @@ const DonorDashboard = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-sm">
-                {requests.slice(0, 3).map((request) => (
+                {lastRequest.map((request) => (
                   <tr
                     key={request._id}
                     className="hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4 font-medium text-gray-900">
-                      {request.recipientName}
+                      {request.name}
                     </td>
                     <td className="px-6 py-4 text-gray-600">
                       {request.upazilaName}, {request.districtName}
@@ -97,7 +110,7 @@ const DonorDashboard = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`capitalize px-2 py-1 rounded text-xs font-semibold 
+                        className={`capitalize px-2 py-1 rounded text-xs font-semibold
                         ${
                           request.status === "inprogress"
                             ? "bg-blue-100 text-blue-700"
@@ -114,8 +127,8 @@ const DonorDashboard = () => {
                     <td className="px-6 py-4">
                       {request.status === "inprogress" ? (
                         <div className="text-xs">
-                          <p className="font-semibold">{request.donorName}</p>
-                          <p className="text-gray-400">{request.donorEmail}</p>
+                          <p className="font-semibold">{request.name}</p>
+                          <p className="text-gray-400">{request.email}</p>
                         </div>
                       ) : (
                         "—"
@@ -123,39 +136,33 @@ const DonorDashboard = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex justify-center gap-3">
-                        {/* Done/Cancel buttons shown only if inprogress */}
                         {request.status === "inprogress" && (
                           <>
-                            <button
-                              onClick={() => updateStatus(request._id, "done")}
-                              className="text-green-600 hover:underline font-medium"
-                            >
+                            <button className="text-green-600 hover:underline font-medium">
                               Done
                             </button>
-                            <button
-                              onClick={() =>
-                                updateStatus(request._id, "canceled")
-                              }
-                              className="text-red-600 hover:underline font-medium"
-                            >
+                            <button className="text-red-600 hover:underline font-medium">
                               Cancel
                             </button>
                           </>
                         )}
-
                         <button
                           title="View"
+                          // onClick={() => handleView(request._id)}
                           className="text-gray-400 hover:text-blue-600"
                         >
                           <Eye size={18} />
                         </button>
-                        <button
+                        <Link
+                          to={`/dashboard/update-donation-request`}
+                          state={{ requestId: request._id }}
                           title="Edit"
                           className="text-gray-400 hover:text-yellow-600"
                         >
                           <Edit size={18} />
-                        </button>
+                        </Link>
                         <button
+                          onClick={() => handleDelete(request._id)}
                           title="Delete"
                           className="text-gray-400 hover:text-red-600"
                         >
@@ -178,6 +185,84 @@ const DonorDashboard = () => {
             </Link>
           </div>
         </section>
+      )}
+
+      {/* --- Animated & Blurry Modal --- */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+          {/* Backdrop with Blur */}
+          <div
+            className="absolute inset-0 bg-white/40 backdrop-blur-md"
+            onClick={() => setIsOpen(false)}
+          ></div>
+
+          {/* Modal Content */}
+          <div className="relative bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl border border-gray-100 transform transition-all scale-100 animate-in fade-in zoom-in duration-200">
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-gray-900">
+                Edit Donation Request
+              </h3>
+              <p className="text-sm text-gray-500">
+                Update recipient details below
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                  Recipient Name
+                </label>
+                <input
+                  type="text"
+                  // value={formData.recipientName || ""}
+                  // onChange={(e) =>
+                  //   setFormData({ ...formData, recipientName: e.target.value })
+                  // }
+                  className="w-full mt-1 px-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  placeholder="Enter name"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                    District
+                  </label>
+                  <input
+                    type="text"
+                    // value={formData.districtName || ""}
+                    // onChange={(e) =>
+                    //   setFormData({ ...formData, districtName: e.target.value })
+                    // }
+                    className="w-full mt-1 px-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                    Upazila
+                  </label>
+                  <input
+                    type="text"
+                    // value={formData.upazilaName || ""}
+                    // onChange={(e) =>
+                    //   setFormData({ ...formData, upazilaName: e.target.value })
+                    // }
+                    className="w-full mt-1 px-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex gap-3">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="flex-1 px-6 py-3 text-sm font-bold text-gray-500 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all"
+              >
+                close
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

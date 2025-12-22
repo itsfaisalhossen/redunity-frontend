@@ -7,14 +7,13 @@ import AuthLayout from "../layouts/AuthLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Error from "../pages/error/Error";
 import SearchDonation from "../pages/SearchDonation/SearchDonation";
-import BloodDonationReq from "../pages/bloodDonationReq/bloodDonationReq";
 import Loading from "../ui/Loading";
 import ProfilePage from "../pages/dashboard/AllUserProfile/ProfilePage";
 import Funding from "../pages/funding/Funding";
 import DashboardHome from "../pages/dashboard/dashboardHome/DashboardHome";
 import MyDonationRequests from "../pages/dashboard/donor/MyDonationRequests";
 import CreateDonationRequest from "../pages/dashboard/donor/CreateDonationRequest";
-import BloodRequestDetails from "../pages/bloodRequestDetails/BloodRequestDetails";
+// import BloodRequestDetails from "../pages/bloodRequestDetails/BloodRequestDetails";
 import PrivateRoute from "./PrivateRoute ";
 import AllUsers from "../pages/dashboard/admin/AllUsers";
 import AllBloodDonationRequest from "../pages/dashboard/admin/AllBloodDonationRequest";
@@ -24,6 +23,7 @@ import RoleRoute from "./RoleRoute ";
 import UpdateDonationRequest from "../pages/dashboard/donor/UpdateDonationRequest";
 import ViewDetails from "../pages/dashboard/donor/ViewDetails";
 import BloodDetails from "../pages/bloodDetails/BloodDetails";
+import BloodDonationReq from "../pages/bloodDonationReq/BloodDonationReq";
 
 export const router = createBrowserRouter([
   {
@@ -34,16 +34,16 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "search-donation", element: <SearchDonation /> },
       { path: "donation-requests", element: <BloodDonationReq /> },
+      // {
+      //   path: "blood-equest-details",
+      //   element: (
+      //     <PrivateRoute>
+      //       <BloodRequestDetails />
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
-        path: "blood-equest-details",
-        element: (
-          <PrivateRoute>
-            <BloodRequestDetails />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "blood-details",
+        path: "donation-details",
         element: (
           <PrivateRoute>
             <BloodDetails />

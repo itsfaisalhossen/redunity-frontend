@@ -14,29 +14,58 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You will be logged out from your account",
-      width: "320px", // 🔹 smaller width
-      padding: "1.25rem",
+      title: "<span style='color:#ef4444'>Confirm Logout</span>",
+      html: "<p style='color:#e5e7eb'>Are you sure you want to logout?</p>",
+      icon: "warning",
+      background: "#0f172a",
+      color: "#e5e7eb",
+      width: 350,
       showCancelButton: true,
-      confirmButtonText: "Logout",
-      confirmButtonColor: "#2563eb", // Tailwind blue-600
-      cancelButtonColor: "#dc2626", // Tailwind red-600
+      confirmButtonText: "Yes, Logout",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#020617",
+      buttonsStyling: true,
+      reverseButtons: true,
+      showClass: {
+        popup: "animate__animated animate__fadeInDown animate__slower",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp animate__slower",
+      },
       customClass: {
-        title: "text-base",
-        popup: "rounded-xl",
-        confirmButton: "px-4 py-1.5 text-sm",
-        cancelButton: "px-4 py-1.5 text-sm",
+        popup: "rounded-2xl shadow-2xl border border-red-500/30",
+        title: "font-bold text-xl",
+        confirmButton:
+          "px-6 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition duration-300",
+        cancelButton:
+          "px-6 py-3 rounded-xl font-semibold border border-red-500/30 text-red-400 hover:bg-red-500/10 transition duration-300",
       },
     });
-
     if (result.isConfirmed) {
       try {
         await signOutUserFunc();
         Swal.fire({
-          title: "Logged Out!",
-          text: "You have been logged out successfully.",
           icon: "success",
+          title: "<span style='color:#ef4444'>Logged Out</span>",
+          html: "<p style='color:#e5e7eb'>You have been logged out successfully.</p>",
+          background: "#020617",
+          width: 350,
+          color: "#f8fafc",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#dc2626",
+          showClass: {
+            popup: "animate__animated animate__zoomIn animate__slower",
+          },
+          hideClass: {
+            popup: "animate__animated animate__zoomOut animate__slower",
+          },
+          customClass: {
+            popup: "rounded-2xl shadow-2xl border border-red-500/30",
+            title: "text-2xl font-bold",
+            confirmButton:
+              "px-8 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition duration-300",
+          },
         });
       } catch (error) {
         toast.error("Failed to logout");

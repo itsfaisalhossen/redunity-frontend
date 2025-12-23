@@ -180,8 +180,7 @@ const DonorDashboard = () => {
                             </div>
                           )}
                           <Link
-                            to={`/dashboard/view-details-donation`}
-                            state={{ requestId: request._id }}
+                            to={`/dashboard/view-details-donation/${request?._id}`}
                             className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
                             title="View"
                           >

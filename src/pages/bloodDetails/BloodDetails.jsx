@@ -1,9 +1,11 @@
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import SectionTitle from "../../ui/SectionTitle ";
+import Container from "../../ui/Container";
 import {
   Calendar,
   Clock,
@@ -14,16 +16,12 @@ import {
   Droplets,
   FileText,
   ChevronLeft,
-  Link,
   X,
 } from "lucide-react";
-import SectionTitle from "../../ui/SectionTitle ";
-import Container from "../../ui/Container";
 
 const BloodDetails = () => {
   const { user } = useAuth();
-  const location = useLocation();
-  const id = location.state?.requestId;
+  const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [isModalOpen, setIsModalOpen] = useState(false);

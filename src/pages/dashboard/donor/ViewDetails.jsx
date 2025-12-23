@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -20,8 +20,7 @@ import {
 
 const ViewDetails = () => {
   const { user } = useAuth();
-  const location = useLocation();
-  const id = location.state?.requestId;
+  const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [isModalOpen, setIsModalOpen] = useState(false);

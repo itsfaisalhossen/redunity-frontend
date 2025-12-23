@@ -3,16 +3,15 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet";
 import SectionTitle from "../../../ui/SectionTitle ";
-import { Link, useLocation, useNavigate } from "react-router";
-import { MdOutlineArrowBack } from "react-icons/md";
+import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ChevronLeft } from "lucide-react";
+// import { MdOutlineArrowBack } from "react-icons/md";
 
 const UpdateDonationRequest = () => {
   const { user } = useAuth();
-  const location = useLocation();
-  const id = location.state?.requestId;
+  const { id } = useParams();
   const Navigate = useNavigate();
 
   const axiosSecure = useAxiosSecure();

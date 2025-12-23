@@ -94,8 +94,7 @@ const BloodDonationReq = () => {
 
                     {/* View Button */}
                     <Link
-                      to={`/donation-details`}
-                      state={{ requestId: request._id }}
+                      to={`/donation-details/${request?._id}`}
                       className="flex items-center justify-center gap-2 w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-rose-600 shadow-lg shadow-slate-200 hover:shadow-rose-300 transition-all active:scale-95"
                     >
                       View Details <ArrowRight size={18} />

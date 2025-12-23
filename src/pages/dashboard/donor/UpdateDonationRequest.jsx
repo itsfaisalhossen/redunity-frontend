@@ -7,20 +7,20 @@ import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ChevronLeft } from "lucide-react";
-// import { MdOutlineArrowBack } from "react-icons/md";
 
 const UpdateDonationRequest = () => {
   const { user } = useAuth();
-  const { id } = useParams();
   const Navigate = useNavigate();
-
   const axiosSecure = useAxiosSecure();
-  const { data: blood = [] } = useQuery({
-    queryKey: ["blod"],
-    enabled: !!user?.email,
+  const { id } = useParams();
+  console.log(id);
+
+  const { data: blood = {} } = useQuery({
+    queryKey: ["blood", id],
+    enabled: !!user?.email && !!id,
     queryFn: async () => {
       const res = await axiosSecure.get(`/bloods/${id}`);
-      return res?.data;
+      return res.data;
     },
   });
 
@@ -63,11 +63,9 @@ const UpdateDonationRequest = () => {
     const date = form.date.value;
     const time = form.time.value;
     const detalsText = form.detalsText.value;
-
     const selectedDistrict = districtData.find((d) => d.id === district);
     const districtName = selectedDistrict ? selectedDistrict.name : "";
     const upazilaName = form.upazila.value;
-
     const updatedBloodData = {
       name,
       recipientName,
@@ -96,7 +94,6 @@ const UpdateDonationRequest = () => {
     }
     console.log("Updated Data sent to server:", updatedBloodData);
   };
-
   return (
     <div className="my-14 md:my-24">
       <Helmet>

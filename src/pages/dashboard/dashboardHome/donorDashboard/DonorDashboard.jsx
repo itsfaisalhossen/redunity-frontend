@@ -187,8 +187,8 @@ const DonorDashboard = () => {
                             <Eye size={18} />
                           </Link>
                           <Link
-                            to={`/dashboard/update-donation-request`}
-                            state={{ requestId: request._id }}
+                            to={`/dashboard/update-donation-request/${request?._id}`}
+                            // state={{ requestId: request._id }}
                             className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                             title="Edit"
                           >

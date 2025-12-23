@@ -178,7 +178,7 @@ const MyDonationRequests = () => {
                           <Eye size={18} />
                         </Link>
                         <Link
-                          to={`/dashboard/update-donation-request/:${item?._id}`}
+                          to={`/dashboard/update-donation-request/${item?._id}`}
                           className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                           title="Edit"
                         >

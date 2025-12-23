@@ -7,7 +7,6 @@ import Loading from "../../ui/Loading";
 
 const BloodDonationReq = () => {
   const axiosSecure = useAxiosSecure();
-  // const { user } = useAuth();
 
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ["pending-requests"],

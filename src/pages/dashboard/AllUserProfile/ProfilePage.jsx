@@ -88,7 +88,7 @@ const ProfilePage = () => {
     });
   };
   return (
-    <div className="max-w-5xl mx-auto my-12 md:my-22 p-8 md:p-8 bg-white shadow-md rounded-2xl">
+    <div className="max-w-5xl mx-auto my-12 md:my-22 p-5 md:p-8 shadow-md rounded-2xl">
       <Helmet>
         <title>RedUnity | My Profile</title>
       </Helmet>

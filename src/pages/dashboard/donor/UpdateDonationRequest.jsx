@@ -7,13 +7,14 @@ import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ChevronLeft } from "lucide-react";
+import useRole from "../../../hooks/useRole";
 
 const UpdateDonationRequest = () => {
   const { user } = useAuth();
   const Navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const { role } = useRole();
   const { id } = useParams();
-  console.log(id);
 
   const { data: blood = {} } = useQuery({
     queryKey: ["blood", id],
@@ -101,13 +102,27 @@ const UpdateDonationRequest = () => {
       </Helmet>
       <div className="max-w-5xl mx-auto my-12 md:my-22 p-8 md:p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
         <SectionTitle title={"Update Donation Request"} />
-        <button
-          onClick={() => Navigate("/dashboard/my-donation-requests")}
-          className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"
-        >
-          <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
-          <span className="font-semibold">Back to List</span>
-        </button>
+        {role === "Admin" ? (
+          <>
+            <button
+              onClick={() => Navigate("/dashboard/all-blood-donation-request")}
+              className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-semibold">Back to List</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => Navigate("/dashboard/my-donation-requests")}
+              className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-semibold">Back to List</span>
+            </button>
+          </>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Read-Only Section */}

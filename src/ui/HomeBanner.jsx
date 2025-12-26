@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router";
 import { Heart, Search } from "lucide-react";
+import useAuth from "../hooks/useAuth";
 
 const HomeBanner = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <section className="relative w-full py-12 flex items-center justify-center overflow-hidden bg-white">
@@ -34,13 +36,27 @@ const HomeBanner = () => {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           {/* Join as Donor Button */}
-          <button
-            onClick={() => navigate("/auth/register")}
-            className="group relative px-8 py-4 bg-red-600 text-white font-bold rounded-2xl transition-all duration-300 hover:bg-red-700 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.3)] active:scale-95 flex items-center gap-2"
-          >
-            Join as a Donor
-            <Heart size={18} className="group-hover:animate-bounce" />
-          </button>
+          {user ? (
+            <>
+              <button
+                onClick={() => navigate("/donation-requests")}
+                className="group relative px-8 py-4 bg-red-600 text-white font-bold rounded-2xl transition-all duration-300 hover:bg-red-700 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.3)] active:scale-95 flex items-center gap-2"
+              >
+                Donation Requests
+                <Heart size={18} className="group-hover:animate-bounce" />
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => navigate("/auth/register")}
+                className="group relative px-8 py-4 bg-red-600 text-white font-bold rounded-2xl transition-all duration-300 hover:bg-red-700 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.3)] active:scale-95 flex items-center gap-2"
+              >
+                Join as a Donor
+                <Heart size={18} className="group-hover:animate-bounce" />
+              </button>
+            </>
+          )}
 
           {/* Search Donor Button */}
           <button

@@ -4,7 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import SectionTitle from "../../../ui/SectionTitle ";
 import { Link } from "react-router";
-import { Edit, Eye, Trash2 } from "lucide-react";
+import { Edit, Eye, Trash2, User } from "lucide-react";
 import Swal from "sweetalert2";
 
 const MyDonationRequests = () => {
@@ -15,8 +15,7 @@ const MyDonationRequests = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // eslint-disable-next-line no-unused-vars
-  const { data: response = {}, isLoading } = useQuery({
+  const { data: response = {}, refetch } = useQuery({
     queryKey: ["my-requests", user?.email, currentPage, filter],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -68,6 +67,29 @@ const MyDonationRequests = () => {
     });
   };
 
+  const handleDonateDoneAndCencel = async (id, status) => {
+    const donationData = {
+      donorName: user?.displayName,
+      donorEmail: user?.email,
+      status: status,
+    };
+
+    try {
+      const res = await axiosSecure.patch(`/bloods/${id}`, donationData);
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          title: "Success!",
+          text: `Donation status updated to ${status}`,
+          icon: "success",
+          confirmButtonColor: "#e11d48",
+        });
+        refetch();
+      }
+    } catch (error) {
+      console.error("Donation error", error);
+    }
+  };
+
   return (
     <section className="container px-4 mx-auto py-10 min-h-screen">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
@@ -88,7 +110,7 @@ const MyDonationRequests = () => {
             <option value="pending">Pending</option>
             <option value="inprogress">In Progress</option>
             <option value="done">Done</option>
-            <option value="canceled">Canceled</option>
+            <option value="cancel">Canceled</option>
           </select>
         </div>
       </div>
@@ -110,6 +132,9 @@ const MyDonationRequests = () => {
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-bold text-rose-600 uppercase tracking-widest">
                   Status
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-bold text-rose-600 uppercase tracking-widest">
+                  Donor Info
                 </th>
                 <th className="px-6 py-4 text-center text-xs font-bold text-rose-600 uppercase tracking-widest">
                   Actions
@@ -141,7 +166,7 @@ const MyDonationRequests = () => {
                     </div>
                     <div className="text-xs text-rose-400">{item.time}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 uppercase whitespace-nowrap">
                     <span
                       className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 shadow-sm inline-block
                   ${
@@ -157,15 +182,46 @@ const MyDonationRequests = () => {
                       {item.status}
                     </span>
                   </td>
+                  <td className="px-8 py-6">
+                    {item.status === "inprogress" || item.status === "done" ? (
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 border border-rose-200">
+                          <User size={16} />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-slate-800 leading-none">
+                            {item.donorName || "Assigned"}
+                          </p>
+                          <p className="text-[10px] text-slate-400 font-medium mt-1  ">
+                            {item.donorEmail}
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-slate-200 font-black tracking-widest text-xs">
+                        ————
+                      </span>
+                    )}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                     <div className="flex justify-center items-center gap-4">
                       <div className="flex justify-center items-center gap-3">
                         {item.status === "inprogress" && (
                           <div className="flex gap-2 mr-3 pr-3 border-r border-rose-100">
-                            <button className="px-3 py-1.5 bg-emerald-500 text-white text-[10px] font-black rounded-lg hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100">
+                            <button
+                              onClick={() =>
+                                handleDonateDoneAndCencel(item?._id, "done")
+                              }
+                              className="px-3 py-1.5 bg-emerald-500 text-white text-[10px] font-black rounded-lg hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100"
+                            >
                               DONE
                             </button>
-                            <button className="px-3 py-1.5 bg-rose-500 text-white text-[10px] font-black rounded-lg hover:bg-rose-600 transition-all shadow-lg shadow-rose-100">
+                            <button
+                              onClick={() => {
+                                handleDonateDoneAndCencel(item?._id, "cancel");
+                              }}
+                              className="px-3 py-1.5 bg-rose-500 text-white text-[10px] font-black rounded-lg hover:bg-rose-600 transition-all shadow-lg shadow-rose-100"
+                            >
                               CANCEL
                             </button>
                           </div>

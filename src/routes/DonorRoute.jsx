@@ -12,7 +12,7 @@ const DonorRoute = ({ children }) => {
     return <Loading></Loading>;
   }
 
-  if (role !== "Donor") {
+  if (role !== "Donor" && role !== "Admin") {
     return <Forbidden />;
   }
 

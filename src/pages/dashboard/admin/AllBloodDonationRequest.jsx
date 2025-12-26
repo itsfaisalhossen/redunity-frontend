@@ -1,8 +1,3 @@
-// const AllBloodDonationRequest = () => {
-//   return <div>AllBloodDonationRequest</div>;
-// };
-// export default AllBloodDonationRequest;
-
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
@@ -21,7 +16,7 @@ const MyDonationRequests = () => {
   const itemsPerPage = 5;
 
   // eslint-disable-next-line no-unused-vars
-  const { data: response = {}, isLoading } = useQuery({
+  const { data: response = {}, refetch } = useQuery({
     queryKey: ["all-requests", user?.email, currentPage, filter],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -54,9 +49,8 @@ const MyDonationRequests = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axiosSecure.delete(
-            `/lastRequest-bloods/${id}?email=${user.email}`
-          );
+          // ?email=${user.email}
+          await axiosSecure.delete(`/lastRequest-bloods/${id}`);
           queryClient.invalidateQueries(["last-requests", user.email]);
           Swal.fire({
             title: "Deleted!",
@@ -73,10 +67,33 @@ const MyDonationRequests = () => {
     });
   };
 
+  const handleDonateDoneAndCencel = async (id, status) => {
+    const donationData = {
+      donorName: user?.displayName,
+      donorEmail: user?.email,
+      status: status,
+    };
+
+    try {
+      const res = await axiosSecure.patch(`/bloods/${id}`, donationData);
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          title: "Success!",
+          text: `Donation status updated to ${status}`,
+          icon: "success",
+          confirmButtonColor: "#e11d48",
+        });
+        refetch();
+      }
+    } catch (error) {
+      console.error("Donation error", error);
+    }
+  };
+
   return (
     <section className="container px-4 mx-auto py-10 min-h-screen">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <SectionTitle title={"My Donation Requests"} />
+        <SectionTitle title={"All Boold Donation Requests"} />
         {/* Modern Filter Dropdown */}
         <div className="flex items-center gap-4">
           <span className="font-semibold text-gray-800 uppercase tracking-wider">
@@ -167,10 +184,20 @@ const MyDonationRequests = () => {
                       <div className="flex justify-center items-center gap-3">
                         {item.status === "inprogress" && (
                           <div className="flex gap-2 mr-3 pr-3 border-r border-rose-100">
-                            <button className="px-3 py-1.5 bg-emerald-500 text-white text-[10px] font-black rounded-lg hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100">
+                            <button
+                              onClick={() => {
+                                handleDonateDoneAndCencel(item?._id, "done");
+                              }}
+                              className="px-3 py-1.5 bg-emerald-500 text-white text-[10px] font-black rounded-lg hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100"
+                            >
                               DONE
                             </button>
-                            <button className="px-3 py-1.5 bg-rose-500 text-white text-[10px] font-black rounded-lg hover:bg-rose-600 transition-all shadow-lg shadow-rose-100">
+                            <button
+                              onClick={() => {
+                                handleDonateDoneAndCencel(item?._id, "cencel");
+                              }}
+                              className="px-3 py-1.5 bg-rose-500 text-white text-[10px] font-black rounded-lg hover:bg-rose-600 transition-all shadow-lg shadow-rose-100"
+                            >
                               CANCEL
                             </button>
                           </div>

@@ -20,7 +20,6 @@ const DonorDashboard = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  // const [isOpen, setIsOpen] = useState(false);
 
   // eslint-disable-next-line no-unused-vars
   const { data: lastRequest = [], isLoading } = useQuery({
@@ -138,16 +137,19 @@ const DonorDashboard = () => {
                               ? "bg-blue-50 text-blue-600 border-blue-100"
                               : request.status === "done"
                               ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                              : request.status === "canceled"
-                              ? "bg-slate-50 text-slate-500 border-slate-100"
-                              : "bg-amber-50 text-amber-600 border-amber-100"
+                              : request.status === "cancel"
+                              ? "bg-red-50 text-red-500 border-red-100"
+                              : request.status === "pending"
+                              ? "bg-amber-50 text-amber-600 border-amber-100"
+                              : ""
                           }`}
                         >
                           {request.status}
                         </span>
                       </td>
                       <td className="px-8 py-6">
-                        {request.status === "inprogress" ? (
+                        {request.status === "inprogress" ||
+                        request.status === "done" ? (
                           <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 border border-rose-200">
                               <User size={16} />
@@ -156,7 +158,7 @@ const DonorDashboard = () => {
                               <p className="text-xs font-bold text-slate-800 leading-none">
                                 {request.donorName || "Assigned"}
                               </p>
-                              <p className="text-[10px] text-slate-400 font-medium mt-1 uppercase">
+                              <p className="text-[10px] text-slate-400 font-medium mt-1  ">
                                 {request.donorEmail}
                               </p>
                             </div>
@@ -169,16 +171,6 @@ const DonorDashboard = () => {
                       </td>
                       <td className="px-8 py-6">
                         <div className="flex justify-center items-center gap-3">
-                          {request.status === "inprogress" && (
-                            <div className="flex gap-2 mr-3 pr-3 border-r border-rose-100">
-                              <button className="px-3 py-1.5 bg-emerald-500 text-white text-[10px] font-black rounded-lg hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100">
-                                DONE
-                              </button>
-                              <button className="px-3 py-1.5 bg-rose-500 text-white text-[10px] font-black rounded-lg hover:bg-rose-600 transition-all shadow-lg shadow-rose-100">
-                                CANCEL
-                              </button>
-                            </div>
-                          )}
                           <Link
                             to={`/dashboard/view-details-donation/${request?._id}`}
                             className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"

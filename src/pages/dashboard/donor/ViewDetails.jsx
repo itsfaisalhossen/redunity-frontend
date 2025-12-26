@@ -17,13 +17,15 @@ import {
   ChevronLeft,
   X,
 } from "lucide-react";
+import useRole from "../../../hooks/useRole";
 
 const ViewDetails = () => {
   const { user } = useAuth();
   const { id } = useParams();
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { role } = useRole();
 
   const { data: blood = {}, refetch } = useQuery({
     queryKey: ["blod", id],
@@ -63,13 +65,27 @@ const ViewDetails = () => {
     <div className="min-h-screen p-4 md:p-8 bg-slate50">
       <SectionTitle title={"Donation Details"} />
       <div className="max-w-5xl mx-auto">
-        <button
-          onClick={() => navigate("/dashboard/my-donation-requests")}
-          className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"
-        >
-          <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
-          <span className="font-semibold">Back to List</span>
-        </button>
+        {role === "Admin" ? (
+          <>
+            <button
+              onClick={() => Navigate("/dashboard/all-blood-donation-request")}
+              className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-semibold">Back to List</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => Navigate("/dashboard/my-donation-requests")}
+              className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-semibold">Back to List</span>
+            </button>
+          </>
+        )}
 
         <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
           <div className="bg-rose-600 p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">

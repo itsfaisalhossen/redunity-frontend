@@ -129,9 +129,9 @@ const DonorDashboard = () => {
                         </div>
                       </td>
 
-                      <td className="px-8 py-6">
+                      <td className="px-8 py-6 ">
                         <span
-                          className={`capitalize px-3 py-1.5 rounded-full text-[10px] font-black tracking-wider border-2 shadow-sm
+                          className={`uppercase px-3 py-1.5 rounded-full text-[10px] font-black tracking-wider border-2 shadow-sm
                           ${
                             request.status === "inprogress"
                               ? "bg-blue-50 text-blue-600 border-blue-100"

@@ -96,8 +96,10 @@ const BloodDetails = () => {
                 </p>
               </div>
             </div>
-            <div className="p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-start md:items-center">
+              {/* LEFT COLUMN */}
               <div className="md:col-span-1 space-y-6">
+                {/* Blood Group Card */}
                 <div className="bg-rose-50 rounded-2xl p-6 text-center border border-rose-100">
                   <Droplets className="w-10 h-10 text-rose-600 mx-auto mb-2" />
                   <p className="text-slate-500 text-sm font-medium">
@@ -108,10 +110,12 @@ const BloodDetails = () => {
                   </h2>
                 </div>
 
+                {/* Requester Information */}
                 <div className="space-y-4">
                   <h3 className="font-bold text-slate-800 border-b pb-2">
-                    Blood Information
+                    Requester Information
                   </h3>
+
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-slate-100 rounded-lg">
                       <User className="w-4 h-4 text-slate-600" />
@@ -125,6 +129,7 @@ const BloodDetails = () => {
                       </p>
                     </div>
                   </div>
+
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-slate-100 rounded-lg">
                       <Mail className="w-4 h-4 text-slate-600" />
@@ -139,41 +144,91 @@ const BloodDetails = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Donor Information */}
+                {blood.status === "inprogress" || blood.status === "done" ? (
+                  <>
+                    <div className="space-y-4">
+                      <h3 className="font-bold text-slate-800 border-b pb-2">
+                        Donor Information
+                      </h3>
+
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-slate-100 rounded-lg">
+                          <User className="w-4 h-4 text-slate-600" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-400 uppercase">
+                            Donor Name
+                          </p>
+                          <p className="font-semibold text-slate-700">
+                            {blood.donorName}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-slate-100 rounded-lg">
+                          <Mail className="w-4 h-4 text-slate-600" />
+                        </div>
+                        <div className="overflow-hidden">
+                          <p className="text-xs text-slate-400 uppercase">
+                            Email Address
+                          </p>
+                          <p className="font-semibold text-slate-700 truncate">
+                            {blood.donorEmail}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
 
-              <div className="md:col-span-2 space-y-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* RIGHT COLUMN */}
+              <div className="md:col-span-2 space-y-8 self-center">
+                {/* Schedule + Location Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+                  {/* Schedule */}
                   <section className="space-y-4">
                     <h3 className="font-bold text-slate-800 border-b pb-2">
                       Schedule
                     </h3>
+
                     <div className="flex items-center gap-3">
-                      <Calendar className="w-5 h-5 text-rose-500" />
-                      <span className="text-slate-700">
-                        {blood.date &&
-                          new Date(blood.date).toLocaleDateString("en-US", {
-                            dateStyle: "long",
-                          })}
-                      </span>
+                      <Calendar className="w-5 h-5 text-rose-500 mt-1" />
+                      <p className="text-sm font-medium text-rose-500">
+                        {new Date(blood.dateTime).toLocaleDateString("en-GB")}
+                      </p>
                     </div>
+
                     <div className="flex items-center gap-3">
                       <Clock className="w-5 h-5 text-rose-500" />
                       <span className="text-slate-700">
-                        {blood.time} (24h Format)
+                        {new Date(blood.dateTime).toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}
                       </span>
                     </div>
                   </section>
 
+                  {/* Location */}
                   <section className="space-y-4">
                     <h3 className="font-bold text-slate-800 border-b pb-2">
                       Location
                     </h3>
+
                     <div className="flex items-start gap-3">
                       <Hospital className="w-5 h-5 text-rose-500 shrink-0" />
                       <span className="text-slate-700 font-medium">
                         {blood.hospitalName}
                       </span>
                     </div>
+
                     <div className="flex items-start gap-3 text-sm">
                       <MapPin className="w-5 h-5 text-slate-400 shrink-0" />
                       <p className="text-slate-600">
@@ -185,6 +240,7 @@ const BloodDetails = () => {
                   </section>
                 </div>
 
+                {/* Additional Details */}
                 <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
                   <div className="flex items-center gap-2 mb-3">
                     <FileText className="w-5 h-5 text-slate-400" />
@@ -197,6 +253,7 @@ const BloodDetails = () => {
                   </p>
                 </div>
 
+                {/* Actions */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button
                     disabled={blood.status !== "pending"}
@@ -211,6 +268,7 @@ const BloodDetails = () => {
                       ? "Donate Now"
                       : "Request Filled"}
                   </button>
+
                   <button className="flex-1 bg-white border-2 border-slate-200 hover:border-slate-300 text-slate-600 font-bold py-3 rounded-xl transition-all">
                     Contact Support
                   </button>

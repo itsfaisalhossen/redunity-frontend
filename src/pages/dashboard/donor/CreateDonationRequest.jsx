@@ -50,6 +50,7 @@ const CreateDonationRequest = () => {
     const date = form.date.value;
     const time = form.time.value;
     const detalsText = form.detalsText.value;
+    const dateTime = new Date(`${date}T${time}`);
 
     //  find district name from id
     const selectedDistrict = districtData.find((d) => d.id === district);
@@ -63,8 +64,7 @@ const CreateDonationRequest = () => {
       hospitalName,
       fullAddress,
       bloodGroup,
-      date,
-      time,
+      dateTime,
       detalsText,
       districtName,
       upazilaName,

@@ -67,6 +67,7 @@ const UpdateDonationRequest = () => {
     const selectedDistrict = districtData.find((d) => d.id === district);
     const districtName = selectedDistrict ? selectedDistrict.name : "";
     const upazilaName = form.upazila.value;
+    const dateTime = new Date(`${date}T${time}`);
     const updatedBloodData = {
       name,
       recipientName,
@@ -74,8 +75,7 @@ const UpdateDonationRequest = () => {
       hospitalName,
       fullAddress,
       bloodGroup,
-      date,
-      time,
+      dateTime,
       detalsText,
       districtName,
       upazilaName,

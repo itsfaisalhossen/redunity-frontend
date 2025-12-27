@@ -76,18 +76,27 @@ const BloodDonationReq = () => {
                         <div className="p-2 bg-slate-50 rounded-lg group-hover:text-rose-500 transition-colors">
                           <Calendar size={18} />
                         </div>
-                        <span className="text-sm font-semibold">
-                          {request.date}
-                        </span>
+                        <p className="text-[13px] text-gray-600">
+                          {new Date(request.dateTime).toLocaleDateString(
+                            "en-GB"
+                          )}
+                        </p>
                       </div>
 
                       <div className="flex items-center gap-3">
                         <div className="p-2 bg-slate-50 rounded-lg group-hover:text-rose-500 transition-colors">
                           <Clock size={18} />
                         </div>
-                        <span className="text-sm font-semibold uppercase">
-                          {request.time}
-                        </span>
+                        <p className="text-sm font-medium">
+                          {new Date(request.dateTime).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "numeric",
+                              minute: "2-digit",
+                              hour12: true,
+                            }
+                          )}
+                        </p>
                       </div>
                     </div>
 

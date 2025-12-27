@@ -160,15 +160,22 @@ const MyDonationRequests = () => {
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-600 font-medium">
-                      {item.date}
-                    </div>
-                    <div className="text-xs text-rose-400">{item.time}</div>
+                  <td className="px-6 text-sm font-medium py-4 whitespace-nowrap">
+                    <span className="text-rose-400">
+                      {new Date(item.dateTime).toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
+                    </span>
+                    <br />
+                    <span className="text-gray-600 text-[13px]">
+                      {new Date(item.dateTime).toLocaleDateString("en-GB")}
+                    </span>
                   </td>
                   <td className="px-6 py-4 uppercase whitespace-nowrap">
                     <span
-                      className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 shadow-sm inline-block
+                      className={`px-4 py-1.5 rounded-full text-[10px] font-bold border-2 shadow-sm inline-block
                   ${
                     item.status === "pending"
                       ? "bg-amber-50 text-amber-600 border-amber-100"

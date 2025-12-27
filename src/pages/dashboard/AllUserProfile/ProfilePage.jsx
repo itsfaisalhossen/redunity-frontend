@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaEdit, FaSave } from "react-icons/fa";
+import { FaEdit, FaSave, FaTimes, FaUserCircle } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
-import SectionTitle from "../../../ui/SectionTitle ";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
@@ -12,14 +11,7 @@ const ProfilePage = () => {
   const [upazilaData, setUpazilaData] = useState([]);
   const [district, setDistrict] = useState("");
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
-  const {
-    user,
-    setUser,
-    loading,
-    setLoading,
-    updateProfileFunc,
-    // createUserWithEmailAndPasswordFunc,
-  } = useAuth();
+  const { user, setUser, loading, setLoading, updateProfileFunc } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
@@ -46,7 +38,6 @@ const ProfilePage = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     const form = e.target;
-
     const name = form.name.value;
     const avatar = form.avatar.value;
     const bloodGroup = form.bloodGroup.value;
@@ -67,204 +58,228 @@ const ProfilePage = () => {
     try {
       const res = await axiosSecure.put(`/users/${user?.email}`, updateUser);
       if (res.data.success) {
-        console.log("Profile data saved to database successfully");
         setIsEditable(false);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again.");
+      toast.error("Failed to update profile.");
     }
 
-    // update user profile to firebase
     updateProfileFunc(name, avatar).then(() => {
-      setUser({
-        ...user,
-        displayName: name,
-        photoURL: avatar,
-      });
-
+      setUser({ ...user, displayName: name, photoURL: avatar });
       toast.success("Profile Updated Successfully! 🎉");
       setLoading(false);
     });
   };
+
   return (
-    <div className="max-w-5xl mx-auto my-12 md:my-22 p-5 md:p-8 shadow-md rounded-2xl">
-      <Helmet>
-        <title>RedUnity | My Profile</title>
-      </Helmet>
-      <div>
-        <SectionTitle subTitle={""} title={"Profile Management"} />
-      </div>
-
-      <div className="flex justify-between items-center border-b pb-4 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">My Profile</h2>
-        {!isEditable ? (
-          <button
-            type="button"
-            onClick={() => setIsEditable(true)}
-            className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-red-900 text-white rounded-lg hover:bg-red-700 transition"
-          >
-            <FaEdit /> Edit Profile
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setIsEditable(false)}
-            className="px-4 py-2 bg-gray-400 cursor-pointer text-white rounded-lg hover:bg-gray-500 transition"
-          >
-            Cancel
-          </button>
-        )}
-      </div>
-
-      <form onSubmit={handleUpdate}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {/* Name */}
-          <div>
-            <label className="block font-medium text-gray-800">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              defaultValue={user?.displayName}
-              readOnly={!isEditable}
-              required
-              className={`block w-full px-4 py-3 mt-2 border rounded-xl transition-all ${
-                !isEditable
-                  ? "bg-gray-100 cursor-not-allowed text-gray-500"
-                  : "bg-white border-red-200"
-              }`}
-            />
-          </div>
-
-          {/* Email - Always Locked */}
-          <div>
-            <label className="block font-medium text-gray-800">
-              Email (Fixed)
-            </label>
-            <input
-              type="email"
-              name="email"
-              defaultValue={user?.email}
-              disabled
-              className="block w-full px-4 py-3 mt-2 border rounded-xl bg-gray-200 cursor-not-allowed text-gray-400"
-            />
-          </div>
-
-          {/* Avatar URL */}
-          <div>
-            <label className="block font-medium text-gray-800">
-              Avatar URL
-            </label>
-            <input
-              type="text"
-              name="avatar"
-              defaultValue={user?.photoURL}
-              readOnly={!isEditable}
-              className={`block w-full px-4 py-3 mt-2 border rounded-xl transition-all ${
-                !isEditable
-                  ? "bg-gray-100 cursor-not-allowed text-gray-500"
-                  : "bg-white border-red-200"
-              }`}
-            />
-          </div>
-
-          {/* Blood Group */}
-          <div>
-            <label className="block font-medium text-gray-800">
-              Blood Group
-            </label>
-            <select
-              name="bloodGroup"
-              disabled={!isEditable}
-              required
-              className={`block w-full px-4 py-3 mt-2 border rounded-xl transition-all ${
-                !isEditable
-                  ? "bg-gray-100 cursor-not-allowed text-gray-500"
-                  : "bg-white border-red-200"
-              }`}
-            >
-              <option value="">Select</option>
-              <option>A+</option>
-              <option>A-</option>
-              <option>B+</option>
-              <option>B-</option>
-              <option>AB+</option>
-              <option>AB-</option>
-              <option>O+</option>
-              <option>O-</option>
-            </select>
-          </div>
-
-          {/* District */}
-          <div>
-            <label className="block font-medium text-gray-800">District</label>
-            <select
-              value={district}
-              onChange={(e) => setDistrict(e.target.value)}
-              disabled={!isEditable}
-              required
-              className={`block w-full px-4 py-3 mt-2 border rounded-xl transition-all ${
-                !isEditable
-                  ? "bg-gray-100 cursor-not-allowed text-gray-500"
-                  : "bg-white border-red-200"
-              }`}
-            >
-              <option value="">Select district</option>
-              {districtData.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Upazila */}
-          <div>
-            <label className="block font-medium text-gray-800">Upazila</label>
-            <select
-              name="upazila"
-              disabled={!isEditable || !district}
-              required
-              className={`block w-full px-4 py-3 mt-2 border rounded-xl transition-all ${
-                !isEditable
-                  ? "bg-gray-100 cursor-not-allowed text-gray-500"
-                  : "bg-white border-red-200"
-              }`}
-            >
-              <option value="">Select upazila</option>
-              {filteredUpazilas.map((u) => (
-                <option key={u.id} value={u.name}>
-                  {u.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Save Button - Only visible when editing */}
-        {isEditable && (
-          <div className="mt-10 flex justify-center animate-in fade-in duration-300">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full py-2 md:py-3 rounded-xl font-medium md:text-lg transition cursor-pointer flex items-center justify-center gap-2
-              ${
-                loading
-                  ? "bg-red-400 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700 text-white shadow-lg"
-              }`}
-            >
-              {loading ? (
-                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+    <div className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
+      {/* Header - Dark/Red Gradient */}
+      <div
+        data-aos="fade-up"
+        className="p-5 mb-6 border-t-5 border-red-400 shadow-xl rounded-xl md:p-12 text-white"
+      >
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-6">
+            <div className="relative group">
+              {user?.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt="Profile"
+                  className="w-24 h-24 border-red-500 rounded-full border-4 border-red-00 object-cover rotate-3 group-hover:rotate-0 transition-transform duration-300 shadow-xl"
+                />
               ) : (
-                <>
-                  <FaSave /> Save Changes
-                </>
+                <FaUserCircle className="text-7xl text-zinc-700" />
               )}
-            </button>
+              <div className="absolute -bottom-2 -right-2 bg-red-600 px-2 py-0.5 rounded text-[10px] font-bold">
+                LIVE
+              </div>
+            </div>
+            <div>
+              <h1 className="text-4xl text-black font-black italic tracking-tighter">
+                My Profile
+              </h1>
+
+              <p className="text-gray-500 italic text-sm mt-1">
+                Route: /dashboard/my-profile
+              </p>
+            </div>
           </div>
-        )}
-      </form>
+
+          {!isEditable ? (
+            <button
+              type="button"
+              onClick={() => setIsEditable(true)}
+              className="flex items-center gap-2 px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl transition-all shadow-lg shadow-red-900/40 uppercase tracking-wider"
+            >
+              <FaEdit /> Edit Profile
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setIsEditable(false)}
+              className="flex items-center gap-2 px-8 py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-all uppercase tracking-wider"
+            >
+              <FaTimes /> Cancel
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="rounded-xl overflow-hidden shadow-xl">
+        <Helmet>
+          <title>RedUnity | My Profile</title>
+        </Helmet>
+
+        <form
+          onSubmit={handleUpdate}
+          className="p-8 md:p-12 border-2 border-gray-100 rounded-xl bg-white"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+            {/* Input Groups */}
+            {[
+              {
+                label: "Display Name",
+                name: "name",
+                value: user?.displayName,
+                type: "text",
+              },
+              {
+                label: "Email Address",
+                name: "email",
+                value: user?.email,
+                type: "email",
+                disabled: true,
+              },
+              {
+                label: "Profile Image Link",
+                name: "avatar",
+                value: user?.photoURL,
+                type: "text",
+              },
+            ].map((field) => (
+              <div key={field.name} className="flex flex-col">
+                <label className="text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">
+                  {field.label}
+                </label>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  defaultValue={field.value}
+                  readOnly={field.disabled || !isEditable}
+                  className={`px-5 py-4 rounded-xl border-2 transition-all outline-none 
+                    ${
+                      field.disabled
+                        ? "bg-zinc-100 border-zinc-100 text-zinc-400"
+                        : !isEditable
+                        ? "bg-zinc-50 border-zinc-100 text-zinc-700"
+                        : "bg-white border-red-00 text-black shadow-inner"
+                    }`}
+                />
+              </div>
+            ))}
+
+            {/* Blood Group */}
+            <div className="flex flex-col">
+              <label className="text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">
+                Blood Type
+              </label>
+              <select
+                name="bloodGroup"
+                disabled={!isEditable}
+                required
+                className={`px-5 py-4 rounded-xl border-2 transition-all outline-none  appearance-none
+                  ${
+                    !isEditable
+                      ? "bg-zinc-50 border-zinc-100 text-zinc-700"
+                      : "bg-white border-red-00 text-black"
+                  }`}
+              >
+                <option value="">Select Group</option>
+                {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
+                  (bg) => (
+                    <option key={bg}>{bg}</option>
+                  )
+                )}
+              </select>
+            </div>
+
+            {/* District */}
+            <div className="flex flex-col">
+              <label className="text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">
+                Current District
+              </label>
+              <select
+                value={district}
+                onChange={(e) => setDistrict(e.target.value)}
+                disabled={!isEditable}
+                required
+                className={`px-5 py-4 rounded-xl border-2 transition-all outline-none 
+                   ${
+                     !isEditable
+                       ? "bg-zinc-50 border-zinc-100 text-zinc-700"
+                       : "bg-white border-red-00 text-black"
+                   }`}
+              >
+                <option value="">Select District</option>
+                {districtData.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Upazila */}
+            <div className="flex flex-col">
+              <label className="text-xs font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">
+                Area / Upazila
+              </label>
+              <select
+                name="upazila"
+                disabled={!isEditable || !district}
+                required
+                className={`px-5 py-4 rounded-xl border-2 transition-all outline-none 
+                   ${
+                     !isEditable
+                       ? "bg-zinc-50 border-zinc-100 text-zinc-700"
+                       : "bg-white border-red-00 text-black"
+                   }`}
+              >
+                <option value="">Select Upazila</option>
+                {filteredUpazilas.map((u) => (
+                  <option key={u.id} value={u.name}>
+                    {u.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Action Button */}
+          {isEditable && (
+            <div className="mt-16 flex justify-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className={`group relative overflow-hidden w-full max-w-lg py-4 rounded-2xl font-black tracking-[0.2em] transition-all duration-300
+                ${
+                  loading
+                    ? "bg-zinc-300 text-zinc-500 cursor-not-allowed"
+                    : "bg-black text-white hover:bg-red-600 shadow-2xl active:scale-95"
+                }`}
+              >
+                {loading ? (
+                  <span className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin inline-block"></span>
+                ) : (
+                  <span className="flex items-center justify-center gap-3 uppercase">
+                    <FaSave /> Save Changes
+                  </span>
+                )}
+              </button>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

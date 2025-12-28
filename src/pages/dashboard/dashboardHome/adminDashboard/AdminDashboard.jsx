@@ -30,11 +30,9 @@ const AdminDashboard = () => {
     <div className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
       {/* Welcome Section */}
       <header
-        data-aos="fade-up"
-        className="relative overflow-hidden bg-white border border-gray-200 rounded-2xl p-8 mb-10 shadow-sm transition-all hover:shadow-md"
+        data-aos="fade-down"
+        className="relative overflow-hidden bg-white rounded-xl p-8 mb-10 shadow-sm transition-all hover:shadow-md border-t-5 border-red-400"
       >
-        {/* Subtle Red Accent Line */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-red-600"></div>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <div className="flex items-center gap-2 text-red-600 mb-2">
@@ -59,7 +57,7 @@ const AdminDashboard = () => {
         </div>
       </header>
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div data-aos="fade-up" className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((item) => (
           <div
             key={item.id}

@@ -74,10 +74,13 @@ const ProfilePage = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
+      <Helmet>
+        <title>RedUnity | My Profile</title>
+      </Helmet>
       {/* Header - Dark/Red Gradient */}
       <div
-        data-aos="fade-up"
-        className="p-5 mb-6 border-t-5 border-red-400 shadow-xl rounded-xl md:p-12 text-white"
+        data-aos="fade-down"
+        className="p-5 mb-12 border-t-5 border-red-400 shadow-md rounded-xl md:p-8 text-white"
       >
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-6">
@@ -86,7 +89,7 @@ const ProfilePage = () => {
                 <img
                   src={user.photoURL}
                   alt="Profile"
-                  className="w-24 h-24 border-red-500 rounded-full border-4 border-red-00 object-cover rotate-3 group-hover:rotate-0 transition-transform duration-300 shadow-xl"
+                  className="w-24 h-24 border-red-500 rounded-2xl border-2 border-red-00 object-cover rotate-3 group-hover:rotate-0 transition-transform duration-300 shadow-xl"
                 />
               ) : (
                 <FaUserCircle className="text-7xl text-zinc-700" />
@@ -125,11 +128,7 @@ const ProfilePage = () => {
           )}
         </div>
       </div>
-      <div className="rounded-xl overflow-hidden shadow-xl">
-        <Helmet>
-          <title>RedUnity | My Profile</title>
-        </Helmet>
-
+      <div data-aos="fade-up" className="rounded-xl overflow-hidden shadow-xl">
         <form
           onSubmit={handleUpdate}
           className="p-8 md:p-12 border-2 border-gray-100 rounded-xl bg-white"

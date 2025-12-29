@@ -1,4 +1,5 @@
 import { Users, Banknote, Droplet, Home } from "lucide-react";
+import { Helmet } from "react-helmet";
 
 const AdminDashboard = () => {
   // Mock data for the statistics
@@ -29,6 +30,9 @@ const AdminDashboard = () => {
   return (
     <div className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
       {/* Welcome Section */}
+      <Helmet>
+        <title>RedUnity | Admin Dashboard</title>
+      </Helmet>
       <header
         data-aos="fade-down"
         className="relative overflow-hidden bg-white rounded-xl p-8 mb-10 shadow-sm transition-all hover:shadow-md border-t-5 border-red-400"

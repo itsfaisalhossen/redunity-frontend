@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import SectionTitle from "../../../ui/SectionTitle ";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import {
@@ -18,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import useRole from "../../../hooks/useRole";
+import { Helmet } from "react-helmet";
 
 const ViewDetails = () => {
   const { user } = useAuth();
@@ -62,9 +62,11 @@ const ViewDetails = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8 bg-slate50">
-      <SectionTitle title={"Donation Details"} />
-      <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
+      <Helmet>
+        <title>RedUnity | Donation Details</title>
+      </Helmet>
+      <div data-aos="fade-up" className="max-w-6xl mx-auto">
         {role === "Admin" ? (
           <>
             <button

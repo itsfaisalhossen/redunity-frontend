@@ -25,7 +25,6 @@ const AllUsers = () => {
     });
   }, []);
 
-  // ১. ইউজার ডাটা ফেচ করা
   const { data: users = [], refetch } = useQuery({
     queryKey: ["all-users"],
     queryFn: async () => {
@@ -37,15 +36,14 @@ const AllUsers = () => {
   const [filter, setFilter] = useState("all");
   const [openMenuId, setOpenMenuId] = useState(null);
 
-  // ২. আপডেট করার ফাংশন (Mutation)
   const { mutate: updateUser } = useMutation({
     mutationFn: async ({ id, updateData }) => {
       const res = await axiosSecure.patch(`/users/${id}`, updateData);
       return res.data;
     },
     onSuccess: () => {
-      refetch(); // ডাটাবেস আপডেট হলে টেবিল রিফ্রেশ করবে
-      setOpenMenuId(null); // মেনু বন্ধ করবে
+      refetch();
+      setOpenMenuId(null);
       Swal.fire({
         icon: "success",
         title: "Success!",
@@ -74,7 +72,6 @@ const AllUsers = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
-      {/* Header Section */}
       <div
         data-aos="fade-down"
         className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 p-8 rounded-xl shadow-md backdrop-blur-sm border-t-5 border-red-400"
@@ -92,7 +89,6 @@ const AllUsers = () => {
             </p>
           </div>
         </div>
-
         <div className="flex items-center gap-3 text-black transition-all bg-white">
           <Filter size={18} className="text-red-500" />
           <select
@@ -112,7 +108,6 @@ const AllUsers = () => {
           </select>
         </div>
       </div>
-
       <div
         data-aos="fade-up"
         className="bg-zinc900/30 rounded-3xl border border-gray-300 shadow-xl overflow-hidden backdrop-blur-md"
@@ -158,7 +153,7 @@ const AllUsers = () => {
                         ></div>
                       </div>
                       <div className="min-w-0">
-                        <div className="font-bold text-black text-base lg:text-lg group-hover:text-red-500 transition-colors truncate">
+                        <div className="font-bold text-black text-base group-hover:text-red-500 transition-colors truncate">
                           {user.name}
                         </div>
                         <div className="text-zinc-600 text-xs lg:text-sm font-medium truncate">

@@ -23,11 +23,17 @@ import UpdateDonationRequest from "../pages/dashboard/donor/UpdateDonationReques
 import ViewDetails from "../pages/dashboard/donor/ViewDetails";
 import BloodDetails from "../pages/bloodDetails/BloodDetails";
 import BloodDonationReq from "../pages/bloodDonationReq/BloodDonationReq";
+import ScrollToTop from "../ui/ScrollToTop";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: (
+      <>
+        <ScrollToTop />
+        <RootLayout />
+      </>
+    ),
     hydrateFallbackElement: <Loading />,
     children: [
       { index: true, element: <Home /> },
@@ -53,7 +59,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <>
+        <ScrollToTop />
+        <AuthLayout />
+      </>
+    ),
     children: [
       { path: "login", element: <Login /> },
       {
@@ -66,9 +77,12 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <PrivateRoute>
-        <DashboardLayout />
-      </PrivateRoute>
+      <>
+        <ScrollToTop />
+        <PrivateRoute>
+          <DashboardLayout />
+        </PrivateRoute>
+      </>
     ),
     children: [
       { index: true, element: <DashboardHome /> },

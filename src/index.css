@@ -21,8 +21,3 @@
 li {
   list-style: none;
 }
-
-/* li,
-.active {
-  @apply border-b border-white/80 text-white duration-400 py-1 px-3.5;
-} */

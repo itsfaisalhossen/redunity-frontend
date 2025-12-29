@@ -88,7 +88,7 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "Donation Requests", path: "/donation-requests" },
     { name: "Search Donor", path: "/search-donation" },
-    { name: "Funding", path: "/Funding" },
+    { name: "Funding", path: "/funding" },
   ];
 
   return (

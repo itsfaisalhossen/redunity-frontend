@@ -71,23 +71,32 @@ const DonorDashboard = () => {
   };
 
   return (
-    <div className="my-10 md:my-16 min-h-screen font-sans">
+    <div className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
       <Helmet>
         <title>RedUnity | Donor Dashboard</title>
       </Helmet>
 
-      <div className="container mx-auto px-4">
+      <div className="">
         {/* Welcome Section */}
-        <header className="mb-12">
-          <SectionTitle
-            title={`Welcome back, ${user?.displayName}!`}
-            subTitle={"Here is a summary of your recent activity."}
-          />
+        <header
+          data-aos="fade-down"
+          className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 p-8 rounded-xl shadow-md backdrop-blur-sm border-t-5 border-red-400"
+        >
+          <div className="text-center items-center justify-center mx-auto">
+            <h2 className="text-4xl font-black tracking-tight md:mb-3">
+              Welcome back,{" "}
+              <span className="text-red-600">{user?.displayName}!</span>
+            </h2>
+            <p>Here is a summary of your recent activity.</p>
+          </div>
         </header>
 
         {/* Recent Donation Requests Section */}
         {lastRequest.length > 0 ? (
-          <section className="bg-white rounded-[2.5rem] shadow-2xl shadow-rose-100/40 border border-rose-50 overflow-hidden mb-10 transition-all duration-500">
+          <section
+            data-aos="fade-up"
+            className="bg-white rounded-[2.5rem] shadow-2xl shadow-rose-100/40 border border-rose-50 overflow-hidden mb-10 transition-all duration-500"
+          >
             {/* Table Header */}
             <div className="px-8 py-7 border-b border-rose-50 flex justify-between items-center bg-linear-to-r from-white to-rose-50/20">
               <h2 className="text-xl font-black text-slate-800 flex items-center gap-3">

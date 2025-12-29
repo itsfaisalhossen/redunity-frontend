@@ -91,9 +91,14 @@ const MyDonationRequests = () => {
   };
 
   return (
-    <section className="container px-4 mx-auto py-10 min-h-screen">
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <SectionTitle title={"My Donation Requests"} />
+    <section className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
+      <div
+        data-aos="fade-down"
+        className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 p-8 rounded-xl shadow-md backdrop-blur-sm border-t-5 border-red-400"
+      >
+        <h1 className="text-4xl font-black tracking-tight">
+          My Donation <span className="text-red-600">Requests</span>
+        </h1>
         {/* Modern Filter Dropdown */}
         <div className="flex items-center gap-4">
           <span className="font-semibold text-gray-800 uppercase tracking-wider">
@@ -116,7 +121,10 @@ const MyDonationRequests = () => {
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-3xl shadow-2xl shadow-rose-100/50 border border-rose-50 overflow-hidden">
+      <div
+        data-aos="fade-up"
+        className="bg-white rounded-3xl shadow-2xl shadow-rose-100/50 border border-rose-50 overflow-hidden"
+      >
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100">
             <thead className="bg-rose-50/50">
@@ -274,7 +282,10 @@ const MyDonationRequests = () => {
       </div>
 
       {/* Modern Pagination Container */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mt-10 px-2 gap-4">
+      <div
+        data-aos="fade-up"
+        className="flex flex-col sm:flex-row items-center justify-between mt-10 px-2 gap-4"
+      >
         <p className="text-sm text-gray-500 font-medium order-2 sm:order-1">
           Showing page{" "}
           <span className="text-rose-600 font-bold">{currentPage}</span>

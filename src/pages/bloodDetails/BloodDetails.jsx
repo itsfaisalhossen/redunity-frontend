@@ -18,6 +18,7 @@ import {
   ChevronLeft,
   X,
 } from "lucide-react";
+import { Helmet } from "react-helmet";
 
 const BloodDetails = () => {
   const { user } = useAuth();
@@ -61,9 +62,12 @@ const BloodDetails = () => {
   };
   return (
     <div className="my-10 md:my-16 min-h-screen">
+      <Helmet>
+        <title>RedUnity | Blood Details</title>
+      </Helmet>
       <Container>
-        <SectionTitle title={"Donation Details"} />
-        <div>
+        {/* <SectionTitle title={"Donation Details"} /> */}
+        <div data-aos="fade-up">
           <button
             onClick={() => navigate("/donation-requests")}
             className="flex items-center text-slate-500 hover:text-rose-600 transition-colors mb-6 md:mb-10 group"

@@ -100,7 +100,7 @@ const ProfilePage = () => {
             </div>
             <div>
               <h1 className="text-4xl text-black font-black italic tracking-tighter">
-                My Profile
+                My <span className="text-red-500">Profile</span>
               </h1>
 
               <p className="text-gray-500 italic text-sm mt-1">

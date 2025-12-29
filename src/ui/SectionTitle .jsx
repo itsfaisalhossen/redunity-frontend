@@ -7,10 +7,7 @@ AOS.init({
 
 const SectionTitle = ({ title, subTitle }) => {
   return (
-    <div
-      data-aos="fade-up"
-      className="w-full md:w-180 mx-auto textblack text-center mb-14"
-    >
+    <div data-aos="fade-down" className="w-full mb-5 md:mb-8 lg:mb-14">
       <h3 className="sirin-stencil-regular text-3xl md:text-5xl font-extrabold">
         {title}
       </h3>

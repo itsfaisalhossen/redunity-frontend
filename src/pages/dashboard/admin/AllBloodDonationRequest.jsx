@@ -6,6 +6,7 @@ import SectionTitle from "../../../ui/SectionTitle ";
 import { Link } from "react-router";
 import { Edit, Eye, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const MyDonationRequests = () => {
   const { user } = useAuth();
@@ -90,12 +91,27 @@ const MyDonationRequests = () => {
   };
 
   return (
-    <section className="container px-4 mx-auto py-10 min-h-screen">
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <SectionTitle title={"All Boold Donation Requests"} />
-        {/* Modern Filter Dropdown */}
-        <div className="flex items-center gap-4">
-          <span className="font-semibold text-gray-800 uppercase tracking-wider">
+    <section className="max-w-6xl mx-auto my-12 md:my-22 p-5 md:p-8">
+      <Helmet>
+        <title>RedUnity | All Donations</title>
+      </Helmet>
+      <div
+        data-aos="fade-down"
+        className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 p-8 rounded-xl shadow-md backdrop-blur-sm border-t-5 border-red-400"
+      >
+        <div className="flex items-center gap-5">
+          <div>
+            <h1 className="text-4xl font-black tracking-tight">
+              All Blood Donation <span className="text-red-600">Requests</span>
+            </h1>
+            <p className="text-black font-mono text-sm mt-1">
+              Route: dashboard/all-blood-donation-request
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center gap-4">
+          <span className="font-semibold text-gray-800 uppercase tracking-wider whitespace-nowrap">
             Filter By:
           </span>
           <select
@@ -103,7 +119,7 @@ const MyDonationRequests = () => {
               setFilter(e.target.value);
               setCurrentPage(1);
             }}
-            className="px-8 py-2.5 bg-white border border-rose-100 text-gray-700 rounded-xl font-medium shadow-sm focus:ring-2 focus:ring-rose-500 focus:outline-none transition-all cursor-pointer hover:border-rose-300"
+            className="px-6 py-2.5 bg-white border border-rose-100 text-gray-700 rounded-xl font-medium shadow-sm focus:ring-2 focus:ring-rose-500 focus:outline-none transition-all cursor-pointer hover:border-rose-300"
           >
             <option value="">All Status</option>
             <option value="pending">Pending</option>
@@ -115,7 +131,10 @@ const MyDonationRequests = () => {
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-3xl shadow-2xl shadow-rose-100/50 border border-rose-50 overflow-hidden">
+      <div
+        data-aos="fade-up"
+        className="bg-white rounded-3xl shadow-2xl shadow-rose-100/50 border border-rose-50 overflow-hidden"
+      >
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100">
             <thead className="bg-rose-50/50">
@@ -250,7 +269,10 @@ const MyDonationRequests = () => {
       </div>
 
       {/* Modern Pagination Container */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mt-10 px-2 gap-4">
+      <div
+        data-aos="fade-up"
+        className="flex flex-col sm:flex-row items-center justify-between mt-10 px-2 gap-4"
+      >
         <p className="text-sm text-gray-500 font-medium order-2 sm:order-1">
           Showing page{" "}
           <span className="text-rose-600 font-bold">{currentPage}</span>

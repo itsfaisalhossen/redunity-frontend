@@ -30,10 +30,11 @@ const Login = () => {
       Swal.fire({
         title: "Login Successful!",
         icon: "success",
-        position: "top-end",
-        showConfirmButton: false,
+        background: "#020617",
+        width: 350,
         timer: 1500,
       });
+
       navigate(from);
     } catch (error) {
       toast.error("Email or Password is wrong");

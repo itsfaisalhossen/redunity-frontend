@@ -4,6 +4,8 @@ import FeaturedSection from "../../ui/FeaturedSection";
 import HomeBanner from "../../ui/HomeBanner";
 import WhyDonateBlood from "../../ui/WhyDonateBlood ";
 import HowItWorks from "../../ui/HowItWorks ";
+import FAQ from "../../ui/Faq";
+import JoinUs from "../../ui/JoinUs";
 
 const Home = () => {
   return (
@@ -25,11 +27,14 @@ const Home = () => {
       {/* Why Donate Blood? */}
       <WhyDonateBlood />
 
+      {/* FAQ  */}
+      <FAQ />
+
       {/* How It Works */}
       <HowItWorks />
 
-      {/* Contact Us */}
-      <ContactUsSection />
+      {/* Join us */}
+      <JoinUs />
     </div>
   );
 };

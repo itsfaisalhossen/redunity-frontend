@@ -91,7 +91,8 @@ const Navbar = () => {
     { name: "Donation Requests", path: "/donation-requests" },
     { name: "Search Donor", path: "/search-donation" },
     { name: "Funding", path: "/funding" },
-    { name: "About", path: "/about" },
+    { name: "About", path: "/about-us" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
@@ -108,7 +109,7 @@ const Navbar = () => {
           </span>
         </Link>
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}

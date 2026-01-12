@@ -24,6 +24,8 @@ import ViewDetails from "../pages/dashboard/donor/ViewDetails";
 import BloodDetails from "../pages/bloodDetails/BloodDetails";
 import BloodDonationReq from "../pages/bloodDonationReq/BloodDonationReq";
 import ScrollToTop from "../ui/ScrollToTop";
+import AboutUs from "../pages/aboutus/AboutUs";
+import Contact from "../pages/contact/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +41,8 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "search-donation", element: <SearchDonation /> },
       { path: "donation-requests", element: <BloodDonationReq /> },
+      { path: "about-us", element: <AboutUs /> },
+      { path: "contact", element: <Contact /> },
       {
         path: "donation-details/:id",
         element: (

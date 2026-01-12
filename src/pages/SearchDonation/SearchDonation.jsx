@@ -207,6 +207,7 @@
 import { useState, useEffect } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Search, MapPin, Droplet, User, Mail } from "lucide-react";
+import DidYouKnow from "../../ui/DidYouKnow ";
 
 const SearchDonation = () => {
   const axiosSecure = useAxiosSecure();
@@ -410,6 +411,8 @@ const SearchDonation = () => {
           )}
         </div>
       </div>
+
+      <DidYouKnow />
     </div>
   );
 };

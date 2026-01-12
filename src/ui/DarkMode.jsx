@@ -24,7 +24,7 @@ const DarkMode = () => {
     <div>
       <button
         onClick={() => SetDarkMode((prev) => !prev)}
-        className="p-1 bg-white/10 rounded-full flex items-center justify-center cursor-pointer  text-white shadow gap-2"
+        className="p-1 bg-red-500/50 rounded-lg flex items-center justify-center cursor-pointer  text-white shadow gap-2"
       >
         {darkMode ? <IoMdSunny size={18} /> : <RiMoonClearLine size={18} />}{" "}
       </button>

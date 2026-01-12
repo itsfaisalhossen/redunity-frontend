@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router";
 import Container from "../../ui/Container";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -142,186 +143,203 @@ const Register = () => {
   };
 
   return (
-    <div className="my-14 md:my-24">
+    <div>
       <Helmet>
         <title>RedUnity | Register</title>
       </Helmet>
-
       <Container>
-        <div className="w-full max-w165 p-6 md:p-10 m-auto bg-white rounded-lg shadow-md">
-          <div className="mb-8">
-            <h3 className="text-3xl lg:text-5xl sirin-stencil-regular font-extrabold text-center">
-              Create Your Account
-            </h3>
-          </div>
-          <form onSubmit={handleRegister}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              {/* Name */}
-              <div>
-                <label className="block font-medium text-gray-800">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Full Name"
-                  required
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                />
-              </div>
+        <div className="w-full min-h-screen flex flex-col items-center justify-center px-5 py-8">
+          <Link
+            to={"/"}
+            className=" group relative w-12.5 h-12.5 flex items-center justify-center rounded-full bg-[rgb(20,20,20)] shadow-[0_0_20px_rgba(0,0,0,0.164)] cursor-pointer overflow-hidden transition-all duration-300 hover:w-35 hover:rounded-[50px] hover:bg-[rgb(255,69,69)]"
+          >
+            <span className=" absolute -top-5 text-white text-[2px] opacity-0 transition-all duration-300 group-hover:text-[13px] group-hover:opacity-100 group-hover:translate-y-7.5">
+              Goo Home
+            </span>
 
-              {/* Email */}
-              <div>
-                <label className="block font-medium text-gray-800">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email Address"
-                  required
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                />
-              </div>
-
-              {/* Avatar */}
-              <div>
-                <label className="block font-medium text-gray-800">
-                  Avatar
-                </label>
-                <input
-                  type="file"
-                  name="avatar"
-                  required
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                />
-              </div>
-
-              {/* Blood */}
-              <div>
-                <label className="block font-medium text-gray-800">
-                  Blood Group
-                </label>
-                <select
-                  name="bloodGroup"
-                  required
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                >
-                  <option value="">Select</option>
-                  <option>A+</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
-                  <option>O+</option>
-                  <option>O-</option>
-                </select>
-              </div>
-
-              {/* District */}
-              <div>
-                <label className="block font-medium text-gray-800">
-                  District
-                </label>
-                <select
-                  value={district}
-                  onChange={(e) => setDistrict(e.target.value)}
-                  required
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                >
-                  <option value="">Select district</option>
-                  {districtData.map((d) => (
-                    <option key={d.id} value={d.id}>
-                      {d.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Upazila */}
-              <div>
-                <label className="block font-medium text-gray-800">
-                  Upazila
-                </label>
-                <select
-                  name="upazila"
-                  required
-                  disabled={!district}
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                >
-                  <option value="">Select upazila</option>
-                  {filteredUpazilas.map((u) => (
-                    <option key={u.id} value={u.name}>
-                      {u.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Password */}
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  required
-                  placeholder="Password"
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-8 -translate-y-1/2"
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
-
-              {/* Confirm */}
-              <div className="relative">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  required
-                  placeholder="Confirm Password"
-                  className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-4 top-8 -translate-y-1/2"
-                >
-                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
+            {/* Icon */}
+            <FaHome className=" transition-all duration-300 fill-white group-hover:w-12.5 group-hover:translate-y-[60%]" />
+          </Link>
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl relative p-4 md:p-8 mt-14">
+            <div className="mb-8">
+              <h3 className="bg-red-700 text-white text-2xl md:text-3xl font-bold py-6 px-8 rounded-xl absolute -top-10 left-4 right-4 text-center">
+                Create Your Account
+              </h3>
             </div>
+            <form onSubmit={handleRegister}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                {/* Name */}
+                <div>
+                  <label className="block font-medium text-gray-800">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Full Name"
+                    required
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  />
+                </div>
 
-            <div className="mt-10 flex justify-center">
-              <button
-                type="submit"
-                disabled={loading}
-                className={`w-full py-2 md:py-3 mt-6 md:mt-10 rounded-xl font-medium md:text-lg transition cursor-pointer flex items-center justify-center gap-2
+                {/* Email */}
+                <div>
+                  <label className="block font-medium text-gray-800">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email Address"
+                    required
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  />
+                </div>
+
+                {/* Avatar */}
+                <div>
+                  <label className="block font-medium text-gray-800">
+                    Avatar
+                  </label>
+                  <input
+                    type="file"
+                    name="avatar"
+                    required
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  />
+                </div>
+
+                {/* Blood */}
+                <div>
+                  <label className="block font-medium text-gray-800">
+                    Blood Group
+                  </label>
+                  <select
+                    name="bloodGroup"
+                    required
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  >
+                    <option value="">Select</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </select>
+                </div>
+
+                {/* District */}
+                <div>
+                  <label className="block font-medium text-gray-800">
+                    District
+                  </label>
+                  <select
+                    value={district}
+                    onChange={(e) => setDistrict(e.target.value)}
+                    required
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  >
+                    <option value="">Select district</option>
+                    {districtData.map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Upazila */}
+                <div>
+                  <label className="block font-medium text-gray-800">
+                    Upazila
+                  </label>
+                  <select
+                    name="upazila"
+                    required
+                    disabled={!district}
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  >
+                    <option value="">Select upazila</option>
+                    {filteredUpazilas.map((u) => (
+                      <option key={u.id} value={u.name}>
+                        {u.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Password */}
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    required
+                    placeholder="Password"
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-8 -translate-y-1/2"
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+
+                {/* Confirm */}
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    required
+                    placeholder="Confirm Password"
+                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-4 top-8 -translate-y-1/2"
+                  >
+                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-10 flex justify-center">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full font-bold py-3 rounded-lg shadow-md transition-colors uppercase tracking-wider flex items-center justify-center gap-2
       ${
         loading
           ? "bg-red-400 cursor-not-allowed"
-          : "bg-red-500 hover:bg-red-600 text-white"
+          : "bg-black hover:bg-red-600 text-white"
       }`}
+                >
+                  {loading ? (
+                    <>
+                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Sign up...
+                    </>
+                  ) : (
+                    "Sign UP"
+                  )}
+                </button>
+              </div>
+            </form>
+            <p className="text-center mt-6">
+              Already have an account?{" "}
+              <Link
+                to="/auth/login"
+                className=" text-red-600 font-bold hover:underline"
               >
-                {loading ? (
-                  <>
-                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                    Registering...
-                  </>
-                ) : (
-                  "Register"
-                )}
-              </button>
-            </div>
-          </form>
-          <p className="text-center mt-6">
-            Already have an account?{" "}
-            <Link to="/auth/login" className="text-red-600 underline">
-              Sign In
-            </Link>
-          </p>
+                Sign In
+              </Link>
+            </p>
+          </div>
         </div>
       </Container>
     </div>

@@ -5,6 +5,8 @@ import { LogOut, LayoutDashboard, Droplet, Menu, X } from "lucide-react";
 import toast from "react-hot-toast";
 import BtnPrimary from "./BtnPrimary";
 import Swal from "sweetalert2";
+import { BiLayer } from "react-icons/bi";
+import DarkMode from "./DarkMode";
 
 const Navbar = () => {
   const { user, signOutUserFunc } = useAuth();
@@ -89,30 +91,33 @@ const Navbar = () => {
     { name: "Donation Requests", path: "/donation-requests" },
     { name: "Search Donor", path: "/search-donation" },
     { name: "Funding", path: "/funding" },
+    { name: "About", path: "/about" },
   ];
 
   return (
-    <nav className="bg-black text-white px-6 py-4 md:py-6 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+    <nav className="bg-blac text-white  sticky top-0 md:top-2.5 z-50">
+      <div className="max-w-7xl md:rounded-lg back-drop-b px-6  py-4 md:py-5 back-drop-blur-xl bg-black dark:bg-white/20 mx-auto flex justify-between items-center">
         {/* Logo */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-xl md:text-3xl font-bold z-50"
-        >
-          <Droplet className="text-red-600" />
-          RedUnity
+        <Link to="/" className="flex items-center gap-2  font-bold z-50">
+          <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center shadow-md">
+            {/* <BiLayer className="text-white" size={20} /> */}
+            <Droplet className="text-white" size={20} />
+          </div>
+          <span className="text-xl md:text-3xl font-black tracking-tighter text-white uppercase">
+            RedUnity
+          </span>
         </Link>
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-3">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               className={({ isActive }) =>
-                `duration-200 py-1 border-b-2 ${
+                `duration-200 py-0.5 text-[15px] hover:bg-red-600 rounded-lg ${
                   isActive
-                    ? "border-red-600 text-white"
-                    : "border-transparent text-gray-300 hover:text-white"
+                    ? "border-red600 bg-red-600 rounded-lg px-3 text-white"
+                    : "border-transparent text-gray-300 px-3 hover:text-white"
                 }`
               }
             >
@@ -130,25 +135,63 @@ const Navbar = () => {
 
           {user && (
             <div ref={dropdownRef} className="relative">
-              <img
-                onClick={() => setIsOpen(!isOpen)}
-                src={user?.photoURL}
-                alt="avatar"
-                className="w-10 h-10 rounded-full border-2 border-red-600 cursor-pointer object-cover"
-              />
+              <div className="flex items-center gap-2">
+                <Link
+                  to={"/dashboard"}
+                  className=" group relative cursor-pointer p-[1.5px] rounded-lg border-0 bg-linear-to-b from-[#aa0600] to-[#ff1100] shadow-[0_3px_5px_#0008] transition-all duration-300 hover:shadow-[0_5px_10px_#0009] active:shadow-none"
+                >
+                  {/* animation keyframes */}
+                  <style>
+                    {`
+          @keyframes thing {
+            0% {
+              background-position: 130%;
+              opacity: 1;
+            }
+            100% {
+              background-position: -166%;
+              opacity: 0;
+            }
+          }
+        `}
+                  </style>
+                  {/* INNER */}
+                  <div className="relative px-4 py-1 rounded-lg overflow-hidden transition-inherit bg-[radial-gradient(circle_at_50%_100%,#30f8f8_10%,#30f8f800_55%), linear-gradient(#aa0600,#ff1100)]">
+                    {/* Shine layer */}
+                    <div
+                      className="absolute inset-0 bg-[linear-gradient(-65deg,#0000_40%,#fff7_50%,#0000_70%)] bg-size-[200%_100%]"
+                      style={{ animation: "thing 3s ease infinite" }}
+                    />
+
+                    {/* Top white glow */}
+                    <div className="absolute inset-y-0 -inset-x-[6em] rounded-inherit bg-[radial-gradient(circle_at_50%_-260%,#fff_25%,#fff6_60%,#fff0_60%)]" />
+
+                    {/* Inner shadow */}
+                    <div className="absolute inset-0 rounded-inherit transition-all duration-300 shadow-[inset_0_2px_6px_-3px_#0000] group-active:shadow-[inset_0_2px_6px_-3px_#000a]" />
+
+                    {/* Text */}
+                    <span className="relative z-10 text-white text-sm font-medium drop-shadow-[1px_1px_#000a] transition-all duration-300">
+                      Dashboard
+                    </span>
+                  </div>
+                </Link>
+                <img
+                  onClick={() => setIsOpen(!isOpen)}
+                  src={user?.photoURL}
+                  alt="avatar"
+                  className="w-10 h-10 rounded-lg border-2 border-red-600 cursor-pointer object-cover"
+                />
+                <DarkMode />
+              </div>
+
               {isOpen && (
                 <div className="absolute right-0 mt-3 w-48 bg-white text-gray-800 rounded-lg shadow-xl py-2 z-50">
-                  <div className="px-4 py-2 border-b text-sm font-semibold text-gray-500 uppercase">
-                    {user?.displayName}
+                  <div className="px-4 py-2 border-b text-sm font-semibold  ">
+                    <p className="uppercase text-gray-800">
+                      {user?.displayName}
+                    </p>
+                    <p className="text-xs text-gray-500">{user?.email}</p>
                   </div>
-                  <NavLink
-                    to="/dashboard"
-                    className="flex items-center gap-2 px-4 py-3 hover:bg-gray-100 transition"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <LayoutDashboard size={18} />
-                    Dashboard
-                  </NavLink>
                   <button
                     onClick={handleLogout}
                     className="flex items-center gap-2 px-4 py-3 w-full text-left hover:bg-red-50 text-red-600 transition"

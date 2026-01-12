@@ -5,12 +5,16 @@
 
 @theme {
   --color-primary: #ffedfa4b;
-  --color-primary-dark: #0e010f;
+  --color-primary-dark: #030000;
 }
 
 * {
   font-family: "DM Sans", sans-serif;
   font-style: normal;
+}
+
+.back-drop-b {
+  @apply border border-black/20 dark:bg-white/10 dark:backdrop-blur-[6px] dark:border-white/25;
 }
 
 .ranga-font {

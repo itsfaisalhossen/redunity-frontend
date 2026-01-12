@@ -7,20 +7,20 @@ const HomeBanner = () => {
   const { user } = useAuth();
 
   return (
-    <section className="relative w-full py-12 flex items-center justify-center overflow-hidden bg-white">
+    <section className="relative w-full py-12 flex items-center justify-center overflow-hidden bg-white dark:bg-primary-dark">
       {/* Background Decorative Elements - Red Shades */}
-      <div className="absolute top-[-10%] left-[-5%] w-72 h-72 bg-red-100 rounded-full blur-3xl opacity-60 animate-pulse"></div>
-      <div className="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-red-50 rounded-full blur-3xl opacity-70"></div>
+      <div className="absolute top-[10%] left-[-5%] w-72 h-72 dark:hidden bg-red-100 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+      <div className="absolute bottom-[15%] right-[-5%] w-96 h-96 dark:hidden bg-red-50 rounded-full blur-3xl opacity-70"></div>
 
       <div className="container mx-auto px-6 relative z-10 text-center">
         {/* Badge */}
-        <div className="inline-flex my-20 items-center gap-2 px-4 py-2 rounded-full bg-red-50 text-red-600 text-sm font-semibold mb-6 border border-red-300">
+        <div className="inline-flex my-20 items-center gap-2 px-4 py-2 rounded-full bg-red-50 back-drop-b text-red-600 text-sm font-semibold mb-6 border border-red-300">
           <Heart size={16} fill="currentColor" />
           <span>Save a Life, Donate Blood</span>
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-5xl md:text-7xl font-black text-gray-900 leading-tight mb-6">
+        <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white/80 leading-tight mb-6">
           Your Small Effort Can <br />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-red-400">
             Bring a New Life
@@ -28,7 +28,7 @@ const HomeBanner = () => {
         </h1>
 
         {/* Subtext */}
-        <p className="max-w-2xl mx-auto text-gray-500 text-lg md:text-xl mb-10 leading-relaxed">
+        <p className="max-w-2xl mx-auto text-gray-500 dark:text-white/60 text-lg md:text-xl mb-10 leading-relaxed">
           Connecting heroes with those in need. Join our community of lifesavers
           or find a donor near you instantly.
         </p>
@@ -57,7 +57,6 @@ const HomeBanner = () => {
               </button>
             </>
           )}
-
           {/* Search Donor Button */}
           <button
             onClick={() => navigate("/search-donation")}
@@ -69,17 +68,23 @@ const HomeBanner = () => {
         </div>
 
         {/* Floating Stats or Minimal Info */}
-        <div className="mt-16 pt-8 border-t border-gray-100 flex justify-center gap-8 md:gap-16">
+        <div className="mt-16 pt-8 border-t border-gray-300 dark:border-gray-50/30 flex justify-center gap-8 md:gap-16">
           <div className="text-center">
-            <h4 className="text-2xl font-bold text-gray-800">24/7</h4>
+            <h4 className="text-2xl font-bold text-gray-800 dark:text-white/80">
+              24/7
+            </h4>
             <p className="text-gray-400 text-sm">Emergency Support</p>
           </div>
           <div className="text-center">
-            <h4 className="text-2xl font-bold text-gray-800">100%</h4>
+            <h4 className="text-2xl font-bold text-gray-800 dark:text-white/80">
+              100%
+            </h4>
             <p className="text-gray-400 text-sm">Free Service</p>
           </div>
           <div className="text-center">
-            <h4 className="text-2xl font-bold text-gray-800">Secure</h4>
+            <h4 className="text-2xl font-bold text-gray-800 dark:text-white/80">
+              Secure
+            </h4>
             <p className="text-gray-400 text-sm">Donor Privacy</p>
           </div>
         </div>

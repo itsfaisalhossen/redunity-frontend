@@ -36,7 +36,7 @@ const WhyDonateBlood = () => {
       <Container>
         {/* Header */}
         <div className="text-center mb-20 relative z-10">
-          <h2 className="text-4xl md:text-5xl text-black font-extrabold tracking-tight">
+          <h2 className="text-4xl md:text-5xl text-black dark:text-white font-extrabold tracking-tight">
             Why <span className="text-red-600">Blood Donation</span> Matters
           </h2>
           <p className="text-gray-700 dark:text-white/80 mt-4 max-w-2xl mx-auto">
@@ -50,7 +50,7 @@ const WhyDonateBlood = () => {
           {cards.map((card, idx) => (
             <div
               key={idx}
-              className="group relative p-6 rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#111] border border-red-600/20 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-500 cursor-pointer overflow-hidden"
+              className="group relative back-drop-b p-6 rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#111] border border-red-600/20 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-500 cursor-pointer overflow-hidden"
             >
               {/* Animated Glow */}
               <div className="absolute inset-0 bg-red-600/10 rounded-3xl opacity-0 group-hover:opacity-40 blur-xl transition duration-500 pointer-events-none"></div>

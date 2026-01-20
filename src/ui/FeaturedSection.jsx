@@ -59,7 +59,7 @@ const FeaturedSection = () => {
                 </p>
               </div>
 
-              <div className="bg-gray-900 p-8 rounded-[40px] text-white flex flex-col justify-center items-center text-center space-y-3 hover:-translate-y-2 transition-transform duration-500">
+              <div className="bg-gray-900 back-drop-b p-8 rounded-[40px] text-white flex flex-col justify-center items-center text-center space-y-3 hover:-translate-y-2 transition-transform duration-500">
                 <Users size={40} className="mb-2 text-red-500" />
                 <h3 className="text-3xl font-black">3k+</h3>
                 <p className="text-gray-400 text-sm font-medium">

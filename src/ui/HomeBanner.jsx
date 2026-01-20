@@ -20,7 +20,7 @@ const HomeBanner = () => {
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white/80 leading-tight mb-6">
+        <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-tight mb-6">
           Your Small Effort Can <br />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-red-400">
             Bring a New Life
@@ -40,7 +40,7 @@ const HomeBanner = () => {
             <>
               <button
                 onClick={() => navigate("/donation-requests")}
-                className="group relative px-8 py-4 bg-red-600 text-white font-bold rounded-2xl transition-all duration-300 hover:bg-red-700 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.3)] active:scale-95 flex items-center gap-2"
+                className="group relative sm:w-auto px-8 max-md:text-sm py-4 md:py-5 bg-red-600 text-white font-bold rounded-2xl transition-all duration-300 hover:bg-red-700 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.3)] active:scale-95 flex items-center gap-2"
               >
                 Donation Requests
                 <Heart size={18} className="group-hover:animate-bounce" />
@@ -50,7 +50,7 @@ const HomeBanner = () => {
             <>
               <button
                 onClick={() => navigate("/auth/register")}
-                className="group relative px-8 py-4 bg-red-600 text-white font-bold rounded-2xl transition-all duration-300 hover:bg-red-700 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.3)] active:scale-95 flex items-center gap-2"
+                className="group relative sm:w-auto px-8 max-md:text-sm py-4 md:py-5 bg-red-600 text-white font-bold rounded-2xl transition-all duration-300 hover:bg-red-700 hover:shadow-[0_20px_40px_-15px_rgba(220,38,38,0.3)] active:scale-95 flex items-center gap-2"
               >
                 Join as a Donor
                 <Heart size={18} className="group-hover:animate-bounce" />
@@ -60,7 +60,7 @@ const HomeBanner = () => {
           {/* Search Donor Button */}
           <button
             onClick={() => navigate("/search-donation")}
-            className="px-8 py-4 bg-white text-gray-800 font-bold rounded-2xl border-2 border-gray-100 transition-all duration-300 hover:border-red-200 hover:bg-red-50 hover:text-red-600 active:scale-95 flex items-center gap-2"
+            className="sm:w-auto px-8 max-md:text-sm py-4 md:py-5 bg-white text-gray-800 font-bold rounded-2xl border-2 border-gray-100 transition-all duration-300 hover:border-red-200 hover:bg-red-50 hover:text-red-600 active:scale-95 flex items-center gap-2"
           >
             Search Donors
             <Search size={18} />
@@ -68,7 +68,7 @@ const HomeBanner = () => {
         </div>
 
         {/* Floating Stats or Minimal Info */}
-        <div className="mt-16 pt-8 border-t border-gray-300 dark:border-gray-50/30 flex justify-center gap-8 md:gap-16">
+        <div className="mt-16 pt-8 border-t border-gray-300 dark:border-gray-50/20 flex justify-center gap-8 md:gap-16">
           <div className="text-center">
             <h4 className="text-2xl font-bold text-gray-800 dark:text-white/80">
               24/7

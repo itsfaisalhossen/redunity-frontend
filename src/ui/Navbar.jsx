@@ -91,7 +91,7 @@ const Navbar = () => {
     { name: "Donation Requests", path: "/donation-requests" },
     { name: "Search Donor", path: "/search-donation" },
     { name: "Funding", path: "/funding" },
-    { name: "About", path: "/about-us" },
+    { name: "About Us", path: "/about-us" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -180,9 +180,8 @@ const Navbar = () => {
                   onClick={() => setIsOpen(!isOpen)}
                   src={user?.photoURL}
                   alt="avatar"
-                  className="w-10 h-10 rounded-lg border-2 border-red-600 cursor-pointer object-cover"
+                  className="w-10 h-10 rounded-lg border-2 border-red-600 max-sm:hidden cursor-pointer object-cover"
                 />
-                <DarkMode />
               </div>
 
               {isOpen && (
@@ -193,13 +192,17 @@ const Navbar = () => {
                     </p>
                     <p className="text-xs text-gray-500">{user?.email}</p>
                   </div>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 px-4 py-3 w-full text-left hover:bg-red-50 text-red-600 transition"
-                  >
-                    <LogOut size={18} />
-                    Logout
-                  </button>
+
+                  <div className="flex items-center justify-betwee gap-2.5 px-2 mt-1">
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-1 rounded-xl px-4 py-3   text-left hover:bg-red-50 text-red-600 transition"
+                    >
+                      <LogOut size={18} />
+                      Logout
+                    </button>
+                    <DarkMode />
+                  </div>
                 </div>
               )}
             </div>

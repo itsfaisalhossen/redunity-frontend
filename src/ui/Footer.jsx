@@ -13,10 +13,15 @@ const Footer = () => {
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
               {/* Brand Section */}
               <div className="lg:col-span-4">
-                <h3 className="sirin-stencil-regular items-start mx-auto flex justify-start  font-extrabold text-4xl text-center">
-                  <Droplet size={35} color="red" />
-                  RedUnity
-                </h3>
+                <div className="flex items-center gap-2  font-bold z-50">
+                  <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center shadow-md">
+                    {/* <BiLayer className="text-white" size={20} /> */}
+                    <Droplet className="text-white" size={20} />
+                  </div>
+                  <span className="text-xl md:text-3xl font-black tracking-tighter text-white uppercase">
+                    RedUnity
+                  </span>
+                </div>
                 <p className="mt-6 text-balance leading-relaxed text-primary-foreground/80">
                   Connecting donors with those in need. Every donation saves
                   lives. Join our community of heroes making a difference one
@@ -131,7 +136,7 @@ const Footer = () => {
             </div>
 
             {/* Divider */}
-            <div className="mt-16 border-t border-primary-foreground/10 pt-8">
+            <div className="mt-16 border-t dark:border-white/30 border-primary-foreground/10 pt-8">
               <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
                 <p className="text-sm text-primary-foreground/60">
                   © {currentYear} RedUnity Blood Donation. All rights reserved.

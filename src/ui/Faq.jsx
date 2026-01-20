@@ -38,7 +38,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="py-20 bg-white dark:bg-primary-dark transition-colors duration-300">
+    <section className="py-20 dark:bg-primary-dark transition-colors duration-300">
       <Container>
         <div className="flex flex-col md:flex-row gap-12 items-start">
           {/* Left Side: Content */}
@@ -72,7 +72,7 @@ const FAQ = () => {
                 className={`border rounded-3xl transition-all duration-300 ${
                   activeIndex === index
                     ? "border-rose-200 bg-rose-50/30 dark:bg-rose-900/10 dark:border-rose-900/30 shadow-md"
-                    : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm"
+                    : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 back-drop-b shadow-sm"
                 }`}
               >
                 <button

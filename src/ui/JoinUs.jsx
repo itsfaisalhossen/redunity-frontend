@@ -6,7 +6,7 @@ const JoinUs = () => {
   return (
     <section className="py-16 md:py-24 transition-colors duration-300">
       <Container>
-        <div className="relative bg-rose-600 back-drop-b rounded-[3rem] p-8 md:p-16 overflow-hidden shadow-2xl shadow-rose-200 dark:shadow-none">
+        <div className="relative bg-rose-700 back-drop-b rounded-[1.5rem] p-8 md:p-16 overflow-hidden shadow-2xl shadow-rose-200 dark:shadow-none">
           {/* Background Decorative Circles */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-rose-900/20 rounded-full -ml-20 -mb-20 blur-3xl"></div>
@@ -32,10 +32,10 @@ const JoinUs = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 w-full lg:w-auto">
               <Link
                 to="/register"
-                className="w-full sm:w-auto px-10 py-5 bg-white text-rose-600 font-bold rounded-2xl shadow-xl hover:bg-rose-50 transition-all flex items-center justify-center gap-2 group"
+                className="w-full sm:w-auto px-8 max-md:text-sm py-4 md:py-5 bg-white text-rose-600 font-bold rounded-2xl shadow-xl hover:bg-rose-50 transition-all flex items-center justify-center gap-2 group"
               >
                 <UserPlus size={20} />
                 Register Now
@@ -47,7 +47,7 @@ const JoinUs = () => {
 
               <Link
                 to="/about"
-                className="w-full sm:w-auto px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center"
+                className="w-full sm:w-auto px-8 max-md:text-sm py-4 md:py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center"
               >
                 Learn More
               </Link>

@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
-  // baseURL: "https://red-unity-server.vercel.app",
+  // baseURL: "http://localhost:3000",
+  baseURL: "https://red-unity-server.vercel.app",
 });
 
 const useAxiosSecure = () => {
@@ -33,7 +33,7 @@ const useAxiosSecure = () => {
           });
         }
         return Promise.reject(error);
-      }
+      },
     );
 
     return () => {

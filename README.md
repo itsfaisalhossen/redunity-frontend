@@ -38,12 +38,12 @@ RedUnity is a full-stack MERN application designed to bridge the gap between blo
 
 1. **Clone the repository**
    ```bash
-   https://github.com/itsfaisalhossen/food-circle-client.git
+   https://github.com/itsfaisalhossen/redunity-frontend.git
    ```
 1. **Navigate to the project folder**
 
    ```bash
-   cd food-circle-client
+   cd redunity-frontend
    ```
 
 1. **Install dependencies**

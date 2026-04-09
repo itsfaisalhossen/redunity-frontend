@@ -137,6 +137,7 @@ const Navbar = () => {
           {user && (
             <div ref={dropdownRef} className="relative">
               <div className="flex items-center gap-2">
+                <DarkMode />
                 <Link
                   to={"/dashboard"}
                   className=" group relative cursor-pointer p-[1.5px] rounded-lg border-0 bg-linear-to-b from-[#aa0600] to-[#ff1100] shadow-[0_3px_5px_#0008] transition-all duration-300 hover:shadow-[0_5px_10px_#0009] active:shadow-none"
@@ -201,7 +202,6 @@ const Navbar = () => {
                       <LogOut size={18} />
                       Logout
                     </button>
-                    <DarkMode />
                   </div>
                 </div>
               )}

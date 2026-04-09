@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router";
 import Container from "../../ui/Container";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -11,10 +11,9 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [mounted, setMounted] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
   const [districtData, setDistrictData] = useState([]);
   const [upazilaData, setUpazilaData] = useState([]);
   const [district, setDistrict] = useState("");
@@ -30,6 +29,10 @@ const Register = () => {
   } = useAuth();
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     fetch("/dristict.json")
       .then((res) => res.json())
       .then((data) => setDistrictData(data));
@@ -41,7 +44,6 @@ const Register = () => {
       .then((data) => setUpazilaData(data));
   }, []);
 
-  /* ============ FILTER UPAZILA BY DISTRICT ID ============ */
   useEffect(() => {
     if (district) {
       const result = upazilaData.filter((u) => u.district_id === district);
@@ -51,7 +53,6 @@ const Register = () => {
     }
   }, [district, upazilaData]);
 
-  /* ================= REGISTER ================= */
   const handleRegister = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -65,7 +66,6 @@ const Register = () => {
     const upazilaName = form.upazila.value;
     const avatarFile = form.avatar.files[0];
 
-    //  find district name from id
     const selectedDistrict = districtData.find((d) => d.id === district);
     const districtName = selectedDistrict ? selectedDistrict.name : "";
 
@@ -84,15 +84,10 @@ const Register = () => {
           import.meta.env.VITE_image_host_key
         }`;
 
-        fetch(image_API_URL, {
-          method: "POST",
-          body: formData,
-        })
+        fetch(image_API_URL, { method: "POST", body: formData })
           .then((res) => res.json())
           .then((imgData) => {
             const photoURL = imgData?.data?.display_url || "";
-
-            // ✅ FINAL USER OBJECT (NAME + DISTRICT NAME + UPAZILA NAME)
             const newUser = {
               name: displayName,
               email,
@@ -106,22 +101,12 @@ const Register = () => {
             axiosSecure
               .post("/users", newUser)
               .then((res) => {
-                if (res.data.insertedId) {
-                  console.log("User created in the database");
-                }
+                if (res.data.insertedId) console.log("User created in the database");
               })
-              .catch((err) => {
-                console.error(err);
-              });
+              .catch((err) => console.error(err));
 
-            // update user profile to firebase
             updateProfileFunc(displayName, photoURL).then(() => {
-              setUser({
-                ...user,
-                displayName,
-                photoURL,
-              });
-
+              setUser({ ...user, displayName, photoURL });
               toast.success("Account created successfully 🎉");
               navigate(location.state ? location.state : "/");
               form.reset();
@@ -131,7 +116,6 @@ const Register = () => {
           .catch((err) => {
             toast.error("Image upload failed");
             console.log(err);
-
             setLoading(false);
           });
       })
@@ -143,206 +127,183 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <>
       <Helmet>
         <title>RedUnity | Register</title>
       </Helmet>
       <Container>
-        <div className="w-full min-h-screen flex flex-col items-center justify-center px-5 py-8">
-          <Link
-            to={"/"}
-            className=" group relative w-12.5 h-12.5 flex items-center justify-center rounded-full bg-[rgb(20,20,20)] shadow-[0_0_20px_rgba(0,0,0,0.164)] cursor-pointer overflow-hidden transition-all duration-300 hover:w-35 hover:rounded-[50px] hover:bg-[rgb(255,69,69)]"
-          >
-            <span className=" absolute -top-5 text-white text-[2px] opacity-0 transition-all duration-300 group-hover:text-[13px] group-hover:opacity-100 group-hover:translate-y-7.5">
-              Goo Home
-            </span>
+      <div className="rr-root">
+        <div className="rr-bg">
+          <div className="rr-orb rr-orb-1" />
+          <div className="rr-orb rr-orb-2" />
+          <div className="rr-orb rr-orb-3" />
+        </div>
 
-            {/* Icon */}
-            <FaHome className=" transition-all duration-300 fill-white group-hover:w-12.5 group-hover:translate-y-[60%]" />
+        <div className={`rr-card ${mounted ? "rr-visible" : ""}`}>
+
+          {/* Home link */}
+          <Link to="/" className="rr-home-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            Back to home
           </Link>
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl relative p-4 md:p-8 mt-14">
-            <div className="mb-8">
-              <h3 className="bg-red-700 text-white text-2xl md:text-3xl font-bold py-6 px-8 rounded-xl absolute -top-10 left-4 right-4 text-center">
-                Create Your Account
-              </h3>
+
+          <div className="rr-card-inner">
+            {/* Eyebrow */}
+            <div className="rr-eyebrow">
+              <div className="rr-drop-icon">
+                <svg width="14" height="18" viewBox="0 0 14 18" fill="none">
+                  <path d="M7 1C7 1 1 8 1 12.5C1 15.5 3.7 18 7 18C10.3 18 13 15.5 13 12.5C13 8 7 1 7 1Z" fill="white"/>
+                </svg>
+              </div>
+              <span className="rr-eyebrow-text">RedUnity</span>
             </div>
+
+            <h2 className="rr-heading">Create account</h2>
+            <p className="rr-subheading">Join the community. Every donor saves a life.</p>
+
             <form onSubmit={handleRegister}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                {/* Name */}
-                <div>
-                  <label className="block font-medium text-gray-800">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Your Full Name"
-                    required
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                  />
+              <div className="rr-grid">
+
+                {/* ── Personal info ── */}
+                <div className="rr-section-label">Personal info</div>
+
+                <div className="rr-field">
+                  <label className="rr-label">Full Name</label>
+                  <input type="text" name="name" placeholder="Your full name" required className="rr-input" />
                 </div>
 
-                {/* Email */}
-                <div>
-                  <label className="block font-medium text-gray-800">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Your Email Address"
-                    required
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                  />
+                <div className="rr-field">
+                  <label className="rr-label">Email</label>
+                  <input type="email" name="email" placeholder="you@example.com" required className="rr-input" />
                 </div>
 
                 {/* Avatar */}
-                <div>
-                  <label className="block font-medium text-gray-800">
-                    Avatar
+                <div className="rr-field">
+                  <label className="rr-label">Avatar</label>
+                  <label className="rr-file-label" htmlFor="avatar-input">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,45,85,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <span id="avatar-name">Choose a photo...</span>
                   </label>
                   <input
+                    id="avatar-input"
                     type="file"
                     name="avatar"
                     required
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
+                    accept="image/*"
+                    className="rr-file-input"
+                    onChange={(e) => {
+                      const el = document.getElementById("avatar-name");
+                      if (el) el.textContent = e.target.files[0]?.name || "Choose a photo...";
+                    }}
                   />
                 </div>
 
-                {/* Blood */}
-                <div>
-                  <label className="block font-medium text-gray-800">
-                    Blood Group
-                  </label>
-                  <select
-                    name="bloodGroup"
-                    required
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                  >
-                    <option value="">Select</option>
-                    <option>A+</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                    <option>O+</option>
-                    <option>O-</option>
-                  </select>
+                {/* Blood Group */}
+                <div className="rr-field">
+                  <label className="rr-label">Blood Group</label>
+                  <div className="rr-blood-wrap">
+                    <select name="bloodGroup" required className="rr-select">
+                      <option value="">Select blood group</option>
+                      <option>A+</option>
+                      <option>A-</option>
+                      <option>B+</option>
+                      <option>B-</option>
+                      <option>AB+</option>
+                      <option>AB-</option>
+                      <option>O+</option>
+                      <option>O-</option>
+                    </select>
+                  </div>
                 </div>
 
-                {/* District */}
-                <div>
-                  <label className="block font-medium text-gray-800">
-                    District
-                  </label>
-                  <select
-                    value={district}
-                    onChange={(e) => setDistrict(e.target.value)}
-                    required
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                  >
-                    <option value="">Select district</option>
-                    {districtData.map((d) => (
-                      <option key={d.id} value={d.id}>
-                        {d.name}
-                      </option>
-                    ))}
-                  </select>
+                {/* ── Location ── */}
+                <div className="rr-section-label">Location</div>
+
+                <div className="rr-field">
+                  <label className="rr-label">District</label>
+                  <div className="rr-blood-wrap">
+                    <select value={district} onChange={(e) => setDistrict(e.target.value)} required className="rr-select">
+                      <option value="">Select district</option>
+                      {districtData.map((d) => (
+                        <option key={d.id} value={d.id}>{d.name}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
-                {/* Upazila */}
-                <div>
-                  <label className="block font-medium text-gray-800">
-                    Upazila
-                  </label>
-                  <select
-                    name="upazila"
-                    required
-                    disabled={!district}
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                  >
-                    <option value="">Select upazila</option>
-                    {filteredUpazilas.map((u) => (
-                      <option key={u.id} value={u.name}>
-                        {u.name}
-                      </option>
-                    ))}
-                  </select>
+                <div className="rr-field">
+                  <label className="rr-label">Upazila</label>
+                  <div className="rr-blood-wrap">
+                    <select name="upazila" required disabled={!district} className="rr-select">
+                      <option value="">Select upazila</option>
+                      {filteredUpazilas.map((u) => (
+                        <option key={u.id} value={u.name}>{u.name}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
-                {/* Password */}
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    required
-                    placeholder="Password"
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-8 -translate-y-1/2"
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {/* ── Security ── */}
+                <div className="rr-section-label">Security</div>
+
+                <div className="rr-field">
+                  <label className="rr-label">Password</label>
+                  <div className="rr-pw-wrap">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      required
+                      placeholder="••••••••"
+                      className="rr-input rr-input-pw"
+                    />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="rr-pw-toggle">
+                      {showPassword ? <FaEyeSlash size={13} /> : <FaEye size={13} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="rr-field">
+                  <label className="rr-label">Confirm Password</label>
+                  <div className="rr-pw-wrap">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      required
+                      placeholder="••••••••"
+                      className="rr-input rr-input-pw"
+                    />
+                    <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="rr-pw-toggle">
+                      {showConfirmPassword ? <FaEyeSlash size={13} /> : <FaEye size={13} />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Submit */}
+                <div className="rr-full" style={{ marginTop: "8px" }}>
+                  <button type="submit" disabled={loading} className="rr-submit">
+                    {loading ? (
+                      <><span className="rr-spin" />Creating account...</>
+                    ) : "Create Account"}
                   </button>
                 </div>
-
-                {/* Confirm */}
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    required
-                    placeholder="Confirm Password"
-                    className="block w-full px-4 py-3 mt-2 border rounded-xl"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-4 top-8 -translate-y-1/2"
-                  >
-                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="mt-10 flex justify-center">
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`w-full font-bold py-3 rounded-lg shadow-md transition-colors uppercase tracking-wider flex items-center justify-center gap-2
-      ${
-        loading
-          ? "bg-red-400 cursor-not-allowed"
-          : "bg-black hover:bg-red-600 text-white"
-      }`}
-                >
-                  {loading ? (
-                    <>
-                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                      Sign up...
-                    </>
-                  ) : (
-                    "Sign UP"
-                  )}
-                </button>
               </div>
             </form>
-            <p className="text-center mt-6">
+
+            <p className="rr-login">
               Already have an account?{" "}
-              <Link
-                to="/auth/login"
-                className=" text-red-600 font-bold hover:underline"
-              >
-                Sign In
-              </Link>
+              <Link to="/auth/login">Sign in</Link>
             </p>
           </div>
         </div>
+      </div>
       </Container>
-    </div>
+    </>
   );
 };
 

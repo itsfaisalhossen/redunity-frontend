@@ -1,38 +1,32 @@
-import { Link, useLocation, useNavigate } from "react-router";
-import { useState } from "react";
+ import { Link, useLocation, useNavigate } from "react-router";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
 import useAuth from "../../hooks/useAuth";
 import Container from "../../ui/Container";
-import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state || "/";
-
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   const { setUser, signInWithEmailAndPasswordFunc } = useAuth();
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const roleCredencitals = {
-    Admin: {
-      email: "itsfaisalhossen@gmail.com",
-      pass: "123456$Zx",
-    },
-    Donor: {
-      email: "faisalhossen396@gmail.com",
-      pass: "123456$Zx",
-    },
-    Volunteer: {
-      email: "mb@salman.com",
-      pass: "123456$Zx",
-    },
+    Admin: { email: "itsfaisalhossen@gmail.com", pass: "123456$Zx" },
+    Donor: { email: "faisalhossen396@gmail.com", pass: "123456$Zx" },
+    Volunteer: { email: "mb@salman.com", pass: "123456$Zx" },
   };
 
   const handleRoleFill = (role) => {
@@ -43,11 +37,9 @@ const Login = () => {
   const handleSignin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const result = await signInWithEmailAndPasswordFunc(email, password);
       setUser(result.user);
-
       Swal.fire({
         title: "Login Successful!",
         icon: "success",
@@ -55,7 +47,6 @@ const Login = () => {
         width: 350,
         timer: 1500,
       });
-
       navigate(from);
     } catch (error) {
       console.log(error);
@@ -65,218 +56,159 @@ const Login = () => {
     }
   };
 
+  const roles = ["Admin", "Donor", "Volunteer"];
+
   return (
-    <div>
+    <>
       <Helmet>
         <title>RedUnity | Login</title>
       </Helmet>
       <Container>
-        <div className="w-full min-h-screen flex flex-col items-center justify-center px-4">
-          <Link
-            to={"/"}
-            className=" group relative w-12.5 h-12.5 flex items-center justify-center rounded-full bg-[rgb(20,20,20)] shadow-[0_0_20px_rgba(0,0,0,0.164)] cursor-pointer overflow-hidden transition-all duration-300 hover:w-35 hover:rounded-[50px] hover:bg-[rgb(255,69,69)]"
-          >
-            <span className=" absolute -top-5 text-white text-[2px] opacity-0 transition-all duration-300 group-hover:text-[13px] group-hover:opacity-100 group-hover:translate-y-7.5">
-              Goo Home
-            </span>
+      <div className="ru-root">
+        <div className="ru-bg">
+          <div className="ru-orb ru-orb-1" />
+          <div className="ru-orb ru-orb-2" />
+          <div className="ru-orb ru-orb-3" />
+        </div>
 
-            {/* Icon */}
-            <FaHome className=" transition-all duration-300 fill-white group-hover:w-12.5 group-hover:translate-y-[60%]" />
-          </Link>
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md relative mt-14">
-            <div className="bg-red-700 text-white text-2xl md:text-3xl font-bold py-6 px-4 rounded-xl absolute -top-10 left-4 right-4 text-center">
-              Please Sign In
+        {/* ── Left panel (desktop only) ── */}
+        <div className="ru-left">
+          <div>
+            <h1 className="ru-brand">
+              Red<span>Unity</span>
+            </h1>
+            <p className="ru-tagline">
+              Connecting blood donors with those in need.<br />
+              Every drop counts. Every donor matters.
+            </p>
+            <div className="ru-stat-row">
+              <div className="ru-stat">
+                <span className="ru-stat-num">12K+</span>
+                <span className="ru-stat-label">Donors</span>
+              </div>
+              <div className="ru-stat">
+                <span className="ru-stat-num">8.4K</span>
+                <span className="ru-stat-label">Lives Saved</span>
+              </div>
+              <div className="ru-stat">
+                <span className="ru-stat-num">340</span>
+                <span className="ru-stat-label">Campaigns</span>
+              </div>
             </div>
+          </div>
 
-            <div className="pt-20 pb-8 px-6">
-              <form onSubmit={handleSignin} className="space-y-6">
+          {/* Decorative large drop */}
+          <div className="ru-drop-art">
+            <svg width="320" height="420" viewBox="0 0 320 420" fill="none">
+              <path d="M160 10C160 10 20 170 20 260C20 344 84 410 160 410C236 410 300 344 300 260C300 170 160 10 160 10Z"
+                fill="white" />
+            </svg>
+          </div>
+        </div>
+
+        {/* ── Right panel ── */}
+        <div className="ru-right">
+          <div className={`ru-card ${mounted ? "ru-visible" : ""}`}>
+
+            {/* Home link */}
+            <Link to="/" className="ru-home-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+              </svg>
+              Back to home
+            </Link>
+
+            <div className="ru-card-inner">
+              {/* Eyebrow */}
+              <div className="ru-eyebrow">
+                <div className="ru-drop-icon">
+                  <svg width="14" height="18" viewBox="0 0 14 18" fill="none">
+                    <path d="M7 1C7 1 1 8 1 12.5C1 15.5 3.7 18 7 18C10.3 18 13 15.5 13 12.5C13 8 7 1 7 1Z" fill="white"/>
+                  </svg>
+                </div>
+                <span className="ru-eyebrow-text">RedUnity</span>
+              </div>
+
+              <h2 className="ru-heading">Sign in</h2>
+              <p className="ru-subheading">Welcome back — good to see you again.</p>
+
+              <form onSubmit={handleSignin}>
                 {/* Email */}
-                <div className="relative">
-                  <label className="absolute -top-2 left-3 bg-white px-1 text-sm font-medium">
-                    Email
-                  </label>
-                  <input
-                    name="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder="Your email"
-                    className="w-full px-4 py-3 sm:py-3.5 border border-black/90 rounded-lg focus:outline-none"
-                  />
+                <div className="ru-field">
+                  <label className="ru-label">Email</label>
+                  <div className="ru-input-wrap">
+                    <input
+                      name="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      placeholder="you@example.com"
+                      className="ru-input"
+                    />
+                  </div>
                 </div>
 
                 {/* Password */}
-                <div className="relative">
-                  <label className="absolute -top-2 left-3 bg-white px-1 text-sm font-medium">
-                    Password
-                  </label>
-                  <input
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    placeholder="Your password"
-                    className="w-full px-4 py-3 sm:py-3.5 border border-black/90 rounded-lg focus:outline-none"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2"
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
+                <div className="ru-field">
+                  <label className="ru-label">Password</label>
+                  <div className="ru-input-wrap">
+                    <input
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      placeholder="••••••••"
+                      className="ru-input ru-input-pw"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="ru-pw-toggle"
+                    >
+                      {showPassword ? <FaEyeSlash size={13} /> : <FaEye size={13} />}
+                    </button>
+                  </div>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`w-full py-3 font-bold rounded-lg ${
-                    loading
-                      ? "bg-red-400 text-white"
-                      : "bg-black text-white hover:bg-red-700"
-                  }`}
-                >
-                  {loading ? "Signing In..." : "Sign In"}
+                <button type="submit" disabled={loading} className="ru-submit">
+                  {loading ? (
+                    <><span className="ru-spin" />Signing in...</>
+                  ) : "Sign In"}
                 </button>
               </form>
 
-              {/* 🔥 ROLE BUTTONS (DESIGN SAME) */}
-              <div className="mt-5">
-                <p className="text-xs text-center mb-2 font-medium">
-                  Sign in as Demo User
-                </p>
-                <div className="flex flex-wrap text-white justify-center items-center gap-2">
-                  {/* Admin */}
-                  <button
-                    type="button"
-                    onClick={() => handleRoleFill("Admin")}
-                    className=" group relative cursor-pointer p-[1.5px] rounded-[5px] border-0 bg-linear-to-b from-[#aa0600] to-[#ff1100] shadow-[0_3px_5px_#0008] transition-all duration-300 hover:shadow-[0_5px_10px_#0009] active:shadow-none"
-                  >
-                    {" "}
-                    {/* animation keyframes */}{" "}
-                    <style>
-                      {`@keyframes thing { 0% { background-position: 130%; opacity: 1;}      100% {background-position: -166%; opacity: 0;}}`}
-                    </style>
-                    {/* INNER */}
-                    <div className="relative px-4 py-1 rounded-sm overflow-hidden transition-inherit bg-[radial-gradient(circle_at_50%_100%,#30f8f8_10%,#30f8f800_55%),linear-gradient(#aa0600,#ff1100)]">
-                      {/* Shine layer */}
-                      <div
-                        className="absolute inset-0 bg-[linear-gradient(-65deg,#0000_40%,#fff7_50%,#0000_70%)] bg-size-[200%_100%]"
-                        style={{ animation: "thing 3s ease infinite" }}
-                      />
-
-                      {/* Top white glow */}
-                      <div className="absolute inset-y-0 -inset-x-[6em] rounded-inherit bg-[radial-gradient(circle_at_50%_-260%,#fff_45%,#fff6_60%,#fff0_60%)]" />
-
-                      {/* Inner shadow */}
-                      <div className="absolute inset-0 rounded-inherit transition-all duration-300 shadow-[inset_0_2px_6px_-3px_#0000] group-active:shadow-[inset_0_2px_6px_-3px_#000a]" />
-
-                      {/* Text */}
-                      <span className="relative z-10 text-white text-sm font-medium drop-shadow-[1px_1px_#000a] transition-all duration-300">
-                        Admin
-                      </span>
-                    </div>
-                  </button>
-                  {/* Donor */}
-                  <button
-                    type="button"
-                    onClick={() => handleRoleFill("Donor")}
-                    className=" group relative cursor-pointer p-[1.5px] rounded-[5px] border-0 bg-linear-to-b from-[#aa0600] to-[#ff1100] shadow-[0_3px_5px_#0008] transition-all duration-300 hover:shadow-[0_5px_10px_#0009] active:shadow-none"
-                  >
-                    {/* animation keyframes */}
-                    <style>
-                      {`
-          @keyframes thing {
-            0% {
-              background-position: 130%;
-              opacity: 1;
-            }
-            100% {
-              background-position: -166%;
-              opacity: 0;
-            }
-          }
-        `}
-                    </style>
-                    {/* INNER */}
-                    <div className="relative px-4 py-1 rounded-sm overflow-hidden transition-inherit bg-[radial-gradient(circle_at_50%_100%,#30f8f8_10%,#30f8f800_55%), linear-gradient(#aa0600,#ff1100)]">
-                      {/* Shine layer */}
-                      <div
-                        className="absolute inset-0 bg-[linear-gradient(-65deg,#0000_40%,#fff7_50%,#0000_70%)] bg-size-[200%_100%]"
-                        style={{ animation: "thing 3s ease infinite" }}
-                      />
-
-                      {/* Top white glow */}
-                      <div className="absolute inset-y-0 -inset-x-[6em] rounded-inherit bg-[radial-gradient(circle_at_50%_-260%,#fff_45%,#fff6_60%,#fff0_60%)]" />
-
-                      {/* Inner shadow */}
-                      <div className="absolute inset-0 rounded-inherit transition-all duration-300 shadow-[inset_0_2px_6px_-3px_#0000] group-active:shadow-[inset_0_2px_6px_-3px_#000a]" />
-
-                      {/* Text */}
-                      <span className="relative z-10 text-white text-sm font-medium drop-shadow-[1px_1px_#000a] transition-all duration-300">
-                        Donor
-                      </span>
-                    </div>
-                  </button>
-                  {/* Volunteer */}
-                  <button
-                    type="button"
-                    onClick={() => handleRoleFill("Volunteer")}
-                    className=" group relative cursor-pointer p-[1.5px] rounded-[5px] border-0 bg-linear-to-b from-[#aa0600] to-[#ff1100] shadow-[0_3px_5px_#0008] transition-all duration-300 hover:shadow-[0_5px_10px_#0009] active:shadow-none"
-                  >
-                    {/* animation keyframes */}
-                    <style>
-                      {`
-          @keyframes thing {
-            0% {
-              background-position: 130%;
-              opacity: 1;
-            }
-            100% {
-              background-position: -166%;
-              opacity: 0;
-            }
-          }
-        `}
-                    </style>
-                    {/* INNER */}
-                    <div className="relative px-4 py-1 rounded-sm overflow-hidden transition-inherit bg-[radial-gradient(circle_at_50%_100%,#30f8f8_10%,#30f8f800_55%), linear-gradient(#aa0600,#ff1100)]">
-                      {/* Shine layer */}
-                      <div
-                        className="absolute inset-0 bg-[linear-gradient(-65deg,#0000_40%,#fff7_50%,#0000_70%)] bg-size-[200%_100%]"
-                        style={{ animation: "thing 3s ease infinite" }}
-                      />
-
-                      {/* Top white glow */}
-                      <div className="absolute inset-y-0 -inset-x-[6em] rounded-inherit bg-[radial-gradient(circle_at_50%_-260%,#fff_45%,#fff6_60%,#fff0_60%)]" />
-
-                      {/* Inner shadow */}
-                      <div className="absolute inset-0 rounded-inherit transition-all duration-300 shadow-[inset_0_2px_6px_-3px_#0000] group-active:shadow-[inset_0_2px_6px_-3px_#000a]" />
-
-                      {/* Text */}
-                      <span className="relative z-10 text-white text-sm font-medium drop-shadow-[1px_1px_#000a] transition-all duration-300">
-                        Volunteer
-                      </span>
-                    </div>
-                  </button>
-                </div>
+              {/* Demo roles */}
+              <div className="ru-divider">
+                <div className="ru-divider-line" />
+                <span className="ru-divider-text">demo accounts</span>
+                <div className="ru-divider-line" />
               </div>
-              <p className="text-center mt-5">
-                Don't have an account?{" "}
-                <Link
-                  to={"/auth/register"}
-                  className=" text-red-600 font-bold hover:underline"
-                >
-                  Sign up
-                </Link>
+
+              <div className="ru-chips">
+                {roles.map((role) => (
+                  <button
+                    key={role}
+                    type="button"
+                    onClick={() => handleRoleFill(role)}
+                    className="ru-chip"
+                  >
+                    {role}
+                  </button>
+                ))}
+              </div>
+
+              <p className="ru-register">
+                No account?{" "}
+                <Link to="/auth/register">Create one</Link>
               </p>
             </div>
           </div>
         </div>
+      </div>
       </Container>
-    </div>
+    </>
   );
 };
 

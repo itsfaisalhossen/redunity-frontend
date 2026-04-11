@@ -1,5 +1,9 @@
 import { FaUserPlus, FaSearch, FaHandshake, FaHeartbeat } from "react-icons/fa";
 import Container from "./Container";
+import useAuth from "../hooks/useAuth";
+import { Heart } from "lucide-react";
+import BtnPrimary from "./BtnPrimary";
+import BtnOutLine from "./BtnOutline";
 
 const steps = [
   {
@@ -29,16 +33,17 @@ const steps = [
 ];
 
 const HowItWorks = () => {
+  const { user } = useAuth();
   return (
-    <section className="relative dark:bg-primary-dark bg-linear-to-b from-black via-[#0c0c0c] to-black py-20 overflow-hidden">
+    <section className="relative dark:bg-primary-dark bg-linearto-b from-black via[#0c0c0c] toblack py-20 overflow-hidden">
       <Container>
         {/* Glow Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(220,38,38,0.15),transparent_60%)]"></div>
+        <div className="absolute inset-0 bg[radial-gradient(circle_at_top,rgba(220,38,38,0.15),transparent_60%)]"></div>
 
         <div className="relative max-w-7xl mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-black dark:text-white tracking-tight">
               How It <span className="text-red-600">Works</span>
             </h2>
             <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
@@ -52,7 +57,7 @@ const HowItWorks = () => {
             {steps.map((step) => (
               <div
                 key={step.id}
-                className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 hover:border-red-600/60 transition duration-500"
+                className="group relative bg-white/5 backdropblur-xl border border-black/10 dark:border-white/10 rounded-2xl p-8 hover:border-red-600/60 transition duration-500"
               >
                 {/* Step Number */}
                 <span className="absolute -top-5 -left-5 w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-lg shadow-lg">
@@ -60,15 +65,15 @@ const HowItWorks = () => {
                 </span>
 
                 {/* Icon */}
-                <div className="text-4xl text-red-600 group-hover:text-white transition mb-6">
+                <div className="text-4xl text-red-600 group-hover:text-black dark:group-hover:text-white transition mb-6">
                   {step.icon}
                 </div>
 
                 {/* Content */}
-                <h3 className="text-2xl font-semibold text-white mb-3">
+                <h3 className="text-2xl font-semibold text-black dark:text-white mb-3">
                   {step.title}
                 </h3>
-                <p className="text-gray-400 group-hover:text-gray-200 transition">
+                <p className="text-gray-500 group-hover:text-gray-600  dakr:group-hover:text-gray-200 transition">
                   {step.desc}
                 </p>
 
@@ -79,15 +84,17 @@ const HowItWorks = () => {
           </div>
 
           {/* CTA */}
-          <div className="flex flex-col sm:flex-row justify-center gap-6 mt-20">
-            <button className="relative px-10 py-4 rounded-xl bg-red-600 text-white font-semibold overflow-hidden group">
-              <span className="relative z-10">Become a Donor</span>
-              <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition duration-300"></div>
-            </button>
-
-            <button className="px-10 py-4 rounded-xl border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold transition duration-300">
-              Search Blood
-            </button>
+          <div className="flex flex-col sm:flex-row justify-center gap-6 mt-10 md:mt-14">
+             {user ? (
+            <>
+                <BtnPrimary text={'Donation Requests'} link={'/donation-requests'}/>
+            </>
+          ) : (
+            <>
+                <BtnPrimary text={'Become a Donor'} link={'/auth/register'}/>
+            </>
+          )}
+            <BtnOutLine text={'Search Blood'} link={'/donation-requests'}/> 
           </div>
         </div>
       </Container>

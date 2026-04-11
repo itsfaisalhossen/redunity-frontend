@@ -14,7 +14,7 @@
 }
 
 .back-drop-b {
-  @apply border border-black/20 dark:bg-white/10 dark:backdrop-blur-[6px] dark:border-white/25;
+  @apply border border-black/20 dark:bg-white/5 dark:backdrop-blur-[6px] dark:border-white/10;
 }
 
 .ranga-font {
@@ -26,9 +26,30 @@ li {
   list-style: none;
 }
 
-/* ============================================================
-   REGISTER PAGE STYLES
-   ============================================================ */
+
+ .hb-ticker { animation: hbTicker 28s linear infinite; }
+  @keyframes hbTicker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  .hb-float  { animation: hbFloat 6s ease-in-out infinite alternate; }
+  @keyframes hbFloat  { from{transform:translateY(-10px) rotate(-2deg)} to{transform:translateY(10px) rotate(2deg)} }
+
+  .hb-drop1  { animation: hbMini 5s ease-in-out infinite alternate; }
+  .hb-drop2  { animation: hbMini 5s -2s ease-in-out infinite alternate; }
+  .hb-drop3  { animation: hbMini 5s -3.5s ease-in-out infinite alternate; }
+  @keyframes hbMini   { from{opacity:.35;transform:translateY(0) scale(1)} to{opacity:.7;transform:translateY(-16px) scale(1.1)} }
+
+  .hb-pulse  { animation: hbPulse 2s ease-in-out infinite; }
+  @keyframes hbPulse  { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+
+  .hb-in0 { animation: hbFadeSlide .6s     ease both; }
+  .hb-in1 { animation: hbFadeSlide .7s .1s ease both; }
+  .hb-in2 { animation: hbFadeSlide .7s .2s ease both; }
+  .hb-in3 { animation: hbFadeSlide .7s .3s ease both; }
+  .hb-in4 { animation: hbFadeSlide .7s .4s ease both; }
+  .hb-in5 { animation: hbFadeSlide .8s .2s ease both; }
+  @keyframes hbFadeSlide { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+/* ================== REGISTER PAGE STYLES ================== */
 
 .rr-root {
   font-family: 'DM Sans', sans-serif;
@@ -412,9 +433,7 @@ li {
   .rr-login { color: rgba(0,0,0,0.3); }
 }
 
-/* ============================================================
-   LOGIN PAGE STYLES
-   ============================================================ */
+/* ============================ LOGIN PAGE STYLES ============================ */
 
 .ru-root {
   font-family: 'DM Sans', sans-serif;

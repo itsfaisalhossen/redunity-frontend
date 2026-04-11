@@ -69,7 +69,7 @@ const FAQ = () => {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className={`border rounded-3xl transition-all duration-300 ${
+                className={`border rounded-xl transition-all duration-300 ${
                   activeIndex === index
                     ? "border-rose-200 bg-rose-50/30 dark:bg-rose-900/10 dark:border-rose-900/30 shadow-md"
                     : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 back-drop-b shadow-sm"

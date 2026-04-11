@@ -3,8 +3,8 @@ import { Link } from "react-router";
 const BtnOutLine = ({ link, text }) => {
   return (
     <Link
-      className="px-4 md:px-8 border-2 p-3 rounded-lg border-red-500 hover:bg-red-500 text-white transition-all duration-300"
-      to={link}
+    to={link}
+      className="px-5 md:px-6 py-2.5 md:py-3 font-medium rounded-lg justify-center text-center border-2 border-red-500/50 hover:bg-red-500 text-red-500 hover:text-white transition-all duration-300"
     >
       {text}
     </Link>

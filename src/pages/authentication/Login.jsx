@@ -63,6 +63,7 @@ const Login = () => {
       <Helmet>
         <title>RedUnity | Login</title>
       </Helmet>
+      
       <Container>
       <div className="ru-root">
         <div className="ru-bg">
@@ -70,7 +71,6 @@ const Login = () => {
           <div className="ru-orb ru-orb-2" />
           <div className="ru-orb ru-orb-3" />
         </div>
-
         {/* ── Left panel (desktop only) ── */}
         <div className="ru-left">
           <div>
@@ -105,7 +105,6 @@ const Login = () => {
             </svg>
           </div>
         </div>
-
         {/* ── Right panel ── */}
         <div className="ru-right">
           <div className={`ru-card ${mounted ? "ru-visible" : ""}`}>

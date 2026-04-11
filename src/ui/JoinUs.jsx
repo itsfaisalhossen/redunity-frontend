@@ -1,8 +1,10 @@
 import { UserPlus, Heart, ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 import Container from "./Container";
+import useAuth from "../hooks/useAuth";
 
 const JoinUs = () => {
+  const { user } = useAuth();
   return (
     <section className="py-16 md:py-24 transition-colors duration-300">
       <Container>
@@ -33,9 +35,11 @@ const JoinUs = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 w-full lg:w-auto">
-              <Link
-                to="/register"
-                className="w-full sm:w-auto px-8 max-md:text-sm py-4 md:py-5 bg-white text-rose-600 font-bold rounded-2xl shadow-xl hover:bg-rose-50 transition-all flex items-center justify-center gap-2 group"
+              {
+                user ? <></>:
+                <><Link
+                to="/auth/register"
+                className="w-full sm:w-auto px-5 md:px-6 py-2.5 md:py-3 font-medium rounded-lg max-md:text-sm bg-white text-rose-600 shadow-xl hover:bg-rose-50 transition-all flex items-center justify-center gap-2 group"
               >
                 <UserPlus size={20} />
                 Register Now
@@ -43,11 +47,12 @@ const JoinUs = () => {
                   size={18}
                   className="group-hover:translate-x-1 transition-transform"
                 />
-              </Link>
-
+              </Link></>
+              }
+       
               <Link
-                to="/about"
-                className="w-full sm:w-auto px-8 max-md:text-sm py-4 md:py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center"
+                to="/about-us"
+                className="w-full sm:w-auto px-5 md:px-6 py-2.5 md:py-3 font-medium rounded-lg max-md:text-sm bg-transparent border-2 border-white/30 text-white hover:bg-white/10 transition-all flex items-center justify-center"
               >
                 Learn More
               </Link>

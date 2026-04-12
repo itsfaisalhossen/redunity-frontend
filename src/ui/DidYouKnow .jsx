@@ -29,7 +29,7 @@ const DidYouKnow = () => {
     <section className="bg[#111] py-16">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <h2 className="text-3xl md:text-4xl font-bold text-black text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white text-center mb-10">
           Did You Know? <span className="text-red-600">Blood Facts</span>
         </h2>
 
@@ -38,7 +38,7 @@ const DidYouKnow = () => {
           {facts.map((fact, idx) => (
             <div
               key={idx}
-              className="flex-shrink-0 w-64 md:w-72 p-6 bg-black rounded-2xl border border-red-600/30 hover:bg-red-600/10 transition duration-300 cursor-pointer flex flex-col items-center text-center"
+              className="shrink-0 w-64 md:w-72 p-6 bg-black rounded-2xl border border-red-600/30 hover:bg-red-600/10 transition duration-300 cursor-pointer flex flex-col items-center text-center"
             >
               <div className="text-red-600 text-5xl mb-3">{fact.icon}</div>
               {fact.number && (

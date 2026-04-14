@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useRef, useState, useEffect } from "react";
@@ -38,9 +39,7 @@ const injectFonts = () => {
   document.head.appendChild(link);
 };
 
-/* ─────────────────────────────────────────
-   Inject keyframe animations + utilities once
-───────────────────────────────────────── */
+/* ──────────────────── Inject keyframe animations + utilities once ───────────────────── */
 const injectStyles = () => {
   if (document.getElementById("ru-dash-styles")) return;
   const s = document.createElement("style");
@@ -108,9 +107,7 @@ const injectStyles = () => {
   document.head.appendChild(s);
 };
 
-/* ══════════════════════════════════════════════════
-   DASHBOARD LAYOUT
-══════════════════════════════════════════════════ */
+/* ═════════════════════ DASHBOARD LAYOUT ══════════════════════ */
 const DashboardLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed]   = useState(false);
@@ -214,9 +211,7 @@ const DashboardLayout = () => {
         : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white",
     ].join(" ");
 
-  /* ─────────────────────────────────
-     NavItem — with tooltip when collapsed
-  ───────────────────────────────── */
+  /* ───────────────────────────────── NavItem — with tooltip when collapsed ───────────────────────────────── */
   const NavItem = ({ to, end, icon: Icon, label, badge }) => (
     <div className="relative group/tip">
       <NavLink to={to} end={end} className={navClass}>
@@ -247,9 +242,7 @@ const DashboardLayout = () => {
     </div>
   );
 
-  /* ─────────────────────────────────
-     Section label — hides when collapsed
-  ───────────────────────────────── */
+  /* ───────────────────────────────── Section label — hides when collapsed ───────────────────────────────── */
   const SectionLabel = ({ children }) => (
     <p
       className={`text-[10px] font-semibold tracking-[1.5px] uppercase text-gray-400 dark:text-gray-600 px-3 pt-4 pb-1.5 overflow-hidden whitespace-nowrap transition-all duration-300 ${
@@ -267,9 +260,7 @@ const DashboardLayout = () => {
       className="flex h-screen overflow-hidden bg-[#f8f7f4] dark:bg-[#0e0c0b] text-gray-900 dark:text-gray-100"
     >
 
-      {/* ════════════════════════════
-          MOBILE OVERLAY
-      ════════════════════════════ */}
+      {/* ════════════════════════════ MOBILE OVERLAY ════════════════════════════ */}
       {mobileOpen && (
         <div
           className="ru-fade-in fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
@@ -295,8 +286,8 @@ const DashboardLayout = () => {
       >
 
         {/* Logo row */}
-        <div className="flex items-center gap-3 px-4 py-5 border-b border-gray-100 dark:border-white/5 min-h-[70px]">
-          <div className="ru-logo-pulse w-9 h-9 bg-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+        <div className="flex items-center gap-3 px-4 py-5 border-b border-gray-100 dark:border-white/5 min-h-17.5">
+          <div className="ru-logo-pulse w-9 h-9 bg-red-600 rounded-xl flex items-center justify-center shrink-0">
             <Droplet size={18} className="text-white fill-white" />
           </div>
 
@@ -424,9 +415,8 @@ const DashboardLayout = () => {
 
       {/* ════════════════════════════ MAIN CONTENT ════════════════════════════ */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
-
         {/* Header */}
-        <header className="ru-c1 flex-shrink-0 flex items-center gap-3 px-5 md:px-7 h-[70px] bg-white dark:bg-[#111010] border-b border-gray-200 dark:border-white/5 overflow-visible relative z-50">
+        <header className="ru-c1 shrink-0 flex items-center gap-3 px-5 md:px-7 h-17.5 bg-white dark:bg-[#111010] border-b border-gray-200 dark:border-white/5 overflow-visible relative z-50">
 
           {/* hamburger */}
           <button
@@ -459,14 +449,14 @@ const DashboardLayout = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                className="ru-search bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full py-2 pl-9 pr-4 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 w-40 focus:w-[200px] focus:border-red-400 dark:focus:border-red-700 focus:bg-white dark:focus:bg-white/10 focus:ring-2 focus:ring-red-500/10"
+                className="ru-search bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full py-2 pl-9 pr-4 text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 w-40 focus:w-50 focus:border-red-400 dark:focus:border-red-700 focus:bg-white dark:focus:bg-white/10 focus:ring-2 focus:ring-red-500/10"
               />
             </div>
 
             {/* notification bell */}
             <button className="relative w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all duration-200">
               <Bell size={17} strokeWidth={1.8} />
-              <span className="absolute top-[9px] right-[9px] w-1.5 h-1.5 bg-red-600 rounded-full border border-white dark:border-[#111010]" />
+              <span className="absolute top-2.25 right-2.25 w-1.5 h-1.5 bg-red-600 rounded-full border border-white dark:border-[#111010]" />
             </button>
 
             {/* dark / light toggle */}
@@ -491,9 +481,9 @@ const DashboardLayout = () => {
                   <img
                     src={user?.photoURL}
                     alt="avatar"
-                    className="w-7 h-7 rounded-lg border border-red-300 dark:border-red-700 object-cover flex-shrink-0"
+                    className="w-7 h-7 rounded-lg border border-red-300 dark:border-red-700 object-cover shrink-0"
                   />
-                  <span className="hidden md:block text-xs font-medium text-gray-700 dark:text-gray-300 max-w-[80px] truncate">
+                  <span className="hidden md:block text-xs font-medium text-gray-700 dark:text-gray-300 max-w-20 truncate">
                     {user?.displayName}
                   </span>
                   <ChevronLeft

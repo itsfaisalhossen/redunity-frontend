@@ -243,8 +243,8 @@ const HomeBanner = () => {
 
         {/* ── RIGHT ── */}
       
-                <div className="w-full h-auto">
-                  <Lottie animationData={medical} loop={true} />
+        <div className="w-full h-auto">
+         <Lottie animationData={medical} loop={true} />
         </div>
       </div>
 

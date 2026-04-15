@@ -153,34 +153,46 @@ export default function Funding() {
           style={{ gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))" }}
         >
           {[
-            { label: "Total Raised", value: formatAmount(totalFunds), sub: "across all donors" },
-            { label: "Contributors", value: totalDonors, sub: "unique donors" },
-            { label: "Avg Donation", value: formatAmount(avgDonation), sub: "per contribution" },
+            { label: "Total Raised", value: formatAmount(totalFunds), 
+              sub: "across all donors", color: "bg-blue-500/10 text-blue-600", },
+            { label: "Contributors", value: totalDonors, 
+              sub: "unique donors",color: "bg-amber-500/10 text-amber-600", },
+            { label: "Avg Donation", value: formatAmount(avgDonation), 
+              sub: "per contribution",color: "bg-emerald-500/10 text-emerald-600", },
           ].map((s, i) => (
             <div
-              key={i}
-              className="bg-[#0d0d0d] border border-red-600/15 rounded-[20px] p-6 relative overflow-hidden transition-all duration-200 hover:border-red-600/40 hover:-translate-y-0.5"
-            >
-              <div className="absolute top-0 left-0 w-[60px] h-[60px] bg-[radial-gradient(circle_at_top_left,rgba(220,38,38,0.2),transparent_70%)]" />
-              <div className="text-red-600 mb-3">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+                key={i}
+                className="group relative bg-white dark:bg-gray-900/60 p-4 md:p-8 rounded-[1rem] border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-rose-500/10 hover:-translate-y-2 transition-all duration-500"
+              >
+                {/* Card Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 rounded-[1rem] transition-opacity"></div>
+
+                <div
+                  className={`py-3 md:py-6 md:text-xl ${s.color} rounded-xl flex items-center justify-center mb-4 md:mb-6 relative z-10 group-hover:rotate6 transition-transform`}
+
+                >
+                  {s.value}
+                </div>
+
+                <div className="relative z-10">
+                  <h4 className="font-black text-slate-800 dark:text-white mb-3 text-lg">
+                    {s.label}
+                  </h4>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {s.sub}
+                  </p>
+                </div>
               </div>
-              <div className="text-[28px] font-black text-white tracking-tight">{s.value}</div>
-              <div className="text-gray-400 text-[11px] font-bold uppercase tracking-[0.15em] mt-1">{s.label}</div>
-              <div className="text-gray-700 text-xs mt-0.5">{s.sub}</div>
-            </div>
           ))}
         </div>
 
         {/* ── PROGRESS ── */}
         <div
-          className={`bg-[#0d0d0d] border border-red-600/15 rounded-[20px] p-6 mb-6 transition-all duration-700 ease-out delay-200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          className={`bg-white dark:bg-black dark:back-drop-b border md:my-12 border-red-500/15 rounded-[20px] p-6 mb-6 transition-all duration-700 ease-out delay-200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
         >
           <div className="flex justify-between items-center mb-3.5">
             <div>
-              <span className="text-white font-bold text-[13px]">Campaign Goal</span>
+              <span className="text-black dark:text-white font-bold text-[13px]">Campaign Goal</span>
               <span className="text-gray-700 text-xs ml-2">৳5,00,000 target</span>
             </div>
             <span className="text-red-400 font-black text-2xl tracking-tight">{progressPct}%</span>
@@ -201,11 +213,11 @@ export default function Funding() {
 
         {/* ── TABLE ── */}
         <div
-          className={`bg-[#0d0d0d] border border-red-600/15 rounded-[20px] overflow-hidden mb-6 transition-all duration-700 ease-out delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          className={`back-drop-b bg-white border border-red-600/15 rounded-[20px] overflow-hidden mb-6 transition-all duration-700 ease-out delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
         >
           <div className="px-6 py-5 border-b border-red-600/10 bg-red-600/[0.03] flex items-center justify-between">
             <div>
-              <h2 className="text-white font-black text-[13px] uppercase tracking-[0.15em] m-0">Contribution History</h2>
+              <h2 className="text-black dark:text-white font-black text-[13px] uppercase tracking-[0.15em] m-0">Contribution History</h2>
               <p className="text-gray-700 text-xs mt-1 mb-0">{funds.length} total contributions</p>
             </div>
             <div className="flex items-center gap-2 text-gray-700 text-xs">
@@ -283,7 +295,7 @@ export default function Funding() {
                       ${btn.disabled ? "opacity-25 cursor-not-allowed" : ""}
                       ${btn.active
                         ? "bg-red-600 text-white shadow-[0_0_12px_rgba(220,38,38,0.4)]"
-                        : "bg-[#1a1a1a] text-gray-500"
+                        : "bg-red-100 dark:bg-[#1a1a1a] text-gray-500"
                       }`}
                   >
                     {btn.label}
@@ -296,7 +308,7 @@ export default function Funding() {
 
         {/* ── WHY FUND ── */}
         <div
-          className={`grid gap-4 transition-all mb-14 duration-700 ease-out delay-500 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          className={`grid gap-4 transition-all mb-10 md:my-12 duration-700 ease-out delay-500 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
           style={{ gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))" }}
         >
           {[
@@ -306,10 +318,10 @@ export default function Funding() {
           ].map((item, i) => (
             <div
               key={i}
-              className="bg-[#0d0d0d] border border-red-600/10 rounded-[20px] p-6 transition-all duration-200 hover:border-red-600/35 hover:-translate-y-0.5"
+              className="bg-red-50/80 back-drop-b border border-red-600/10 rounded-[20px] p-6 transition-all duration-200 hover:border-red-600/35 hover:-translate-y-0.5"
             >
               <div className="text-[28px] mb-3">{item.icon}</div>
-              <h3 className="text-white font-extrabold text-xs uppercase tracking-[0.15em] mb-2">{item.title}</h3>
+              <h3 className="text-black dark:text-white font-extrabold text-xs uppercase tracking-[0.15em] mb-2">{item.title}</h3>
               <p className="text-gray-600 text-[13px] leading-[1.7]">{item.desc}</p>
             </div>
           ))}

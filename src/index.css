@@ -13,9 +13,14 @@
   font-style: normal;
 }
 
-.back-drop-b {
+/* .back-drop-b {
   @apply border border-black/20 dark:bg-white/5 dark:backdrop-blur-[6px] dark:border-white/10;
+} */
+.back-drop-b {
+  @apply border border-black/20 dark:bg-slate-900/50 dark:backdrop-blur dark:border-slate-800;
 }
+
+ border 
 
 .ranga-font {
   font-family: "Ranga", cursive;

@@ -26,7 +26,7 @@ const Contact = () => {
                 <MessageCircle size={16} />
                 <span>WE ARE HERE FOR YOU</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-800 dark:text-white leading-tight">
+              <h1 className="text-4xl md:text-6xl leading-tight font-black dark:text-white">
                 Let's Start a <br className="hidden sm:block" />
                 <span className="text-rose-600">Conversation</span>
               </h1>

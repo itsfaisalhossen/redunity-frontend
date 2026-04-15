@@ -70,7 +70,7 @@ const SearchDonation = () => {
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center  mb-12">
-          <h1 className="text-4xl dark:text-white md:text-5xl font-black text-slate-900 mb-4">
+          <h1 className="text-4xl md:text-6xl leading-tight font-black dark:text-white text-slate-900 mb-4">
             Find a <span className="text-rose-600">Donor</span>
           </h1>
           <p className="text-slate-500 dark:text-slate-400 font-medium">

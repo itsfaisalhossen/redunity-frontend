@@ -188,7 +188,7 @@ export default function Funding() {
 
         {/* ── PROGRESS ── */}
         <div
-          className={`bg-white dark:bg-black dark:back-drop-b border md:my-12 border-red-500/15 rounded-[20px] p-6 mb-6 transition-all duration-700 ease-out delay-200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          className={`bg-white dark:bg-black dark:back-drop-b border md:my-12 border-red-500/15 rounded-[1rem] p-6 mb-6 transition-all duration-700 ease-out delay-200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
         >
           <div className="flex justify-between items-center mb-3.5">
             <div>
@@ -213,7 +213,7 @@ export default function Funding() {
 
         {/* ── TABLE ── */}
         <div
-          className={`back-drop-b bg-white border border-red-600/15 rounded-[20px] overflow-hidden mb-6 transition-all duration-700 ease-out delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          className={`back-drop-b bg-white border border-red-600/15 rounded-[1rem] overflow-hidden mb-6 transition-all duration-700 ease-out delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
         >
           <div className="px-6 py-5 border-b border-red-600/10 bg-red-600/[0.03] flex items-center justify-between">
             <div>
@@ -318,7 +318,7 @@ export default function Funding() {
           ].map((item, i) => (
             <div
               key={i}
-              className="bg-red-50/80 back-drop-b border border-red-600/10 rounded-[20px] p-6 transition-all duration-200 hover:border-red-600/35 hover:-translate-y-0.5"
+              className="bg-red-50/80 back-drop-b border border-red-600/10 rounded-[1rem] p-6 transition-all duration-200 hover:border-red-600/35 hover:-translate-y-0.5"
             >
               <div className="text-[28px] mb-3">{item.icon}</div>
               <h3 className="text-black dark:text-white font-extrabold text-xs uppercase tracking-[0.15em] mb-2">{item.title}</h3>

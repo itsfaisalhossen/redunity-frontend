@@ -43,10 +43,13 @@ const Login = () => {
       Swal.fire({
         title: "Login Successful!",
         icon: "success",
+        width: 300,
         background: "#020617",
-        width: 350,
+        color: "#FFFFFF",
+        showConfirmButton: false,
         timer: 1500,
       });
+  
       navigate(from);
     } catch (error) {
       console.log(error);

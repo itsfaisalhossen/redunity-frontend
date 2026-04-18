@@ -41,7 +41,7 @@ const AboutUs = () => {
 
         {/* --- Vision & Mission Cards --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-20">
-          <div className="opacity-0 animate-[fadeSlideUp_0.6s_ease_0.2s_forwards] bg-white back-drop-b dark:bg-slate-900/40 backdrop-blur-md p-6 md:p-10 rounded-[1.5rem] shadow-sm border border-slate-100 dark:border-slate-800 group hover:border-rose-300 dark:hover:border-rose-900 hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-500 flex flex-col">
+          <div className="opacity-0 animate-[fadeSlideUp_0.6s_ease_0.2s_forwards] bg-white back-drop-b dark:bg-slate-900/40 backdrop-blur-md p-6 md:p-10 rounded-[1rem] shadow-sm border border-slate-100 dark:border-slate-800 group hover:border-rose-300 dark:hover:border-rose-900 hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-500 flex flex-col">
             <div className="w-14 h-14 bg-rose-50 dark:bg-rose-900/20 rounded-2xl flex items-center justify-center text-rose-600 mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
               <Target size={30} />
             </div>
@@ -55,7 +55,7 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="opacity-0 animate-[fadeSlideUp_0.6s_ease_0.4s_forwards] bg-white back-drop-b dark:bg-slate-900/40 backdrop-blur-md p-6 md:p-10 rounded-[1.5rem] shadow-sm border border-slate-100 dark:border-slate-800 group hover:border-rose-300 dark:hover:border-rose-900 hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-500 flex flex-col">
+          <div className="opacity-0 animate-[fadeSlideUp_0.6s_ease_0.4s_forwards] bg-white back-drop-b dark:bg-slate-900/40 backdrop-blur-md p-6 md:p-10 rounded-[1rem] shadow-sm border border-slate-100 dark:border-slate-800 group hover:border-rose-300 dark:hover:border-rose-900 hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-500 flex flex-col">
             <div className="w-14 h-14 bg-rose-50 dark:bg-rose-900/20 rounded-2xl flex items-center justify-center text-rose-600 mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
               <Heart size={30} className="group-hover:fill-rose-500 transition-colors duration-300" />
             </div>

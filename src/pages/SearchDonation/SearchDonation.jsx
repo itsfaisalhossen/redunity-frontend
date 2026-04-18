@@ -79,7 +79,7 @@ const SearchDonation = () => {
         </div>
 
         {/* Search Form */}
-        <div className="bg-white dark:bg-primary-dark p-8 rounded-[2.5rem] shadow-2xl dark:shadow-md shadow-rose-100/50 dark:shadow-rose-100/20 border border-rose-50 dark:border-white/10 mb-16">
+        <div className="bg-white back-drop-b dark:bgprimary-dark p-8 rounded-[1rem] shadow-2xl dark:shadow-md shadow-rose-100/50 dark:shadow-rose-100/20 border border-rose-50 dark:border-white/10 mb-16">
           <form
             onSubmit={handleSearch}
             className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end"
@@ -92,7 +92,7 @@ const SearchDonation = () => {
               <select
                 name="bloodGroup"
                 required
-                className="w-full px-5 py-4 bg-slate-50 dark:bg-white/10 dark:text-gray-500 border-none rounded-2xl font-bold text-slate-700"
+                className="w-full px-5 md:px-6 py-3 font-medium rounded-lg bg-slate-50 dark:bg-white/10 dark:text-gray-500 border-nonetext-slate-700"
               >
                 <option value="">Select Group</option>
                 {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((g) => (
@@ -112,7 +112,7 @@ const SearchDonation = () => {
                 name="district"
                 required
                 onChange={handleDistrictChange}
-                className="w-full px-5 py-4 bg-slate-50 dark:bg-white/10 dark:text-gray-500 border-none rounded-2xl font-bold text-slate-700"
+                className="w-full px-5 md:px-6 py-3 font-medium rounded-lg bg-slate-50 dark:bg-white/10 dark:text-gray-500 border-none text-slate-700"
               >
                 <option value="">Select District</option>
                 {districts.map((d) => (
@@ -131,7 +131,7 @@ const SearchDonation = () => {
               <select
                 name="upazila"
                 required
-                className="w-full px-5 bg-slate-50 dark:bg-white/10 dark:text-gray-500 py-4 border-none rounded-2xl font-bold text-slate-700"
+                className="w-full px-5 md:px-6 py-3 font-medium rounded-lg bg-slate-50 dark:bg-white/10 dark:text-gray-500  border-nonetext-slate-700"
               >
                 <option value="">Select Upazila</option>
                 {upazilas.map((u) => (
@@ -145,7 +145,7 @@ const SearchDonation = () => {
             {/* Search Button */}
             <button
               type="submit"
-              className="w-full py-3.5 bg-rose-600 text-white font-black rounded-2xl hover:bg-rose-700 shadow-lg dark:shadow-md shadow-rose-200 dark:shadow-rose-400  transition-all flex items-center justify-center gap-2 active:scale-95"
+              className="w-full px-5 md:px-6 py-3 font-medium rounded-lg bg-rose-600 text-white rounded2xl hover:bg-rose-700 shadow-lg dark:shadow-md shadow-rose-200 dark:shadow-rose-400  transition-all flex items-center justify-center gap-2 active:scale-95"
             >
               <Search size={20} /> SEARCH
             </button>

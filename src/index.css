@@ -5,7 +5,7 @@
 
 @theme {
   --color-primary: #ffedfa4b;
-  --color-primary-dark: #030000;
+  --color-primary-dark: #00020A;
 }
 
 * {
@@ -17,7 +17,7 @@
   @apply border border-black/20 dark:bg-white/5 dark:backdrop-blur-[6px] dark:border-white/10;
 } */
 .back-drop-b {
-  @apply border border-black/20 dark:bg-slate-900/50 dark:backdrop-blur dark:border-slate-800;
+  @apply border border-black/20 dark:bg-slate-950 dark:backdrop-blur dark:border-slate-800;
 }
 
  border 
@@ -30,6 +30,23 @@
 li {
   list-style: none;
 }
+
+ /* From Uiverse.io by AqFox */ 
+.spinner {
+ width: 76px;
+ height: 76px;
+ border: 12px #ff0000 double;
+ border-left-style: solid;
+ border-radius: 50%;
+ animation: spinner-aib1d7 0.75s infinite linear;
+}
+
+@keyframes spinner-aib1d7 {
+ to {
+  transform: rotate(360deg);
+ }
+}
+
 
 
  .hb-ticker { animation: hbTicker 28s linear infinite; }

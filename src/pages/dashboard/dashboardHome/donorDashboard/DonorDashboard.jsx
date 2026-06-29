@@ -150,7 +150,7 @@ const DonorDashboard = () => {
         <title>RedUnity | Donor Dashboard</title>
       </Helmet>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-10 space-y-8">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-10 space-y-10">
         {/* ===== Dashboard Header ===== */}
         <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-rose-600 via-red-500 to-pink-600 p-6 md:p-8 shadow-xl">
           {/* Background Blur */}

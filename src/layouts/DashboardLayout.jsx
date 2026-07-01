@@ -27,7 +27,6 @@ import {
   X,
 } from "lucide-react";
 
-
 /* ────────────────── Inject Google Fonts once ─────────────────── */
 const injectFonts = () => {
   if (document.getElementById("ru-fonts")) return;
@@ -110,7 +109,7 @@ const injectStyles = () => {
 /* ═════════════════════ DASHBOARD LAYOUT ══════════════════════ */
 const DashboardLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [collapsed, setCollapsed]   = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dark, setDark] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -175,7 +174,8 @@ const DashboardLayout = () => {
       customClass: {
         popup: "rounded-2xl shadow-2xl border border-red-500/30",
         confirmButton: "px-6 py-3 rounded-xl font-semibold",
-        cancelButton: "px-6 py-3 rounded-xl font-semibold border border-red-500/30 text-red-400",
+        cancelButton:
+          "px-6 py-3 rounded-xl font-semibold border border-red-500/30 text-red-400",
       },
     });
     if (result.isConfirmed) {
@@ -259,7 +259,6 @@ const DashboardLayout = () => {
       style={{ fontFamily: "'DM Sans', sans-serif" }}
       className="flex h-screen overflow-hidden bg-[#f8f7f4] dark:bg-[#0e0c0b] text-gray-900 dark:text-gray-100"
     >
-
       {/* ════════════════════════════ MOBILE OVERLAY ════════════════════════════ */}
       {mobileOpen && (
         <div
@@ -284,7 +283,6 @@ const DashboardLayout = () => {
           minWidth: collapsed ? 72 : 260,
         }}
       >
-
         {/* Logo row */}
         <div className="flex items-center gap-3 px-4 py-5 border-b border-gray-100 dark:border-white/5 min-h-17.5">
           <div className="ru-logo-pulse w-9 h-9 bg-red-600 rounded-xl flex items-center justify-center shrink-0">
@@ -327,9 +325,14 @@ const DashboardLayout = () => {
         <nav className="ru-scroll flex-1 overflow-y-auto px-2.5 py-3 flex flex-col gap-0.5">
           <SectionLabel>Navigation</SectionLabel>
 
-          <NavItem to="/"               end  icon={Home}            label="Home"       />
-          <NavItem to="/dashboard"      end  icon={LayoutDashboard} label="Overview"   />
-          <NavItem to="/dashboard/my-profile" icon={User}           label="My Profile" />
+          <NavItem to="/" end icon={Home} label="Home" />
+          <NavItem
+            to="/dashboard"
+            end
+            icon={LayoutDashboard}
+            label="Overview"
+          />
+          <NavItem to="/dashboard/my-profile" icon={User} label="My Profile" />
 
           {role === "Donor" && (
             <>
@@ -338,7 +341,7 @@ const DashboardLayout = () => {
                 to="/dashboard/my-donation-requests"
                 icon={BiDonateBlood}
                 label="My Requests"
-                badge="3"
+                // badge="3"
               />
               <NavItem
                 to="/dashboard/create-donation-request"
@@ -351,8 +354,16 @@ const DashboardLayout = () => {
           {role === "Admin" && (
             <>
               <SectionLabel>Administration</SectionLabel>
-              <NavItem to="/dashboard/all-users"                   icon={FaUserShield}  label="All Users"       />
-              <NavItem to="/dashboard/all-blood-donation-request"  icon={BiDonateBlood} label="Manage Requests" />
+              <NavItem
+                to="/dashboard/all-users"
+                icon={FaUserShield}
+                label="All Users"
+              />
+              <NavItem
+                to="/dashboard/all-blood-donation-request"
+                icon={BiDonateBlood}
+                label="Manage Requests"
+              />
             </>
           )}
 
@@ -368,8 +379,12 @@ const DashboardLayout = () => {
           )}
 
           <SectionLabel>Account</SectionLabel>
-          <NavItem to="/dashboard/payments"  icon={MdOutlinePayments} label="Payments" />
-          <NavItem to="/dashboard/settings"  icon={Settings}          label="Settings" />
+          <NavItem
+            to="/dashboard/payments"
+            icon={MdOutlinePayments}
+            label="Payments"
+          />
+          {/* <NavItem to="/dashboard/settings"  icon={Settings}          label="Settings" /> */}
         </nav>
 
         {/* Role chip */}
@@ -395,7 +410,10 @@ const DashboardLayout = () => {
         >
           <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/40">
             <div className="w-8 h-8 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center mb-3">
-              <HelpCircle size={16} className="text-red-600 dark:text-red-400" />
+              <HelpCircle
+                size={16}
+                className="text-red-600 dark:text-red-400"
+              />
             </div>
             <h5
               className="text-xs font-bold text-gray-900 dark:text-white mb-1 uppercase tracking-wide"
@@ -417,7 +435,6 @@ const DashboardLayout = () => {
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Header */}
         <header className="ru-c1 shrink-0 flex items-center gap-3 px-5 md:px-7 h-17.5 bg-white dark:bg-[#111010] border-b border-gray-200 dark:border-white/5 overflow-visible relative z-50">
-
           {/* hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
@@ -442,10 +459,12 @@ const DashboardLayout = () => {
 
           {/* right controls */}
           <div className="ml-auto flex items-center gap-2">
-
             {/* search */}
             <div className="relative hidden sm:flex items-center">
-              <Search size={14} className="absolute left-3 text-gray-400 pointer-events-none" />
+              <Search
+                size={14}
+                className="absolute left-3 text-gray-400 pointer-events-none"
+              />
               <input
                 type="text"
                 placeholder="Search..."
@@ -465,10 +484,11 @@ const DashboardLayout = () => {
               className="w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 dark:hover:bg-amber-950/20 transition-all duration-200"
               aria-label="Toggle theme"
             >
-              {dark
-                ? <Sun  size={17} strokeWidth={1.8} />
-                : <Moon size={17} strokeWidth={1.8} />
-              }
+              {dark ? (
+                <Sun size={17} strokeWidth={1.8} />
+              ) : (
+                <Moon size={17} strokeWidth={1.8} />
+              )}
             </button>
 
             {/* avatar + dropdown */}
@@ -494,7 +514,6 @@ const DashboardLayout = () => {
 
                 {dropdownOpen && (
                   <div className="ru-drop-in absolute right-0 top-[calc(100%+8px)] w-52 bg-white dark:bg-[#1a1816] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden z-[999]">
-
                     {/* user info */}
                     <div className="px-4 py-3.5 border-b border-gray-100 dark:border-white/5 flex items-center gap-3">
                       <img
@@ -568,6 +587,3 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
-
-
- 

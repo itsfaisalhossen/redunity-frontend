@@ -203,7 +203,7 @@ const MyDonationRequests = () => {
     <div className="min-h-screen">
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-10 space-y-8 md:space-y-10">
         {/* ── Page header ── */}
-        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-rose-600 via-red-500 to-pink-600 shadow-xl shadow-rose-200 p-6 md:p-10">
+        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-rose-600 via-red-500 to-pink-600 shadow-xl shadow-rose-200  dark: dark:shadow-rose-700/30 p-6 md:p-10">
           {/* blobs */}
           <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
@@ -276,7 +276,7 @@ const MyDonationRequests = () => {
         </div>
 
         {/* ── Filter bar ── */}
-        <div className="bg-white border border-slate-100 rounded-2xl px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+        <div className="bg-white dark:bg-gray-900/60 dark:border-slate-800  border border-slate-100 rounded-2xl px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
           <div className="flex items-center gap-2 text-slate-500">
             <Filter size={15} />
             <span className="text-sm font-semibold text-slate-600">
@@ -294,8 +294,8 @@ const MyDonationRequests = () => {
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200
                   ${
                     filter === opt.value
-                      ? "bg-rose-600 text-white border-rose-600 shadow-md shadow-rose-100"
-                      : "bg-white text-slate-500 border-slate-200 hover:border-rose-200 hover:text-rose-600"
+                      ? "bg-rose-600 dark:shadow-rose-700  text-white border-rose-600 shadow-md shadow-rose-100"
+                      : "bg-white dark:bg-gray-900/60 dark:border-slate-800  text-slate-500 border-slate-200 hover:border-rose-200 dark:hover:border-rose-500  hover:text-rose-600 dark:hover:text-white/90"
                   }`}
               >
                 {opt.label}
@@ -308,12 +308,14 @@ const MyDonationRequests = () => {
         </div>
 
         {/* ── Table card ── */}
-        <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-gray-900/60 dark:border-slate-800 border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
           {/* table header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-600">
             <div className="flex items-center gap-2">
               <TrendingUp size={17} className="text-rose-500" />
-              <h2 className="text-sm font-bold text-slate-700">Requests</h2>
+              <h2 className="text-sm font-bold text-slate-700 dark:text-white/80">
+                Requests
+              </h2>
               <span className="text-[11px] font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
                 {requests.length}
               </span>
@@ -347,7 +349,7 @@ const MyDonationRequests = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-slate-50 text-slate-400 text-[11px] uppercase tracking-widest font-semibold">
+                  <tr className="bg-slate-50 dark:bg-gray-900/60 dark:border-slate-800 text-slate-400 text-[11px] uppercase tracking-widest font-semibold">
                     <th className="px-6 py-3 text-left">Recipient</th>
                     <th className="px-6 py-3 text-left">Location</th>
                     <th className="px-6 py-3 text-left">Date & time</th>
@@ -356,17 +358,17 @@ const MyDonationRequests = () => {
                     <th className="px-6 py-3 text-center">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="divide-y divide-slate-50 dark:divide-slate-700">
                   {requests.map((item) => (
                     <tr
                       key={item._id}
-                      className="hover:bg-rose-50/30 transition-colors group"
+                      className="hover:bg-rose-50/20 transition-colors group"
                     >
                       {/* recipient */}
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2.5">
                           <Avatar name={item.recipientName} />
-                          <span className="font-semibold text-slate-700">
+                          <span className="font-semibold text-slate-700 dark:text-white/80">
                             {item.recipientName}
                           </span>
                         </div>
@@ -393,7 +395,7 @@ const MyDonationRequests = () => {
                             className="text-slate-300 shrink-0"
                           />
                           <div>
-                            <p className="font-semibold text-slate-700">
+                            <p className="font-semibold text-slate-700 dark:text-white/80">
                               {new Date(item.dateTime).toLocaleDateString(
                                 "en-GB",
                               )}
@@ -424,7 +426,7 @@ const MyDonationRequests = () => {
                           <div className="flex items-center gap-2">
                             <Avatar name={item.donorName ?? "?"} />
                             <div>
-                              <p className="text-[11px] font-semibold text-slate-700 leading-none">
+                              <p className="text-[11px] font-semibold text-slate-700 dark:text-white/80 leading-none">
                                 {item.donorName ?? "Assigned"}
                               </p>
                               <p className="text-[10px] text-slate-400 mt-0.5">
@@ -512,7 +514,7 @@ const MyDonationRequests = () => {
               <button
                 disabled={currentPage === 1}
                 onClick={() => goPage(currentPage - 1)}
-                className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 disabled:opacity-30 disabled:pointer-events-none transition-all shadow-sm"
+                className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200 bg-white dark:bg-gray-900/60 dark:border-slate-800 text-slate-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 disabled:opacity-30 disabled:pointer-events-none transition-all shadow-sm"
               >
                 <ChevronLeft size={15} />
               </button>
@@ -522,7 +524,7 @@ const MyDonationRequests = () => {
                 <>
                   <button
                     onClick={() => goPage(1)}
-                    className="w-9 h-9 rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-rose-50 hover:text-rose-600 text-sm font-semibold transition-all shadow-sm"
+                    className="w-9 h-9 rounded-xl dark:bg-gray-900/60 dark:border-slate-800 border border-slate-200 bg-white text-slate-600 hover:bg-rose-50 hover:text-rose-600 text-sm font-semibold transition-all shadow-sm"
                   >
                     1
                   </button>
@@ -542,8 +544,8 @@ const MyDonationRequests = () => {
                   className={`w-9 h-9 rounded-xl text-sm font-semibold border transition-all shadow-sm
                     ${
                       currentPage === n
-                        ? "bg-rose-600 text-white border-rose-600 shadow-rose-200 scale-105"
-                        : "bg-white text-slate-600 border-slate-200 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200"
+                        ? "bg-rose-600 dark:bg-red-500 dark:border-red-800 text-white border-rose-600 shadow-rose-200 dark:shadow-rose-500 scale-105"
+                        : "bg-white text-slate-600 border-slate-200 hover:bg-rose-50  hover:text-rose-600 hover:border-rose-200"
                     }`}
                 >
                   {n}
@@ -571,7 +573,7 @@ const MyDonationRequests = () => {
               <button
                 disabled={currentPage === totalPages || totalPages === 0}
                 onClick={() => goPage(currentPage + 1)}
-                className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 disabled:opacity-30 disabled:pointer-events-none transition-all shadow-sm"
+                className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200 bg-white dark:bg-gray-900/60 dark:border-slate-800 text-slate-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 disabled:opacity-30 disabled:pointer-events-none transition-all shadow-sm"
               >
                 <ChevronRight size={15} />
               </button>

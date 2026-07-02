@@ -21,8 +21,8 @@ import toast from "react-hot-toast";
 /* ── field wrapper ── */
 const Field = ({ label, icon: Icon, children, hint }) => (
   <div className="flex flex-col gap-1.5">
-    <label className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
-      {Icon && <Icon size={12} className="text-slate-300" />}
+    <label className="flex items-center gap-1.5 text-[12px] font-bold dark:text-white/90 text-slate-600 uppercase tracking-wide">
+      {Icon && <Icon size={14} className="text-slate-500 dark:text-white" />}
       {label}
     </label>
     {children}
@@ -31,9 +31,9 @@ const Field = ({ label, icon: Icon, children, hint }) => (
 );
 
 const base =
-  "w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 bg-white border-slate-200 text-slate-800 placeholder:text-slate-300 focus:border-rose-400 focus:ring-2 focus:ring-rose-100";
+  "w-full px-4 py-3.5 rounded-xl border text-sm outline-none transition-all duration-200 bg-white dark:bg-gray-900/60 dark:border-slate-800 border-slate-200 text-slate-800 placeholder:text-slate-300 focus:border-rose-400 focus:ring-2 focus:ring-rose-100";
 const readonlyCls =
-  "w-full px-4 py-3 rounded-xl border text-sm bg-slate-50 border-slate-100 text-slate-400 cursor-not-allowed outline-none";
+  "w-full px-4 py-3 rounded-xl dark:bg-gray-900/60 dark:border-slate-800 border text-sm bg-slate-50 border-slate-100 text-slate-400 cursor-not-allowed outline-none";
 
 /* ── step indicator ── */
 const steps = ["Requester", "Recipient", "Details", "Submit"];
@@ -155,7 +155,7 @@ const CreateDonationRequest = () => {
 
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-10 space-y-8 md:space-y-10">
         {/* ── Hero banner ── */}
-        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-rose-600 via-red-500 to-pink-600 shadow-xl shadow-rose-200 p-6 md:p-10">
+        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-rose-600 via-red-500 to-pink-600 shadow-xl shadow-rose-200  dark: dark:shadow-rose-700/30 p-6 md:p-10">
           <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
           <div
@@ -186,7 +186,7 @@ const CreateDonationRequest = () => {
         </div>
 
         {/* ── Info tip ── */}
-        <div className="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-2xl px-4 py-3.5">
+        <div className="dark:bg-gray-900/60 dark:border-slate-800  flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-2xl px-4 py-3.5">
           <Info size={16} className="text-blue-500 mt-0.5 shrink-0" />
           <p className="text-xs text-blue-600 font-medium leading-relaxed">
             Your request will be visible to all active donors. Make sure the
@@ -196,14 +196,16 @@ const CreateDonationRequest = () => {
         </div>
 
         {/* ── Form card ── */}
-        <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-gray-900/60 dark:border-slate-800  border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
           {/* card header */}
-          <div className="flex items-center gap-3 px-6 py-4 border-b border-slate-100">
+          <div className="flex items-center gap-3 px-6 py-4 border-b border-slate-100 dark:border-slate-700">
             <div className="w-8 h-8 rounded-xl bg-rose-50 flex items-center justify-center text-rose-500">
               <FileText size={16} />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-700">Request form</h2>
+              <h2 className="text-sm font-bold text-slate-700 dark:text-white/90">
+                Request form
+              </h2>
               <p className="text-xs text-slate-400">
                 All fields marked are required.
               </p>
@@ -223,7 +225,7 @@ const CreateDonationRequest = () => {
                 <h3 className="text-sm font-bold text-slate-600 uppercase tracking-wider">
                   Requester info
                 </h3>
-                <div className="flex-1 h-px bg-slate-100" />
+                <div className="flex-1 h-px bg-slate-100 dark:bg-slate-400" />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Your name" icon={User}>
@@ -254,7 +256,7 @@ const CreateDonationRequest = () => {
                 <h3 className="text-sm font-bold text-slate-600 uppercase tracking-wider">
                   Recipient info
                 </h3>
-                <div className="flex-1 h-px bg-slate-100" />
+                <div className="flex-1 h-px bg-slate-100 dark:bg-slate-400" />
               </div>
 
               <Field label="Recipient name" icon={User}>
@@ -344,7 +346,7 @@ const CreateDonationRequest = () => {
                 <h3 className="text-sm font-bold text-slate-600 uppercase tracking-wider">
                   Donation details
                 </h3>
-                <div className="flex-1 h-px bg-slate-100" />
+                <div className="flex-1 h-px bg-slate-100 dark:bg-slate-400" />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -422,7 +424,7 @@ const CreateDonationRequest = () => {
                   ${
                     isSubmitting
                       ? "bg-slate-200 text-slate-400 cursor-not-allowed"
-                      : "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-200 active:scale-95"
+                      : "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-200 dark:shadow-rose-400/60  active:scale-95"
                   }`}
               >
                 {isSubmitting ? (
@@ -462,13 +464,15 @@ const CreateDonationRequest = () => {
           ].map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
-              className="bg-white border border-slate-100 rounded-2xl p-4 flex items-start gap-3 shadow-sm"
+              className="bg-white dark:bg-gray-900/60 dark:border-slate-800  border border-slate-100 rounded-2xl p-4 flex items-start gap-3 shadow-sm"
             >
               <div className="w-8 h-8 rounded-xl bg-rose-50 flex items-center justify-center text-rose-400 shrink-0">
                 <Icon size={16} />
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-700">{title}</p>
+                <p className="text-xs font-bold text-slate-700 dark:text-white/90">
+                  {title}
+                </p>
                 <p className="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
                   {desc}
                 </p>

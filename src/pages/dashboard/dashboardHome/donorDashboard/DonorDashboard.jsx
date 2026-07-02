@@ -218,7 +218,7 @@ const DonorDashboard = () => {
             </p>
           </div>
         ) : lastRequest.length > 0 ? (
-          <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
+          <div className="bg-white dark:border-slate-800 dark:bg-gray-900/60 border border-slate-100 rounded-2xl overflow-hidden">
             {/* section header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
               <div className="flex items-center gap-2">
@@ -242,7 +242,7 @@ const DonorDashboard = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-slate-50 text-slate-400 text-[11px] uppercase tracking-widest font-semibold">
+                  <tr className="bg-slate-50 dark:bg-gray-900 text-slate-400 text-[11px] uppercase tracking-widest font-semibold">
                     <th className="px-6 py-3 text-left">Recipient</th>
                     <th className="px-6 py-3 text-left">Location</th>
                     <th className="px-6 py-3 text-left">Date & time</th>
@@ -256,7 +256,7 @@ const DonorDashboard = () => {
                   {lastRequest.map((req) => (
                     <tr
                       key={req._id}
-                      className="hover:bg-rose-50/30 transition-colors"
+                      className="hover:bg-rose-50/30 dark:hover:bg-white/5 transition-colors"
                     >
                       {/* recipient */}
                       <td className="px-6 py-4">
@@ -393,13 +393,15 @@ const DonorDashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Link
             to="/dashboard/create-donation-request"
-            className="group bg-white border border-slate-100 rounded-2xl p-4 flex items-center gap-4 hover:border-rose-200 hover:shadow-sm hover:shadow-rose-50 transition-all"
+            className="group bg-white dark:bg-gray-900/60 dark:border-slate-800  border border-slate-100 rounded-2xl p-4 flex items-center gap-4 hover:border-rose-200 hover:shadow-sm hover:shadow-rose-50 dark:hover:shadow-rose-50/50 dark:hover:border-white/5 transition-all"
           >
             <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-500 group-hover:bg-rose-100 transition-colors flex-shrink-0">
               <Plus size={20} />
             </div>
             <div>
-              <p className="text-sm font-bold text-slate-700">New request</p>
+              <p className="text-sm font-bold text-slate-700 dark:text-white">
+                New request
+              </p>
               <p className="text-xs text-slate-400 mt-0.5">
                 Create a blood donation request
               </p>
@@ -412,13 +414,15 @@ const DonorDashboard = () => {
 
           <Link
             to="/dashboard/my-donation-requests"
-            className="group bg-white border border-slate-100 rounded-2xl p-4 flex items-center gap-4 hover:border-blue-200 hover:shadow-sm hover:shadow-blue-50 transition-all"
+            className="group bg-white dark:bg-gray-900/60 dark:border-slate-800  border border-slate-100 rounded-2xl p-4 flex items-center gap-4 hover:border-rose-200 hover:shadow-sm hover:shadow-rose-50 dark:hover:shadow-rose-50/50 dark:hover:border-white/5 transition-all"
           >
             <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 group-hover:bg-blue-100 transition-colors flex-shrink-0">
               <List size={20} />
             </div>
             <div>
-              <p className="text-sm font-bold text-slate-700">All requests</p>
+              <p className="text-sm font-bold text-slate-700 dark:text-white">
+                All requests
+              </p>
               <p className="text-xs text-slate-400 mt-0.5">
                 Browse your full donation history
               </p>
